@@ -74,7 +74,7 @@ export function JoinMovement() {
                 
                 <a 
                   href={card.link}
-                  className="bg-[#FDE047] hover:bg-[#FACC15] text-white font-bold py-3 px-8 w-max transition-colors inline-block"
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-3 px-8 w-max transition-colors inline-block"
                 >
                   Learn more
                 </a>

@@ -7,10 +7,10 @@ export function Footer() {
   return (
     <footer
       id="contact"
-      className="pt-24 pb-12 bg-foreground text-background relative overflow-hidden mt-12"
+      className="pt-24 pb-12 bg-black text-background relative overflow-hidden mt-12"
     >
       {/* Decorative blurred blob */}
-      <div className="absolute top-0 right-0 size-125 bg-accent/20 blur-[150px] rounded-full translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+      <div className="absolute top-0 right-0 size-125 bg-white/5 blur-[150px] rounded-full translate-x-1/2 -translate-y-1/2 pointer-events-none" />
 
       <div className="container mx-auto px-6 md:px-12 max-w-8xl relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 mb-24">
@@ -23,12 +23,12 @@ export function Footer() {
             className="space-y-8 flex flex-col justify-between"
           >
             <div>
-              <span className="text-sm uppercase tracking-widest text-accent font-semibold mb-6 block">
+              <span className="text-sm uppercase tracking-widest text-white/60 font-semibold mb-6 block">
                 Let's Collaborate
               </span>
-              <h2 className="text-3xl md:text-5xl font-serif leading-tight">
+              <h2 className="text-3xl md:text-5xl font-serif text-accent/70 leading-tight">
                 Ready to make an{" "}
-                <span className="italic text-accent">impact?</span>
+                <span className="italic text-white/90">impact?</span>
               </h2>
               <p className="text-background/70 text-lg max-w-md mt-6">
                 Reach out for speaking engagements, advisory roles, AI
@@ -43,7 +43,7 @@ export function Footer() {
                 </p>
                 <a
                   href="mailto:contact@mahajouini.com"
-                  className="text-2xl md:text-3xl hover:text-accent transition-colors duration-300"
+                  className="text-2xl md:text-3xl hover:text-white/70 transition-colors duration-300"
                 >
                   contact@mahajouini.com
                 </a>
@@ -80,52 +80,52 @@ export function Footer() {
             <form className="space-y-8" onSubmit={(e) => e.preventDefault()}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="space-y-2 group">
-                  <label className="text-xs uppercase tracking-widest text-background/60 group-focus-within:text-accent transition-colors">
+                  <label className="text-xs uppercase tracking-widest text-background/60 group-focus-within:text-white transition-colors">
                     First Name
                   </label>
                   <input
                     type="text"
                     placeholder="Jane"
-                    className="w-full bg-transparent border-b border-white/20 pb-3 text-lg placeholder:text-background/20 focus:outline-none focus:border-accent transition-colors"
+                    className="w-full bg-transparent border-b border-white/20 pb-3 text-lg placeholder:text-background/20 focus:outline-none focus:border-white transition-colors"
                   />
                 </div>
                 <div className="space-y-2 group">
-                  <label className="text-xs uppercase tracking-widest text-background/60 group-focus-within:text-accent transition-colors">
+                  <label className="text-xs uppercase tracking-widest text-background/60 group-focus-within:text-white transition-colors">
                     Last Name
                   </label>
                   <input
                     type="text"
                     placeholder="Doe"
-                    className="w-full bg-transparent border-b border-white/20 pb-3 text-lg placeholder:text-background/20 focus:outline-none focus:border-accent transition-colors"
+                    className="w-full bg-transparent border-b border-white/20 pb-3 text-lg placeholder:text-background/20 focus:outline-none focus:border-white transition-colors"
                   />
                 </div>
               </div>
 
               <div className="space-y-2 group">
-                <label className="text-xs uppercase tracking-widest text-background/60 group-focus-within:text-accent transition-colors">
+                <label className="text-xs uppercase tracking-widest text-background/60 group-focus-within:text-white transition-colors">
                   Email Address
                 </label>
                 <input
                   type="email"
                   placeholder="jane@example.com"
-                  className="w-full bg-transparent border-b border-white/20 pb-3 text-lg placeholder:text-background/20 focus:outline-none focus:border-accent transition-colors"
+                  className="w-full bg-transparent border-b border-white/20 pb-3 text-lg placeholder:text-background/20 focus:outline-none focus:border-white transition-colors"
                 />
               </div>
 
               <div className="space-y-2 group">
-                <label className="text-xs uppercase tracking-widest text-background/60 group-focus-within:text-accent transition-colors">
+                <label className="text-xs uppercase tracking-widest text-background/60 group-focus-within:text-white transition-colors">
                   Message
                 </label>
                 <textarea
                   rows={4}
                   placeholder="How can we collaborate?"
-                  className="w-full bg-transparent border-b border-white/20 pb-3 text-lg placeholder:text-background/20 focus:outline-none focus:border-accent transition-colors resize-none"
+                  className="w-full bg-transparent border-b border-white/20 pb-3 text-lg placeholder:text-background/20 focus:outline-none focus:border-white transition-colors resize-none"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-fit text-sm px-10 grid-cols-1 py-4 mt-8 bg-accent text-black rounded-full font-semibold uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300 flex items-center justify-center gap-3 group"
+                className="w-fit text-sm px-10 grid-cols-1 py-4 mt-8 bg-white text-black rounded-full font-semibold uppercase tracking-widest hover:bg-white/90 transition-all duration-300 flex items-center justify-center gap-3 group"
               >
                 Send Message
                 <Send className="w-4 h-4 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />

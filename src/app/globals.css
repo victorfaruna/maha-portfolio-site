@@ -26,41 +26,42 @@
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
+  --color-brand-navy: #0B1F4D;
+  --color-brand-pink: #EC4899;
+  --color-brand-cyan: #32C5FF;
+  --color-brand-soft-blue: #F5F7FA;
+  --color-brand-soft-pink: #FCE7F3;
 }
 
 :root {
   /* Clean, crisp light mode */
-  --background: oklch(
-    98.553% 0.0056 84.442
-  ); /* Near pure white with a hint of warmth */
-  --foreground: oklch(
-    0.2 0.01 270
-  ); /* Deep charcoal, almost black but softer */
+  --background: #FFFFFF;
+  --foreground: #2D3748;
 
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.2 0.01 270);
+  --card: #FFFFFF;
+  --card-foreground: #2D3748;
 
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.2 0.01 270);
+  --popover: #FFFFFF;
+  --popover-foreground: #2D3748;
 
-  /* Primary: Elegant Soft Black / Charcoal */
-  --primary: oklch(0.15 0.01 270);
-  --primary-foreground: oklch(0.98 0 0);
+  /* Primary: Buttons */
+  --primary: #1F5AA6;
+  --primary-foreground: #FFFFFF;
 
-  /* Secondary: Soft elegant cream/beige */
-  --secondary: oklch(0.96 0.02 85);
-  --secondary-foreground: oklch(0.2 0.01 270);
+  /* Secondary: Soft background */
+  --secondary: #F5F7FA;
+  --secondary-foreground: #0B1F4D;
 
-  /* Accent: Pale blush pink (from reference) */
-  --accent: oklch(0.85 0.05 10);
-  --accent-foreground: oklch(0.2 0.01 270);
+  /* Accent: Accent elements */
+  --accent: #EC4899;
+  --accent-foreground: #FFFFFF;
 
-  --muted: oklch(0.96 0.01 90);
-  --muted-foreground: oklch(0.55 0.01 270);
+  --muted: #F5F7FA;
+  --muted-foreground: #4A5568;
 
-  --border: oklch(0.9 0.01 90);
-  --input: oklch(0.9 0.01 90);
-  --ring: oklch(0.15 0.01 270);
+  --border: #E2E8F0;
+  --input: #E2E8F0;
+  --ring: #32C5FF;
 
   --radius: 0rem; /* Sharp edges for elegant look */
 }
@@ -81,7 +82,7 @@
   h4,
   h5,
   h6 {
-    @apply font-serif font-normal;
+    @apply font-serif font-normal text-brand-navy;
   }
 }
 

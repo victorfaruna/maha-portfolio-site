@@ -29,26 +29,25 @@ export function Hero() {
           className="relative"
         >
           <h1
-            className="text-6xl md:text-8xl lg:text-[7rem] text-white font-serif tracking-tight leading-none"
+            className="text-5xl md:text-7xl text-white font-serif tracking-tight leading-tight max-w-5xl mx-auto"
             style={{ textShadow: "0px 4px 12px rgba(0,0,0,0.4)" }}
           >
-            Empathy Is Our
+            Designing Human-Centered AI
           </h1>
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.2, delay: 0.2, ease: "easeOut" }}
-            className="absolute -bottom-8 md:-bottom-12 lg:-bottom-16 left-0 right-0"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.2, ease: "easeOut" }}
+            className="-mt-2"
           >
             <h2
-              className="text-5xl tracking-tight md:text-8xl text-[#FFE873] leading-none"
+              className="text-4xl md:text-5xl text-brand-pink leading-normal"
               style={{
                 fontFamily: "var(--font-script), cursive",
                 textShadow: "2px 4px 10px rgba(0,0,0,0.5)",
-                // transform: "rotate(-2deg)"
               }}
             >
-              Superpower
+              for Africa and the Global South.
             </h2>
           </motion.div>
         </motion.div>

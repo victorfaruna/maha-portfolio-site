@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ChevronDown } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
@@ -41,16 +42,14 @@ export function Navbar() {
       <div className="container mx-auto px-6 md:px-12 flex items-center justify-between">
         {/* Logo */}
         <div className="flex flex-col items-center">
-          <Link href="/" className="flex flex-col items-center group">
-            <div className="relative">
-              <span className="text-6xl font-serif text-white tracking-tighter leading-none" style={{ textShadow: "0px 2px 4px rgba(0,0,0,0.5)" }}>
-                m
-              </span>
-              <div className="absolute top-0 right-[-10px] w-2 h-full bg-accent/80 rounded-full mix-blend-screen" />
-            </div>
-            <span className="text-[10px] uppercase tracking-[0.2em] font-semibold text-white mt-1" style={{ textShadow: "0px 1px 2px rgba(0,0,0,0.5)" }}>
-              MAHA JOUINI
-            </span>
+          <Link href="/" className="flex items-center group relative w-32 h-16 md:w-40 md:h-20 transition-transform duration-300 hover:scale-105">
+            <Image
+              src="/images/logo.png"
+              alt="Maha Jouini Logo"
+              fill
+              className="object-contain"
+              priority
+            />
           </Link>
         </div>
 
