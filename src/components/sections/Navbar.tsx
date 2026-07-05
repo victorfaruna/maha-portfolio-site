@@ -2,13 +2,18 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
   { name: "About", href: "#about" },
-  { name: "Initiatives", href: "#initiatives" },
+  { name: "Books", href: "#books" },
+  { name: "Quotes", href: "#quotes" },
+  { name: "Speaking", href: "#speaking" },
+  { name: "Courses", href: "#courses" },
+  { name: "Podcast", href: "#podcast" },
+  { name: "Work with me", href: "#work", hasDropdown: true },
   { name: "Contact", href: "#contact" },
 ];
 
@@ -29,46 +34,53 @@ export function Navbar() {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         scrolled
-          ? "bg-background/70 backdrop-blur-xl border-b border-white/10 shadow-sm py-4"
+          ? "bg-background/90 backdrop-blur-xl border-b border-white/10 shadow-sm py-4"
           : "bg-transparent py-6"
       )}
     >
-      <div className="container mx-auto px-6 md:px-12 grid grid-cols-2 md:grid-cols-3 items-center">
+      <div className="container mx-auto px-6 md:px-12 flex items-center justify-between">
         {/* Logo */}
-        <div className="flex justify-start">
-          <Link href="/" className="text-2xl font-serif tracking-wide text-foreground relative group">
-            <span className="relative z-10">Maha Jouini.</span>
-            <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-accent transition-all duration-300 group-hover:w-full"></span>
+        <div className="flex flex-col items-center">
+          <Link href="/" className="flex flex-col items-center group">
+            <div className="relative">
+              <span className="text-6xl font-serif text-white tracking-tighter leading-none" style={{ textShadow: "0px 2px 4px rgba(0,0,0,0.5)" }}>
+                m
+              </span>
+              <div className="absolute top-0 right-[-10px] w-2 h-full bg-accent/80 rounded-full mix-blend-screen" />
+            </div>
+            <span className="text-[10px] uppercase tracking-[0.2em] font-semibold text-white mt-1" style={{ textShadow: "0px 1px 2px rgba(0,0,0,0.5)" }}>
+              MAHA JOUINI
+            </span>
           </Link>
         </div>
 
-        {/* Desktop Nav (Centered) */}
-        <nav className="hidden md:flex justify-center items-center gap-8 lg:gap-12">
+        {/* Desktop Nav */}
+        <nav className="hidden lg:flex items-center gap-6">
           {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              href={link.href}
-              className="text-xs lg:text-sm uppercase tracking-widest font-medium text-foreground/70 hover:text-foreground transition-colors relative group"
-            >
-              {link.name}
-            </Link>
+            <div key={link.name} className="relative group">
+              <Link
+                href={link.href}
+                className={cn(
+                  "text-sm font-semibold tracking-wide transition-colors flex items-center gap-1",
+                  scrolled ? "text-foreground hover:text-accent" : "text-white hover:text-white/80"
+                )}
+                style={{ textShadow: scrolled ? "none" : "0px 1px 3px rgba(0,0,0,0.6)" }}
+              >
+                {link.name}
+                {link.hasDropdown && <ChevronDown className="w-3 h-3" />}
+              </Link>
+            </div>
           ))}
         </nav>
 
-        {/* CTA & Mobile Toggle */}
-        <div className="flex justify-end items-center gap-4">
-          <a
-            href="#contact"
-            className="hidden md:inline-flex px-6 py-3 bg-foreground text-background text-xs uppercase tracking-widest font-semibold hover:bg-foreground/80 hover:scale-105 hover:shadow-lg transition-all duration-300 rounded-full"
-          >
-            Let's Talk
-          </a>
+        {/* Mobile Toggle */}
+        <div className="flex lg:hidden justify-end items-center">
           <button
-            className="md:hidden text-foreground hover:text-accent transition-colors"
+            className={cn("transition-colors", scrolled ? "text-foreground" : "text-white")}
             onClick={() => setMobileMenuOpen(true)}
             aria-label="Open menu"
           >
-            <Menu className="w-6 h-6" />
+            <Menu className="w-8 h-8" style={{ filter: scrolled ? "none" : "drop-shadow(0px 2px 4px rgba(0,0,0,0.5))" }} />
           </button>
         </div>
       </div>
@@ -89,24 +101,18 @@ export function Navbar() {
             >
               <X className="w-8 h-8" />
             </button>
-            <nav className="flex flex-col gap-8 mt-12 items-center">
+            <nav className="flex flex-col gap-6 mt-12 items-center">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-3xl font-serif text-foreground hover:text-accent transition-colors"
+                  className="text-2xl font-serif text-foreground hover:text-accent transition-colors flex items-center gap-2"
                 >
                   {link.name}
+                  {link.hasDropdown && <ChevronDown className="w-5 h-5" />}
                 </Link>
               ))}
-              <a
-                href="#contact"
-                onClick={() => setMobileMenuOpen(false)}
-                className="mt-8 px-8 py-4 bg-foreground text-background text-sm uppercase tracking-widest font-semibold rounded-full w-full text-center"
-              >
-                Let's Talk
-              </a>
             </nav>
           </motion.div>
         )}
