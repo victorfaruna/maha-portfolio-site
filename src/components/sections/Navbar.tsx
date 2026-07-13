@@ -8,14 +8,14 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
-  { name: "About", href: "#about" },
-  { name: "Books", href: "#books" },
-  { name: "Quotes", href: "#quotes" },
-  { name: "Speaking", href: "#speaking" },
-  { name: "Courses", href: "#courses" },
-  { name: "Podcast", href: "#podcast" },
-  { name: "Work with me", href: "#work", hasDropdown: true },
-  { name: "Contact", href: "#contact" },
+  { name: "About", href: "/about" },
+  { name: "Books", href: "/books" },
+  { name: "Quotes", href: "/quotes" },
+  { name: "Speaking", href: "/speaking" },
+  { name: "Courses", href: "/courses" },
+  { name: "Podcast", href: "/podcast" },
+  { name: "Work with me", href: "/work", hasDropdown: true },
+  { name: "Contact", href: "/contact" },
 ];
 
 export function Navbar() {

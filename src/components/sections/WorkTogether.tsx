@@ -20,7 +20,7 @@ export function WorkTogether() {
   return (
     <section id="work-together" className="bg-background">
       {/* Top Banner */}
-      <div className="relative w-full h-[400px] md:h-[500px] flex flex-col items-center justify-center text-center overflow-hidden">
+      <div className="relative w-full h-[300px] flex flex-col items-center justify-center text-center overflow-hidden">
         <Image
           src="/images/hero.webp"
           alt="Collaborate with Maha Jouini"
@@ -28,7 +28,7 @@ export function WorkTogether() {
           className="object-cover object-[50%_30%]"
         />
         <div className="absolute inset-0 bg-black/50" />
-        
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -36,7 +36,7 @@ export function WorkTogether() {
           transition={{ duration: 0.8 }}
           className="relative z-10 px-6"
         >
-          <h2 className="text-4xl md:text-5xl lg:text-6xl text-white font-serif mb-8 tracking-wide">
+          <h2 className="text-4xl md:text-5xl l text-white font-serif mb-8 tracking-wide">
             Ready to reshape the future?
           </h2>
           <a
@@ -52,9 +52,8 @@ export function WorkTogether() {
       <div className="py-24">
         <div className="container mx-auto px-6 md:px-12 max-w-8xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-start">
-            
             {/* Left Column: Title */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
@@ -66,11 +65,11 @@ export function WorkTogether() {
                 Let's work together
               </h2>
             </motion.div>
-            
+
             {/* Right Column: Cards Grid */}
             <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
               {services.map((service, idx) => (
-                <motion.div 
+                <motion.div
                   key={idx}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -87,13 +86,13 @@ export function WorkTogether() {
                     />
                     {/* Subtle dark gradient for text readability */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                    
+
                     <h3 className="absolute bottom-6 left-6 right-6 text-white text-3xl md:text-4xl font-bold font-sans">
                       {service.title}
                     </h3>
                   </div>
-                  
-                  <a 
+
+                  <a
                     href={service.link}
                     className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-3 px-8 w-max transition-colors inline-block"
                   >
@@ -102,7 +101,6 @@ export function WorkTogether() {
                 </motion.div>
               ))}
             </div>
-            
           </div>
         </div>
       </div>

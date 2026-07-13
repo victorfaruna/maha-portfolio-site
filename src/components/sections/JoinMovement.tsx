@@ -31,9 +31,8 @@ export function JoinMovement() {
     <section id="join" className="py-24 bg-background">
       <div className="container mx-auto px-6 md:px-12 max-w-8xl">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-start">
-          
           {/* Left Column: Title */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
@@ -45,11 +44,11 @@ export function JoinMovement() {
               Join the movement
             </h2>
           </motion.div>
-          
+
           {/* Right Column: Cards Grid */}
           <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
             {cards.map((card, idx) => (
-              <motion.div 
+              <motion.div
                 key={idx}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -57,7 +56,7 @@ export function JoinMovement() {
                 transition={{ duration: 0.8, delay: idx * 0.1 }}
                 className="flex flex-col gap-6"
               >
-                <div className="relative aspect-[4/3] rounded-tr-[5rem] overflow-hidden group">
+                <div className="relative aspect-[18/10] rounded-tr-[5rem] overflow-hidden group">
                   <Image
                     src={card.image}
                     alt={card.title}
@@ -66,13 +65,13 @@ export function JoinMovement() {
                   />
                   {/* Subtle dark gradient for text readability */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                  
+
                   <h3 className="absolute bottom-6 left-6 right-6 text-white text-3xl md:text-4xl font-bold font-sans">
                     {card.title}
                   </h3>
                 </div>
-                
-                <a 
+
+                <a
                   href={card.link}
                   className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-3 px-8 w-max transition-colors inline-block"
                 >
@@ -81,7 +80,6 @@ export function JoinMovement() {
               </motion.div>
             ))}
           </div>
-          
         </div>
       </div>
     </section>

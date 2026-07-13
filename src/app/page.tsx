@@ -2,8 +2,10 @@ import { Navbar } from "@/components/sections/Navbar";
 import { Hero } from "@/components/sections/Hero";
 import { Purpose } from "@/components/sections/Purpose";
 import { JoinMovement } from "@/components/sections/JoinMovement";
+import { MoonshotMission } from "@/components/sections/MoonshotMission";
 import { WorkTogether } from "@/components/sections/WorkTogether";
 import { FeaturedIn } from "@/components/sections/FeaturedIn";
+import { EmpathyNews } from "@/components/sections/EmpathyNews";
 
 import { Initiatives } from "@/components/sections/Initiatives";
 import { Experience } from "@/components/sections/Experience";
@@ -16,12 +18,14 @@ export default function Home() {
       <Navbar />
       <Hero />
       <Purpose />
+      <MoonshotMission />
       <JoinMovement />
       <WorkTogether />
       <FeaturedIn />
-      <Initiatives />
+      <EmpathyNews />
+      {/* <Initiatives />
       <Experience />
-      <Footer />
+      <Footer /> */}
     </main>
   );
 }
