@@ -156,7 +156,7 @@ export function EmpathyNews() {
                 href="#"
                 className="w-10 h-10 rounded-full bg-[#F2D049] flex items-center justify-center text-white hover:scale-110 transition-transform duration-300"
               >
-                <Icon size={18} fill={idx !== 3 ? "currentColor" : "none"} strokeWidth={idx === 3 ? 2 : 0} />
+                <Icon size={18} />
               </a>
             ))}
           </div>
