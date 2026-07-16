@@ -7,7 +7,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 
-const navLinks = [
+type NavLink = {
+  name: string;
+  href: string;
+  hasDropdown?: boolean;
+};
+
+const navLinks: NavLink[] = [
   { name: "About", href: "/about" },
   { name: "AI Solutions", href: "/ai-solutions" },
   { name: "Research & Publications", href: "/research" },
