@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Caveat:wght@400..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Yellowtail&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -9,7 +9,7 @@
   --font-sans: "Hanken Grotesk", sans-serif;
   --font-serif: "Bodoni Moda", serif;
   --font-heading: "Bodoni Moda", serif;
-  --font-script: "Caveat", cursive;
+  --font-script: "Yellowtail", cursive;
   --color-primary-foreground: var(--primary-foreground);
   --color-primary: var(--primary);
   --color-secondary-foreground: var(--secondary-foreground);
@@ -71,10 +71,10 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground overflow-x-hidden;
   }
   html {
-    @apply font-sans antialiased;
+    @apply font-sans antialiased overflow-x-hidden;
   }
   h1,
   h2,

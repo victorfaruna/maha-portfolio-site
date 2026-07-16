@@ -17,9 +17,9 @@ export function MoonshotMission() {
 
       {/* Text overlay */}
       <div className="relative z-10 container mx-auto px-4 text-center">
-        <h2 className="font-script text-white text-4xl md:text-5xl  leading-none max-w-4xl mx-auto drop-shadow-md">
-          My moonshot mission is to help elevate humanity's
-          <br className="hidden md:block" /> empathic consciousness
+        <h2 className="font-script text-white text-3xl md:text-5xl leading-tight max-w-4xl mx-auto drop-shadow-md">
+          Lived experience is not a footnote to expertise—it is expertise.
+          <br className="hidden md:block" /> It transforms knowledge into wisdom, and innovation into impact.
         </h2>
       </div>
     </section>

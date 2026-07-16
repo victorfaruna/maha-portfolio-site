@@ -36,19 +36,19 @@ const InstagramIcon = ({ size = 18 }: { size?: number }) => (
 const channels = [
   {
     title: "Daily Empathy Post",
-    image: "https://images.unsplash.com/photo-1543807535-eceef0bc6599?auto=format&fit=crop&q=80&w=800",
+    image: "/images/dailyempathypost.jpeg",
   },
   {
     title: "LinkedIn Newsletter",
-    image: "https://images.unsplash.com/photo-1560439514-4e9645029c9a?auto=format&fit=crop&q=80&w=800",
+    image: "/images/linkedinnewsletter.jpeg",
   },
   {
     title: "Weekly Podcast",
-    image: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=800",
+    image: "/images/weeklypodcast.jpg",
   },
   {
     title: "Instagram Inspiration",
-    image: "https://images.unsplash.com/photo-1493612276216-ee3925520721?auto=format&fit=crop&q=80&w=800",
+    image: "/images/instagram inspiraton.jpg",
   },
 ];
 

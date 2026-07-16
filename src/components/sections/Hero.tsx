@@ -9,10 +9,10 @@ export function Hero() {
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/images/hero.webp"
+          src="/images/here.jpeg"
           alt="Maha Jouini Hero Background"
           fill
-          className="object-[10%_10%] opacity-90"
+          className="object-center opacity-90"
           priority
           objectFit="cover"
         />
@@ -26,29 +26,28 @@ export function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeOut" }}
-          className="relative"
+          className="flex flex-col items-start"
         >
+          {/* Line 1: serif text */}
           <h1
-            className="text-5xl md:text-7xl text-white font-serif tracking-tight leading-tight max-w-5xl mx-auto"
+            className="text-5xl md:text-7xl text-white font-serif tracking-tight leading-none"
             style={{ textShadow: "0px 4px 12px rgba(0,0,0,0.4)" }}
           >
-            Designing Human-Centered AI
+            Inclusive AI Is
           </h1>
+
+          {/* Line 2: script image — sits directly below, same left edge */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.2, ease: "easeOut" }}
-            className="-mt-2"
           >
-            <h2
-              className="text-4xl md:text-5xl text-brand-pink leading-normal"
-              style={{
-                fontFamily: "var(--font-script), cursive",
-                textShadow: "2px 4px 10px rgba(0,0,0,0.5)",
-              }}
-            >
-              for Africa and the Global South.
-            </h2>
+            <img
+              src="/images/possible.svg"
+              alt="Possible"
+              className="h-20 md:h-36 w-auto -mt-2 md:-mt-4"
+              style={{ filter: "drop-shadow(2px 4px 6px rgba(0,0,0,0.5))" }}
+            />
           </motion.div>
         </motion.div>
       </div>

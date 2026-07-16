@@ -2,18 +2,19 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 
 export function WorkTogether() {
   const services = [
     {
       title: "Speaking with passion",
       image: "/images/event.webp",
-      link: "#speaking",
+      link: "/speaking",
     },
     {
       title: "Advising with integrity",
       image: "/images/about.webp",
-      link: "#advising",
+      link: "/work",
     },
   ];
 
@@ -22,10 +23,10 @@ export function WorkTogether() {
       {/* Top Banner */}
       <div className="relative w-full h-[300px] flex flex-col items-center justify-center text-center overflow-hidden">
         <Image
-          src="/images/hero.webp"
+          src="/images/reiimagine_(1).webp"
           alt="Collaborate with Maha Jouini"
           fill
-          className="object-cover object-[50%_30%]"
+          className="object-cover object-center"
         />
         <div className="absolute inset-0 bg-black/50" />
 
@@ -92,12 +93,12 @@ export function WorkTogether() {
                     </h3>
                   </div>
 
-                  <a
+                  <Link
                     href={service.link}
                     className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-3 px-8 w-max transition-colors inline-block"
                   >
                     Learn more
-                  </a>
+                  </Link>
                 </motion.div>
               ))}
             </div>

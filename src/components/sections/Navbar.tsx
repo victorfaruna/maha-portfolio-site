@@ -9,12 +9,11 @@ import { cn } from "@/lib/utils";
 
 const navLinks = [
   { name: "About", href: "/about" },
-  { name: "Books", href: "/books" },
-  { name: "Quotes", href: "/quotes" },
-  { name: "Speaking", href: "/speaking" },
-  { name: "Courses", href: "/courses" },
-  { name: "Podcast", href: "/podcast" },
-  { name: "Work with me", href: "/work", hasDropdown: true },
+  { name: "AI Solutions", href: "/ai-solutions" },
+  { name: "Research & Publications", href: "/research" },
+  { name: "Speaking & Media", href: "/speaking" },
+  { name: "Awards & Fellowships", href: "/awards" },
+  { name: "Work With Me", href: "/work" },
   { name: "Contact", href: "/contact" },
 ];
 
@@ -35,14 +34,14 @@ export function Navbar() {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         scrolled
-          ? "bg-background/90 backdrop-blur-xl border-b border-white/10 shadow-sm py-4"
-          : "bg-transparent py-6"
+          ? "bg-background/90 backdrop-blur-xl border-b border-white/10 shadow-sm py-2"
+          : "bg-transparent py-2"
       )}
     >
       <div className="container mx-auto px-6 md:px-12 flex items-center justify-between">
         {/* Logo */}
         <div className="flex flex-col items-center">
-          <Link href="/" className="flex items-center group relative w-32 h-16 md:w-40 md:h-20 transition-transform duration-300 hover:scale-105">
+          <Link href="/" className="flex items-center group relative w-64 h-32 md:w-96 md:h-48 transition-transform duration-300 hover:scale-105 -ml-4">
             <Image
               src="/images/logo.png"
               alt="Maha Jouini Logo"

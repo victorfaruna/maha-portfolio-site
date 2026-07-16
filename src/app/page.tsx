@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/sections/Navbar";
 import { Hero } from "@/components/sections/Hero";
+import { VideoSection } from "@/components/sections/VideoSection";
 import { Purpose } from "@/components/sections/Purpose";
 import { JoinMovement } from "@/components/sections/JoinMovement";
 import { MoonshotMission } from "@/components/sections/MoonshotMission";
@@ -17,6 +18,7 @@ export default function Home() {
     <main className="min-h-screen bg-background text-foreground overflow-hidden">
       <Navbar />
       <Hero />
+      <VideoSection />
       <Purpose />
       <MoonshotMission />
       <JoinMovement />
