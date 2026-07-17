@@ -8,7 +8,6 @@ import { MoonshotMission } from "@/components/sections/MoonshotMission";
 import { WorkTogether } from "@/components/sections/WorkTogether";
 import { FeaturedIn } from "@/components/sections/FeaturedIn";
 import { RecognitionStrip } from "@/components/sections/RecognitionStrip";
-
 import { Initiatives } from "@/components/sections/Initiatives";
 import { Experience } from "@/components/sections/Experience";
 import { Footer } from "@/components/sections/Footer";

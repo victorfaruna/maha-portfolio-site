@@ -26,7 +26,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeOut" }}
-          className="flex flex-col items-start"
+          className="flex flex-col items-center "
         >
           {/* Line 1: serif text */}
           <h1
@@ -45,7 +45,7 @@ export function Hero() {
             <img
               src="/images/possible.svg"
               alt="Possible"
-              className="h-20 md:h-36 w-auto -mt-2 md:-mt-4"
+              className="h-20 md:h-36 w-auto -mt-4 md:-mt-8 mx-auto"
               style={{ filter: "drop-shadow(2px 4px 6px rgba(0,0,0,0.5))" }}
             />
           </motion.div>
