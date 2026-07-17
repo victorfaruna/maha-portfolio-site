@@ -34,14 +34,14 @@ export function Navbar() {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         scrolled
-          ? "bg-background/90 backdrop-blur-xl border-b border-white/10 shadow-sm py-2"
+          ? "bg-background border-b border-border shadow-sm py-2"
           : "bg-transparent py-2"
       )}
     >
-      <div className="container mx-auto px-6 md:px-12 flex items-center justify-between">
+      <div className="w-full px-0 sm:px-6 md:px-12 lg:px-20 flex items-center justify-between">
         {/* Logo */}
-        <div className="flex flex-col items-center">
-          <Link href="/" className="flex items-center group relative w-64 h-32 md:w-96 md:h-48 transition-transform duration-300 hover:scale-105 -ml-4">
+        <div className="flex flex-col items-start">
+          <Link href="/" className="flex items-center group relative w-80 h-40 md:w-96 md:h-48 transition-transform duration-300 hover:scale-105 -ml-20 -mt-8 sm:-ml-12 md:-ml-4">
             <Image
               src="/images/logo.png"
               alt="Maha Jouini Logo"
@@ -72,47 +72,57 @@ export function Navbar() {
         </nav>
 
         {/* Mobile Toggle */}
-        <div className="flex lg:hidden justify-end items-center">
+        <div className="flex lg:hidden justify-end items-center mr-2 -mt-20 sm:-mt-12">
           <button
-            className={cn("transition-colors", scrolled ? "text-foreground" : "text-white")}
+            className={cn("p-2 transition-colors", scrolled ? "text-foreground" : "text-white")}
             onClick={() => setMobileMenuOpen(true)}
             aria-label="Open menu"
           >
-            <Menu className="w-8 h-8" style={{ filter: scrolled ? "none" : "drop-shadow(0px 2px 4px rgba(0,0,0,0.5))" }} />
+            <Menu className="w-7 h-7" style={{ filter: scrolled ? "none" : "drop-shadow(0px 2px 4px rgba(0,0,0,0.5))" }} />
           </button>
         </div>
       </div>
 
-      {/* Mobile Nav Overlay */}
+      {/* Mobile Nav Drawer */}
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20, backdropFilter: "blur(0px)" }}
-            animate={{ opacity: 1, y: 0, backdropFilter: "blur(16px)" }}
-            exit={{ opacity: 0, y: -20, backdropFilter: "blur(0px)" }}
-            className="fixed inset-0 bg-background/95 z-50 flex flex-col pt-24 px-6 pb-6"
-          >
-            <button
-              className="absolute top-6 right-6 text-foreground hover:text-accent transition-colors"
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/60 z-40 backdrop-blur-sm"
               onClick={() => setMobileMenuOpen(false)}
-              aria-label="Close menu"
+            />
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="fixed inset-y-0 right-0 w-[80vw] max-w-sm bg-background z-50 flex flex-col pt-24 px-8 pb-6 overflow-y-auto border-l border-border shadow-2xl"
             >
-              <X className="w-8 h-8" />
-            </button>
-            <nav className="flex flex-col gap-6 mt-12 items-center">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="text-2xl font-serif text-foreground hover:text-accent transition-colors flex items-center gap-2"
-                >
-                  {link.name}
-                  {link.hasDropdown && <ChevronDown className="w-5 h-5" />}
-                </Link>
-              ))}
-            </nav>
-          </motion.div>
+              <button
+                className="absolute top-6 right-6 text-foreground hover:text-accent transition-colors p-2"
+                onClick={() => setMobileMenuOpen(false)}
+                aria-label="Close menu"
+              >
+                <X className="w-7 h-7" />
+              </button>
+              <nav className="flex flex-col gap-2 mt-8 w-full items-start">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="w-full text-left text-2xl font-serif text-foreground hover:text-accent transition-colors flex items-center justify-between gap-2 py-4 border-b border-border/50"
+                  >
+                    {link.name}
+                    {link.hasDropdown && <ChevronDown className="w-5 h-5" />}
+                  </Link>
+                ))}
+              </nav>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </header>

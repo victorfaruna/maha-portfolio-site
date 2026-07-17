@@ -7,17 +7,19 @@ export function JoinMovement() {
   const cards = [
     {
       title: "Discover CHIFAA",
-      image: "/images/event.webp",
+      image: "/images/chifaa.jpeg",
       link: "#chifaa",
+      contain: true,
     },
     {
       title: "Explore HIKMA AI",
-      image: "/images/hero.webp",
+      image: "/images/chifaa.jpeg",
       link: "#hikma",
+      contain: true,
     },
     {
       title: "Read My Research",
-      image: "/images/about.webp",
+      image: "/images/research.jpg",
       link: "#research",
     },
     {
@@ -61,7 +63,7 @@ export function JoinMovement() {
                     src={card.image}
                     alt={card.title}
                     fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    className={`transition-transform duration-700 group-hover:scale-105 ${card.contain ? "object-contain bg-white/5" : "object-cover"}`}
                   />
                   {/* Subtle dark gradient for text readability */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />

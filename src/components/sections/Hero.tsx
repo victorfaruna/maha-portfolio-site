@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black">
+    <section className="relative min-h-[65vh] md:min-h-screen flex items-center justify-center overflow-hidden bg-black">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -30,7 +30,7 @@ export function Hero() {
         >
           {/* Line 1: serif text */}
           <h1
-            className="text-5xl md:text-7xl text-white font-serif tracking-tight leading-none"
+            className="text-4xl sm:text-6xl md:text-8xl lg:text-9xl text-white font-serif tracking-tight leading-none"
             style={{ textShadow: "0px 4px 12px rgba(0,0,0,0.4)" }}
           >
             Inclusive AI Is

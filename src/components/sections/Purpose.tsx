@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 
 export function Purpose() {
   return (
@@ -20,7 +21,7 @@ export function Purpose() {
             <h2 className="text-4xl md:text-5xl text-foreground font-serif mb-6">
               What is my vision?
             </h2>
-            <div className="space-y-6 text-foreground/80 font-sans text-lg">
+            <div className="space-y-6 text-foreground font-sans text-lg">
               <p>
                 My vision is to ensure that the Global South becomes a global architect of responsible artificial intelligence, contributing not only technology and talent, but also wisdom, ethical leadership, and culturally grounded innovation.
               </p>
@@ -48,6 +49,15 @@ export function Purpose() {
               <p>
                 I believe that the next generation of AI will not be defined solely by larger models or greater computational power, but by our ability to embed wisdom, empathy, cultural diversity, and human dignity into the systems we create.
               </p>
+              <div className="pt-6">
+                <Link
+                  href="/about"
+                  className="group inline-flex items-center gap-2 px-6 py-3 border-2 border-brand-navy text-brand-navy font-semibold text-base uppercase tracking-widest hover:bg-brand-navy hover:text-white transition-all duration-300"
+                >
+                  Read the Full Story
+                  <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>
+                </Link>
+              </div>
             </div>
           </motion.div>
 
@@ -56,46 +66,33 @@ export function Purpose() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative w-full aspect-[3/4] lg:aspect-[4/5] rounded-xl overflow-hidden order-1 md:order-2 shadow-2xl"
+            className="flex flex-col gap-4 order-1 md:order-2"
           >
-            <Image
-              src="/images/vision.jpg"
-              alt="Vision"
-              fill
-              className="object-cover"
-            />
+            <div className="relative w-full aspect-video rounded-xl overflow-hidden shadow-2xl">
+              <Image
+                src="/images/weeklypodcast.jpg"
+                alt="Vision"
+                fill
+                className="object-cover"
+              />
+            </div>
           </motion.div>
         </div>
 
         {/* Bottom Section: Purpose */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 items-center">
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8 }}
-            className="relative w-full aspect-[3/4] lg:aspect-[4/5] rounded-xl overflow-hidden shadow-2xl"
-          >
-            <Image
-              src="/images/From Storytelling and Poetry to AI Systems.jpg"
-              alt="Maha Jouini"
-              fill
-              className="object-cover object-[5%_10%]"
-            />
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="space-y-6"
+            className="space-y-6 order-2 md:order-1"
           >
             <div className="w-16 h-px bg-foreground mb-8"></div>
             <h2 className="text-4xl md:text-5xl text-foreground font-serif mb-6">
               My purpose
             </h2>
-            <div className="space-y-6 text-foreground/80 font-sans text-lg">
+            <div className="space-y-6 text-foreground font-sans text-lg">
               <p>
                 Maha Jouini is a Tunisian AI thought leader, researcher, and
                 Pan-African advocate working at the intersection of artificial
@@ -116,6 +113,21 @@ export function Purpose() {
                 accessibility, and community-centered design.
               </p>
             </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8 }}
+            className="relative w-full aspect-video md:aspect-[4/5] rounded-xl overflow-hidden shadow-2xl order-1 md:order-2"
+          >
+            <Image
+              src="/images/From Storytelling and Poetry to AI Systems.jpg"
+              alt="Maha Jouini"
+              fill
+              className="object-cover object-[5%_10%]"
+            />
           </motion.div>
         </div>
       </div>

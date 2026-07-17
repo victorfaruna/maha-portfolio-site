@@ -13,7 +13,7 @@ export function WorkTogether() {
     },
     {
       title: "Advising with integrity",
-      image: "/images/about.webp",
+      image: "/images/advice.jpeg",
       link: "/work",
     },
   ];
@@ -23,7 +23,7 @@ export function WorkTogether() {
       {/* Top Banner */}
       <div className="relative w-full h-[300px] flex flex-col items-center justify-center text-center overflow-hidden">
         <Image
-          src="/images/reiimagine_(1).webp"
+          src="/images/ai.jpg"
           alt="Collaborate with Maha Jouini"
           fill
           className="object-cover object-center"

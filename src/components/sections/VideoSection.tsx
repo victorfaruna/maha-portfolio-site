@@ -16,13 +16,13 @@ export function VideoSection() {
   }, [isInView]);
 
   return (
-    <section className="relative py-24 bg-background">
+    <section className="relative pt-10 pb-24 bg-background">
       {/* Decorative background elements */}
       <div className="absolute inset-0 bg-[url('/images/texture-dots.png')] opacity-10 mix-blend-overlay"></div>
       <div className="absolute -top-40 -right-40 w-96 h-96 bg-brand-cyan/20 rounded-full blur-[100px]"></div>
       <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-brand-pink/20 rounded-full blur-[100px]"></div>
       
-      <div className="container relative z-10 mx-auto px-6 md:px-12 max-w-6xl">
+      <div className="container relative z-10 mx-auto px-6 md:px-12 max-w-7xl">
         <div className="text-center mb-16">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
@@ -49,7 +49,7 @@ export function VideoSection() {
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="relative w-full aspect-video rounded-3xl overflow-hidden shadow-2xl bg-black border border-foreground/10"
+          className="relative w-full aspect-video overflow-hidden shadow-2xl bg-black border border-border"
         >
           {shouldPlay ? (
             <iframe

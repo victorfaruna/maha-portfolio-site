@@ -13,7 +13,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-full antialiased">
-      <body className="min-h-full flex flex-col bg-background text-foreground selection:bg-accent/30">{children}</body>
+      <body suppressHydrationWarning className="min-h-full flex flex-col bg-background text-foreground selection:bg-accent/30">{children}</body>
     </html>
   );
 }
