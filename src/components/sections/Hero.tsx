@@ -6,18 +6,17 @@ import Image from "next/image";
 export function Hero() {
   return (
     <section className="relative min-h-[65vh] md:min-h-screen flex items-center justify-center overflow-hidden bg-black">
-      {/* Background Image */}
-      <div className="absolute inset-0 z-0">
-        <Image
-          src="/images/here.jpeg"
-          alt="Maha Jouini Hero Background"
-          fill
-          className="object-center opacity-90"
-          priority
-          objectFit="cover"
+      {/* Background Video */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        <iframe
+          src="https://www.youtube.com/embed/gcnLfZ4VI74?autoplay=1&mute=1&loop=1&playlist=gcnLfZ4VI74&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&playsinline=1"
+          className="absolute top-1/2 left-1/2 w-[100vw] h-[56.25vw] min-h-[100vh] min-w-[177.77vh] -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-80"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
         />
         {/* Subtle overlay to ensure text readability */}
-        <div className="absolute inset-0 bg-black/50" />
+        <div className="absolute inset-0 bg-black/20" />
       </div>
 
       {/* Text Overlay */}

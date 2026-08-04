@@ -13,7 +13,7 @@ export function JoinMovement() {
     },
     {
       title: "Explore HIKMA AI",
-      image: "/images/chifaa.jpeg",
+      image: "/images/hikmaa.png",
       link: "#hikma",
       contain: true,
     },
@@ -42,7 +42,7 @@ export function JoinMovement() {
             className="lg:col-span-4"
           >
             <div className="w-16 h-px bg-foreground/20 mb-8"></div>
-            <h2 className="text-5xl md:text-6xl text-foreground font-serif leading-tight">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl text-foreground font-serif leading-tight">
               Join the movement
             </h2>
           </motion.div>
@@ -68,7 +68,7 @@ export function JoinMovement() {
                   {/* Subtle dark gradient for text readability */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
-                  <h3 className="absolute bottom-6 left-6 right-6 text-white text-3xl md:text-4xl font-bold font-sans">
+                  <h3 className="absolute bottom-4 left-4 right-4 text-white text-xl sm:text-2xl md:text-3xl font-bold font-sans">
                     {card.title}
                   </h3>
                 </div>

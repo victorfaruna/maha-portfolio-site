@@ -41,18 +41,18 @@ export function Navbar() {
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         scrolled
           ? "bg-background border-b border-border shadow-sm py-2"
-          : "bg-transparent py-2"
+          : "bg-gradient-to-b from-black/80 via-black/40 to-transparent py-2"
       )}
     >
-      <div className="w-full px-0 sm:px-6 md:px-12 lg:px-20 flex items-center justify-between">
+      <div className="w-full px-2 sm:px-6 md:px-12 lg:px-20 flex items-center justify-between">
         {/* Logo */}
         <div className="flex flex-col items-start">
-          <Link href="/" className="flex items-center group relative w-80 h-40 md:w-96 md:h-48 transition-transform duration-300 hover:scale-105 -ml-20 -mt-8 sm:-ml-12 md:-ml-4">
+          <Link href="/" className="flex items-center group relative w-48 h-24 sm:w-64 sm:h-32 md:w-80 md:h-40 lg:w-96 lg:h-48 transition-transform duration-300 hover:scale-105 -ml-2 sm:-ml-4 md:-ml-8 lg:-ml-12 xl:-ml-16 -mt-4 sm:-mt-6 md:-mt-8">
             <Image
               src="/images/logo.png"
               alt="Maha Jouini Logo"
               fill
-              className="object-contain"
+              className="object-contain object-left"
               priority
             />
           </Link>
@@ -78,13 +78,13 @@ export function Navbar() {
         </nav>
 
         {/* Mobile Toggle */}
-        <div className="flex lg:hidden justify-end items-center mr-2 -mt-20 sm:-mt-12">
+        <div className="flex lg:hidden justify-end items-center mr-2 -mt-10 sm:-mt-8">
           <button
             className={cn("p-2 transition-colors", scrolled ? "text-foreground" : "text-white")}
             onClick={() => setMobileMenuOpen(true)}
             aria-label="Open menu"
           >
-            <Menu className="w-7 h-7" style={{ filter: scrolled ? "none" : "drop-shadow(0px 2px 4px rgba(0,0,0,0.5))" }} />
+            <Menu className="w-6 h-6 sm:w-7 sm:h-7" style={{ filter: scrolled ? "none" : "drop-shadow(0px 2px 4px rgba(0,0,0,0.5))" }} />
           </button>
         </div>
       </div>

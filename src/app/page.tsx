@@ -1,11 +1,11 @@
 import { Navbar } from "@/components/sections/Navbar";
 import { Hero } from "@/components/sections/Hero";
 import { IntroText } from "@/components/sections/IntroText";
-import { VideoSection } from "@/components/sections/VideoSection";
+
 import { Purpose } from "@/components/sections/Purpose";
 import { JoinMovement } from "@/components/sections/JoinMovement";
 import { MoonshotMission } from "@/components/sections/MoonshotMission";
-import { WorkTogether } from "@/components/sections/WorkTogether";
+
 import { FeaturedIn } from "@/components/sections/FeaturedIn";
 import { RecognitionStrip } from "@/components/sections/RecognitionStrip";
 import { Initiatives } from "@/components/sections/Initiatives";
@@ -18,14 +18,14 @@ export default function Home() {
       <Navbar />
       <Hero />
       <IntroText />
-      <VideoSection />
+
       <Purpose />
       <MoonshotMission />
       <JoinMovement />
-      <WorkTogether />
+
       <FeaturedIn />
       <RecognitionStrip />
-      <Footer />
+      <Footer showGradient />
       {/* <Initiatives />
       <Experience /> */}
     </main>

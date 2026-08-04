@@ -9,7 +9,7 @@ export function Purpose() {
     <section id="purpose" className="py-24 bg-background">
       <div className="container mx-auto px-6 md:px-12 max-w-7xl">
         {/* Top Section: Vision */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 mb-32 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-20 mb-16 md:mb-32 items-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -18,7 +18,7 @@ export function Purpose() {
             className="space-y-6 order-2 md:order-1"
           >
             <div className="w-16 h-px bg-foreground mb-8"></div>
-            <h2 className="text-4xl md:text-5xl text-foreground font-serif mb-6">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl text-foreground font-serif mb-6">
               What is my vision?
             </h2>
             <div className="space-y-6 text-foreground font-sans text-lg">
@@ -89,7 +89,7 @@ export function Purpose() {
             className="space-y-6 order-2 md:order-1"
           >
             <div className="w-16 h-px bg-foreground mb-8"></div>
-            <h2 className="text-4xl md:text-5xl text-foreground font-serif mb-6">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl text-foreground font-serif mb-6">
               My purpose
             </h2>
             <div className="space-y-6 text-foreground font-sans text-lg">

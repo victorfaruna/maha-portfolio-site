@@ -146,6 +146,7 @@ const channels = [
   },
 ];
 
+
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function AboutPage() {
@@ -173,10 +174,11 @@ export default function AboutPage() {
       {/* ── A: Hero ─────────────────────────────────────────────────────── */}
       <section className="relative w-full h-[65vh] md:h-[75vh] overflow-hidden">
         <Image
-          src="/images/instagram inspiraton.jpg"
+          src="/images/abouthero.JPG"
           alt="Maha Jouini – AI Governance Expert"
           fill
-          className="object-cover object-center"
+          className="object-cover"
+          style={{ objectPosition: "center 30%" }}
           priority
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/15 to-black/55" />
@@ -209,7 +211,7 @@ export default function AboutPage() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.85, ease: "easeOut" }}
-          className="text-foreground/80 text-lg md:text-xl lg:text-2xl font-light leading-relaxed"
+          className="text-foreground/80 text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed"
         >
           People say change happens in the blink of an eye — but I&apos;ve lived
           through enough chapters to know it happens in waves. I&apos;m{" "}
@@ -223,59 +225,12 @@ export default function AboutPage() {
         </motion.p>
       </section>
 
-      <div className="mx-auto max-w-7xl px-4 md:px-8">
-        <hr className="border-border" />
-      </div>
 
-      {/* ── C: What's My Story — Video + Timeline ───────────────────────── */}
+
+
       <section className="py-16 px-4 md:px-8 max-w-7xl mx-auto">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="text-4xl md:text-5xl lg:text-6xl font-serif text-brand-navy mb-4"
-        >
-          What&apos;s my story?
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.1 }}
-          className="text-foreground/65 text-lg mb-14 max-w-3xl"
-        >
-          A career built at the intersection of policy, technology, and lived
-          experience — across continents, crises, and breakthroughs.
-        </motion.p>
-
-        {/* YouTube */}
-        <motion.div
-          ref={videoRef}
-          initial={{ opacity: 0, y: 40, scale: 0.97 }}
-          whileInView={{ opacity: 1, y: 0, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.85, ease: "easeOut" }}
-          className="relative w-full aspect-video overflow-hidden shadow-2xl bg-black border border-foreground/10 mb-20"
-        >
-          {shouldPlay ? (
-            <iframe
-              className="absolute inset-0 w-full h-full"
-              src="https://www.youtube.com/embed/wYy9CqunS8g?autoplay=1&mute=1&controls=1&rel=0&modestbranding=1"
-              title="Maha Jouini – My Story"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-            />
-          ) : (
-            <div className="absolute inset-0 flex flex-col items-center justify-center bg-zinc-900">
-              <div className="w-12 h-12 border-4 border-brand-cyan border-t-transparent rounded-full animate-spin mb-4" />
-              <span className="text-white/60 text-sm animate-pulse">Loading video…</span>
-            </div>
-          )}
-        </motion.div>
-
         {/* ── Timeline ── */}
+
         <div className="relative">
           {/* Vertical rule — visible sm+ */}
           <div className="absolute left-[120px] top-2 bottom-2 w-px bg-border hidden sm:block" />
@@ -322,9 +277,9 @@ export default function AboutPage() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="mt-20 max-w-3xl sm:pl-[130px]"
+          className="mt-16 md:mt-20 max-w-3xl sm:pl-[130px]"
         >
-          <h3 className="text-2xl md:text-3xl font-serif text-brand-navy mb-4">
+          <h3 className="text-xl md:text-2xl lg:text-3xl font-serif text-brand-navy mb-4">
             Looking Ahead
           </h3>
           <p className="text-foreground/75 text-lg leading-relaxed">
@@ -341,9 +296,9 @@ export default function AboutPage() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="border-l-4 border-brand-pink pl-8 py-3 mt-12 max-w-3xl sm:ml-[130px]"
+          className="border-l-4 border-brand-pink pl-5 sm:pl-8 py-3 mt-12 max-w-3xl sm:ml-[130px]"
         >
-          <p className="text-xl md:text-2xl font-serif italic text-foreground/85 leading-relaxed">
+          <p className="text-lg md:text-xl lg:text-2xl font-serif italic text-foreground/85 leading-relaxed">
             &ldquo;Technology is most powerful when it strengthens institutions,
             expands opportunity, and serves humanity with wisdom, dignity, and
             justice.&rdquo;
@@ -357,7 +312,7 @@ export default function AboutPage() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-4xl md:text-5xl font-serif text-brand-navy mb-14"
+          className="text-3xl md:text-4xl lg:text-5xl font-serif text-brand-navy mb-14"
         >
           Philosophy
         </motion.h2>
@@ -420,9 +375,9 @@ export default function AboutPage() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="bg-brand-navy/5 border-l-4 border-brand-navy pl-8 pr-8 py-8"
+          className="bg-brand-navy/5 border-l-4 border-brand-navy pl-5 sm:pl-8 pr-4 sm:pr-8 py-6 sm:py-8"
         >
-          <p className="text-xl md:text-2xl font-serif italic text-brand-navy leading-relaxed">
+          <p className="text-lg md:text-xl lg:text-2xl font-serif italic text-brand-navy leading-relaxed">
             &ldquo;Lived experience is not a footnote to expertise — it is
             expertise. It transforms knowledge into wisdom, and innovation into
             impact.&rdquo;
@@ -436,7 +391,7 @@ export default function AboutPage() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-4xl md:text-5xl font-serif text-brand-navy mb-12"
+          className="text-3xl md:text-4xl lg:text-5xl font-serif text-brand-navy mb-12"
         >
           Education
         </motion.h2>
@@ -470,85 +425,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ── F: Stay Connected ────────────────────────────────────────────── */}
-      <section className="py-16 px-4 md:px-8 max-w-7xl mx-auto border-t border-border">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-4xl md:text-5xl font-serif text-brand-navy mb-3"
-        >
-          Stay Connected
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.1 }}
-          className="text-foreground/60 text-lg mb-12 max-w-2xl"
-        >
-          Follow along on the channels where I share policy thinking, research
-          updates, and the work behind HIKMA AI and CHIFAA.
-        </motion.p>
-
-        {/* Channel cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-14">
-          {channels.map((ch, idx) => (
-            <motion.a
-              key={ch.name}
-              href={ch.href}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className={`block p-6 border-2 border-border ${ch.color} transition-all duration-300 group`}
-            >
-              <div className={`mb-4 ${ch.iconColor}`}>{ch.icon}</div>
-              <h3 className="font-semibold text-brand-navy font-serif text-xl mb-2">
-                {ch.name}
-              </h3>
-              <p className="text-foreground/60 text-sm leading-relaxed">{ch.desc}</p>
-            </motion.a>
-          ))}
-        </div>
-
-        {/* Newsletter signup */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="bg-secondary/50 border border-border p-8 md:p-12"
-        >
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-            <div>
-              <h3 className="text-2xl md:text-3xl font-serif text-brand-navy mb-3">
-                Stay in the loop
-              </h3>
-              <p className="text-foreground/65 leading-relaxed">
-                Get updates on responsible AI, governance research, and
-                CHIFAA&apos;s work — straight to your inbox.
-              </p>
-            </div>
-            <form
-              className="flex flex-col sm:flex-row gap-3"
-              onSubmit={(e) => e.preventDefault()}
-            >
-              <input
-                type="email"
-                placeholder="Your email address"
-                className="flex-1 bg-background border border-border px-4 py-3 text-foreground placeholder:text-foreground/35 focus:outline-none focus:border-brand-navy transition-colors"
-              />
-              <button
-                type="submit"
-                className="px-8 py-3 bg-brand-navy text-white font-semibold uppercase tracking-widest text-sm hover:bg-brand-navy/90 transition-colors whitespace-nowrap"
-              >
-                Subscribe
-              </button>
-            </form>
-          </div>
-        </motion.div>
-      </section>
 
       <Footer />
     </main>

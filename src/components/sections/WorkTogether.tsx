@@ -37,7 +37,7 @@ export function WorkTogether() {
           transition={{ duration: 0.8 }}
           className="relative z-10 px-6"
         >
-          <h2 className="text-4xl md:text-5xl l text-white font-serif mb-8 tracking-wide">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white font-serif mb-6 tracking-wide">
             Ready to reshape the future?
           </h2>
           <a
@@ -62,7 +62,7 @@ export function WorkTogether() {
               className="lg:col-span-4"
             >
               <div className="w-16 h-px bg-foreground/20 mb-8"></div>
-              <h2 className="text-5xl md:text-6xl text-foreground font-serif leading-tight">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl text-foreground font-serif leading-tight">
                 Let's work together
               </h2>
             </motion.div>
@@ -88,7 +88,7 @@ export function WorkTogether() {
                     {/* Subtle dark gradient for text readability */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
-                    <h3 className="absolute bottom-6 left-6 right-6 text-white text-3xl md:text-4xl font-bold font-sans">
+                    <h3 className="absolute bottom-4 left-4 right-4 text-white text-xl sm:text-2xl md:text-3xl font-bold font-sans">
                       {service.title}
                     </h3>
                   </div>
