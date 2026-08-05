@@ -98,3 +98,9 @@ button {
 .animate-marquee {
   animation: marquee 20s linear infinite;
 }
+
+@layer utilities {
+  .font-script {
+    font-family: "Yellowtail", cursive;
+  }
+}
