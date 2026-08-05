@@ -6,7 +6,7 @@ import { useInView, motion } from "framer-motion";
 // Extend the Window type to include the YouTube IFrame API globals
 declare global {
   interface Window {
-    YT: typeof YT;
+    YT: any;
     onYouTubeIframeAPIReady: () => void;
   }
 }
@@ -16,7 +16,7 @@ const PLAYER_ELEMENT_ID = "yt-bg-player";
 
 export function VideoSection() {
   const ref = useRef(null);
-  const playerRef = useRef<YT.Player | null>(null);
+  const playerRef = useRef<any>(null);
   // Trigger when the video section is partially in view
   const isInView = useInView(ref, { once: true, amount: 0.3 });
   const [shouldPlay, setShouldPlay] = useState(false);
@@ -44,9 +44,9 @@ export function VideoSection() {
           start: 30,
           // Disable annotations and info cards as well
           iv_load_policy: 3,
-        } as YT.PlayerVars,
+        } as any,
         events: {
-          onReady: (event: YT.PlayerEvent) => {
+          onReady: (event: any) => {
             // Ensure the player is muted via the API as well
             event.target.mute();
             // Unload the captions/subtitles module
