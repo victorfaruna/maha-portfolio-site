@@ -23,13 +23,20 @@ export function Purpose() {
             </h2>
             <div className="space-y-6 text-foreground font-sans text-lg">
               <p>
-                My vision is to ensure that the Global South becomes a global architect of responsible artificial intelligence, contributing not only technology and talent, but also wisdom, ethical leadership, and culturally grounded innovation.
+                My vision is to ensure that the Global South becomes a global
+                architect of responsible artificial intelligence, contributing
+                not only technology and talent, but also wisdom, ethical
+                leadership, and culturally grounded innovation.
               </p>
               <p>
-                I believe the future of AI should be shaped by many civilizations, languages, and knowledge systems. By bringing together science, philosophy, and public policy, I work to build AI that serves humanity, protects human dignity, and advances sustainable development for all.
+                I believe the future of AI should be shaped by many
+                civilizations, languages, and knowledge systems. By bringing
+                together science, philosophy, and public policy, I work to build
+                AI that serves humanity, protects human dignity, and advances
+                sustainable development for all.
               </p>
-              
-              <h3 className="text-foreground font-semibold pt-2 text-xl">
+
+              {/* <h3 className="text-foreground font-semibold pt-2 text-xl">
                 The Approach
               </h3>
               
@@ -48,14 +55,16 @@ export function Purpose() {
               </blockquote>
               <p>
                 I believe that the next generation of AI will not be defined solely by larger models or greater computational power, but by our ability to embed wisdom, empathy, cultural diversity, and human dignity into the systems we create.
-              </p>
+              </p> */}
               <div className="pt-6">
                 <Link
                   href="/about"
                   className="group inline-flex items-center gap-2 px-6 py-3 border-2 border-brand-navy text-brand-navy font-semibold text-base uppercase tracking-widest hover:bg-brand-navy hover:text-white transition-all duration-300"
                 >
                   Read the Full Story
-                  <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>
+                  <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">
+                    →
+                  </span>
                 </Link>
               </div>
             </div>

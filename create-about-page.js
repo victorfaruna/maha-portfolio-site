@@ -1,4 +1,6 @@
-"use client";
+const fs = require('fs');
+
+const content = `"use client";
 
 import { useState, useEffect, useRef } from "react";
 import { useInView, motion, AnimatePresence } from "framer-motion";
@@ -9,7 +11,7 @@ import { Footer } from "@/components/sections/Footer";
 const taglines = [
   "I turn lived experience into policy.",
   "I build AI with wisdom, not just data.",
-  "Every system carries a worldview.\nI make sure it sees everyone.",
+  "Every system carries a worldview.\\nI make sure it sees everyone.",
 ];
 
 export default function AboutPage() {
@@ -69,8 +71,8 @@ export default function AboutPage() {
           transition={{ duration: 0.85, ease: "easeOut" }}
           className="text-foreground/80 text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed"
         >
-          People say change happens in the blink of an eye — but I&apos;ve lived
-          through enough chapters to know it happens in waves. I&apos;m{" "}
+          People say change happens in the blink of an eye — but I've lived
+          through enough chapters to know it happens in waves. I'm{" "}
           <span className="text-brand-navy font-semibold font-serif">
             Maha Jouini
           </span>
@@ -99,7 +101,7 @@ export default function AboutPage() {
           </h3>
           <div className="text-foreground/80 text-lg leading-relaxed space-y-4 max-w-4xl">
             <p>
-              For more than a decade, my work has been driven by a single conviction: technology should strengthen institutions, expand opportunity, and improve people&apos;s lives. My professional journey has taken me across Africa, the Middle East, Europe, and Asia, working at the intersection of artificial intelligence, digital governance, public policy, and social innovation.
+              For more than a decade, my work has been driven by a single conviction: technology should strengthen institutions, expand opportunity, and improve people's lives. My professional journey has taken me across Africa, the Middle East, Europe, and Asia, working at the intersection of artificial intelligence, digital governance, public policy, and social innovation.
             </p>
             <p>
               Today, I advise governments, international organizations, research institutions, and civil society on responsible AI, digital transformation, institutional capacity building, and public sector innovation. Yet my journey began long before artificial intelligence became a global priority.
@@ -118,10 +120,10 @@ export default function AboutPage() {
             {[
               {
                 period: "2011–2013",
-                title: "Empowering Youth During Tunisia&apos;s Democratic Transition",
+                title: "Empowering Youth During Tunisia's Democratic Transition",
                 content: (
                   <>
-                    <p className="mb-3">My professional career started during one of the most transformative moments in Tunisia&apos;s modern history. Following the 2011 Revolution, I joined the Tunisian Forum for Youth Development, where I helped young people become active participants in rebuilding democratic institutions.</p>
+                    <p className="mb-3">My professional career started during one of the most transformative moments in Tunisia's modern history. Following the 2011 Revolution, I joined the Tunisian Forum for Youth Development, where I helped young people become active participants in rebuilding democratic institutions.</p>
                     <p className="mb-3">As Team Leader and Digital Communication Assistant, I co-developed communication strategies that encouraged civic participation, coordinated volunteer networks, and managed digital engagement initiatives designed to amplify youth voices in national dialogue.</p>
                     <p className="mb-3">This experience introduced me to the power of digital technologies as instruments of democratic participation. It also taught me that meaningful transformation depends not only on technology but on inclusive institutions, stakeholder engagement, and trust between governments and citizens.</p>
                     <p>These early years established the foundations of my work in digital governance, institutional collaboration, and public engagement.</p>
@@ -133,7 +135,7 @@ export default function AboutPage() {
                 title: "Advancing Regional Policy at the African Union",
                 content: (
                   <>
-                    <p className="mb-3">I joined the African Union Campaign to End Child Marriage in Africa, based in Addis Ababa, where I contributed to one of the continent&apos;s largest policy and advocacy initiatives focused on protecting girls' rights.</p>
+                    <p className="mb-3">I joined the African Union Campaign to End Child Marriage in Africa, based in Addis Ababa, where I contributed to one of the continent's largest policy and advocacy initiatives focused on protecting girls' rights.</p>
                     <p className="mb-3">Working across multiple African Union Member States, I coordinated regional consultations involving governments, Regional Economic Communities, United Nations agencies, development partners, and civil society organizations.</p>
                     <p className="mb-3">My responsibilities included conducting policy and regulatory analysis, mapping institutional and legal frameworks, collecting and analysing evidence, and producing policy briefs that informed continental strategies. I also contributed to monitoring and evaluation systems, knowledge management, and evidence-based advocacy supporting regional decision-making.</p>
                     <p className="mb-3">One of the highlights of this period was co-organising the First African Girls Summit in Lusaka, Zambia, which brought together policymakers, young leaders, and international partners to strengthen continental collaboration around gender equality.</p>
@@ -172,7 +174,7 @@ export default function AboutPage() {
                 title: "Advancing National Digital Transformation in Mauritania and STEM.",
                 content: (
                   <>
-                    <p className="mb-3">In 2022, I joined Infolog Group as a Digital Transformation and Digital Inclusion Consultant, contributing to the implementation of Mauritania&apos;s National Digital Transformation Strategy through the CACHILY Project. Working alongside government institutions, telecommunications operators, financial institutions, development partners, and local stakeholders, I supported initiatives designed to expand access to digital technologies and strengthen financial inclusion.</p>
+                    <p className="mb-3">In 2022, I joined Infolog Group as a Digital Transformation and Digital Inclusion Consultant, contributing to the implementation of Mauritania's National Digital Transformation Strategy through the CACHILY Project. Working alongside government institutions, telecommunications operators, financial institutions, development partners, and local stakeholders, I supported initiatives designed to expand access to digital technologies and strengthen financial inclusion.</p>
                     <p className="mb-3">My work focused on connecting policy with implementation. I contributed to the development of digital public services, supported e-Government initiatives, and facilitated collaboration between the public and private sectors to improve the country's digital ecosystem. I also designed and delivered capacity-building programmes for entrepreneurs on digital entrepreneurship, innovation, and Design Thinking, helping strengthen institutional capabilities and foster a more inclusive digital economy.</p>
                     <p>This experience reinforced my understanding that digital transformation is ultimately about empowering people, strengthening institutions, and ensuring that technological progress creates opportunities for everyone.</p>
                   </>
@@ -195,7 +197,7 @@ export default function AboutPage() {
                 content: (
                   <>
                     <p className="mb-3">In 2023, I joined the Global Index on Responsible AI (GIRAI) as an AI Policy Researcher and Francophone Africa Lead, a role that significantly expanded my work across the African continent.</p>
-                    <p className="mb-3">Working with governments, regulatory authorities, academic institutions, civil society organisations, and private-sector leaders, I assessed national AI governance readiness through one of the world&apos;s most comprehensive responsible AI benchmarking initiatives.</p>
+                    <p className="mb-3">Working with governments, regulatory authorities, academic institutions, civil society organisations, and private-sector leaders, I assessed national AI governance readiness through one of the world's most comprehensive responsible AI benchmarking initiatives.</p>
                     <p className="mb-3">My work combined policy research with practical engagement. I conducted policy and regulatory analysis, evaluated national governance frameworks, collected qualitative and quantitative evidence, and facilitated high-level consultations with Ministries of Digital Economy, Technology, Innovation, and national regulators.</p>
                     <p className="mb-3">Beyond research, I led stakeholder engagement workshops that identified governance gaps, regulatory priorities, and opportunities for responsible AI adoption across Francophone Africa. Through digital ecosystem assessments, stakeholder mapping, and evidence-based policy recommendations, I contributed to government advisory processes supporting national AI strategies and responsible digital transformation.</p>
                     <p>This role provided invaluable insight into how different countries approach AI governance, highlighting both the shared opportunities and the unique challenges facing the Global South.</p>
@@ -204,7 +206,7 @@ export default function AboutPage() {
               },
               {
                 period: "2024",
-                title: "Helping Shape Tunisia&apos;s Responsible AI Landscape",
+                title: "Helping Shape Tunisia's Responsible AI Landscape",
                 content: (
                   <>
                     <p className="mb-3">In 2024, I served as AI Policy Advocacy Consultant for GIZ Tunisia, supporting national and regional discussions on responsible artificial intelligence.</p>
@@ -220,7 +222,7 @@ export default function AboutPage() {
                 content: (
                   <>
                     <p className="mb-3">My appointment as AI and Gender Fellow Researcher at the Global Center on AI Governance marked another important milestone in my career.</p>
-                    <p className="mb-3">My research examines the intersection of artificial intelligence, gender, public policy, and digital governance within African contexts. I contribute to the implementation of the African Union Continental AI Strategy by developing evidence-based policy recommendations that promote responsible AI, digital inclusion, data governance, and women&apos;s leadership.</p>
+                    <p className="mb-3">My research examines the intersection of artificial intelligence, gender, public policy, and digital governance within African contexts. I contribute to the implementation of the African Union Continental AI Strategy by developing evidence-based policy recommendations that promote responsible AI, digital inclusion, data governance, and women's leadership.</p>
                     <p className="mb-3">My work includes policy and regulatory analysis, stakeholder engagement, institutional capacity building, government advisory, and research supporting public sector digital transformation.</p>
                     <p>More broadly, my research explores how AI governance frameworks can reflect the realities of African societies while strengthening public institutions and protecting fundamental rights.</p>
                   </>
@@ -244,7 +246,7 @@ export default function AboutPage() {
                 content: (
                   <>
                     <p className="mb-3">Education has become an essential pillar of my work.</p>
-                    <p className="mb-3">As Module Lead and Expert Contributor for the UNESCO–LG Global MOOC on the Ethics of AI, I developed the Human–AI Interaction module for one of UNESCO&apos;s flagship global education initiatives.</p>
+                    <p className="mb-3">As Module Lead and Expert Contributor for the UNESCO–LG Global MOOC on the Ethics of AI, I developed the Human–AI Interaction module for one of UNESCO's flagship global education initiatives.</p>
                     <p className="mb-3">The course integrates international ethical standards with African and MENA perspectives, drawing on concepts such as Ubuntu and Hikma to demonstrate that responsible AI must be culturally grounded as well as technically robust.</p>
                     <p>Through this work, I have contributed to making AI ethics education more globally representative, ensuring that perspectives from Africa and the Global South become part of international conversations on AI governance.</p>
                   </>
@@ -256,7 +258,7 @@ export default function AboutPage() {
                 content: (
                   <>
                     <p className="mb-3">As a member of the UNFPA Tunisia Expert Group on Technology-Facilitated Gender-Based Violence and Artificial Intelligence, I contribute technical expertise to one of the most urgent policy challenges created by emerging technologies.</p>
-                    <p className="mb-3">Working alongside specialists from multiple disciplines, I support policy recommendations, expert consultations, and multi-stakeholder dialogue focused on AI governance, digital safety, women&apos;s rights, and responsible technology design.</p>
+                    <p className="mb-3">Working alongside specialists from multiple disciplines, I support policy recommendations, expert consultations, and multi-stakeholder dialogue focused on AI governance, digital safety, women's rights, and responsible technology design.</p>
                     <p>This work reflects my broader commitment to ensuring that innovation strengthens human rights rather than undermining them, particularly for women and vulnerable communities.</p>
                   </>
                 )
@@ -267,7 +269,7 @@ export default function AboutPage() {
                 content: (
                   <>
                     <p className="mb-3">While my work with governments and international organisations has shaped policies, my most personal project is CHIFAA.</p>
-                    <p className="mb-3">Founded after my own experience as a breast cancer survivor, CHIFAA is North Africa&apos;s first survivor-led AI companion designed to support women living with breast and cervical cancer.</p>
+                    <p className="mb-3">Founded after my own experience as a breast cancer survivor, CHIFAA is North Africa's first survivor-led AI companion designed to support women living with breast and cervical cancer.</p>
                     <p className="mb-3">The platform combines responsible AI, digital governance, ethical data governance, digital public services, and human-centred design to provide culturally grounded, multilingual support tailored to the realities of women across North Africa.</p>
                     <p className="mb-3">Beyond technology, CHIFAA represents a new model of innovation—one in which lived experience is recognised as expertise and patients become active partners in designing digital health solutions.</p>
                     <p>By bringing together clinicians, AI researchers, policymakers, survivors, and civil society organisations, CHIFAA demonstrates how inclusive governance can produce technologies that are both innovative and deeply human.</p>
@@ -387,7 +389,7 @@ export default function AboutPage() {
             },
             {
               institution: "Tunis High Institute of Human Sciences, Tunisia",
-              degree: "Bachelor of Arts (BA) in French Literature and Civilization Specialized in 20th-century French literature and philosophy, studying the works of Jean-Paul Sartre, existentialism, l&apos;esprit de liberté (the spirit of freedom), and the relationship between literature, ethics, and social engagement.",
+              degree: "Bachelor of Arts (BA) in French Literature and Civilization Specialized in 20th-century French literature and philosophy, studying the works of Jean-Paul Sartre, existentialism, l'esprit de liberté (the spirit of freedom), and the relationship between literature, ethics, and social engagement.",
               year: "2008–2012",
             },
             {
@@ -455,7 +457,7 @@ export default function AboutPage() {
 
               <h3 className="text-2xl font-serif text-brand-navy mb-4 mt-12">From Storytelling and Poetry to AI Systems</h3>
               <p className="mb-4">
-                Before algorithms, there were words. Maha Jouini&apos;s journey began not in code, but in poetry and prose — in <em>عاشقة من إفريقيا</em> and <em>الرقصة الأخيرة: من قرطاج إلى الصين</em>, where she explored identity, memory, and belonging across continents. That same instinct carried her into artificial intelligence: the belief that every system, like every story, carries a worldview — and that whoever writes it decides whose humanity is seen.
+                Before algorithms, there were words. Maha Jouini's journey began not in code, but in poetry and prose — in <em>عاشقة من إفريقيا</em> and <em>الرقصة الأخيرة: من قرطاج إلى الصين</em>, where she explored identity, memory, and belonging across continents. That same instinct carried her into artificial intelligence: the belief that every system, like every story, carries a worldview — and that whoever writes it decides whose humanity is seen.
               </p>
               <p className="mb-8">
                 Today, she moves fluidly between both worlds. As a novelist, she gives voice to lived experience. As an AI governance expert and founder of CHIFAA and HIKMA AI, she ensures that voice — and the wisdom of the Global South — is written into the systems shaping our future.
@@ -463,13 +465,13 @@ export default function AboutPage() {
 
               <div className="bg-brand-navy/5 p-6 rounded-xl border border-brand-navy/10 mb-12">
                 <p className="mb-4">
-                  Her contributions have been recognized internationally. She is the recipient of the <strong>She Shapes AI Global Award for AI Thought Leadership (2026)</strong> and was previously named among <strong>UNESCO&apos;s Top 20 Women AI Change Makers in the MENA Region</strong>. She also serves as <strong>Vice President of the Agence Francophone et Africaine de l'Intelligence Artificielle (AFRIA)</strong>.
+                  Her contributions have been recognized internationally. She is the recipient of the <strong>She Shapes AI Global Award for AI Thought Leadership (2026)</strong> and was previously named among <strong>UNESCO's Top 20 Women AI Change Makers in the MENA Region</strong>. She also serves as <strong>Vice President of the Agence Francophone et Africaine de l'Intelligence Artificielle (AFRIA)</strong>.
                 </p>
                 <p className="mb-4">
                   Through her work — technical and literary alike — Maha advocates for a future where AI is not only advanced but socially responsible, culturally grounded, and designed to improve lives across diverse communities.
                 </p>
                 <blockquote className="italic font-serif text-brand-navy text-lg text-center mt-6">
-                  &quot;The future of AI will not be built by one region alone. It must be co-created by the communities it seeks to serve.&quot;
+                  "The future of AI will not be built by one region alone. It must be co-created by the communities it seeks to serve."
                 </blockquote>
               </div>
             </motion.div>
@@ -516,7 +518,7 @@ export default function AboutPage() {
                 As Rūmī wrote:
               </p>
               <blockquote className="border-l-2 border-brand-navy pl-4 italic text-[15px] text-brand-navy mb-4">
-                &quot;Yesterday I was clever, so I wanted to change the world. Today I am wise, so I am changing myself.&quot;
+                "Yesterday I was clever, so I wanted to change the world. Today I am wise, so I am changing myself."
               </blockquote>
               <p className="text-foreground/75 leading-relaxed text-[15px]">
                 I believe that the next generation of AI will not be defined solely by larger models or greater computational power, but by our ability to embed <strong>wisdom, empathy, cultural diversity, and human dignity</strong> into the systems we create.
@@ -549,4 +551,6 @@ export default function AboutPage() {
     </main>
   );
 }
+`
 
+fs.writeFileSync('src/app/about/page.tsx', content);
