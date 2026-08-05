@@ -56,26 +56,26 @@ export function JoinMovement() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.8, delay: idx * 0.1 }}
-                className="flex flex-col gap-6"
+                className="flex flex-col gap-5"
               >
-                <div className="relative aspect-[18/10] rounded-tr-[5rem] overflow-hidden group">
+                <div className="relative aspect-[18/10] rounded-tr-[4rem] overflow-hidden group bg-white border border-border/40 shadow-sm">
                   <Image
                     src={card.image}
                     alt={card.title}
                     fill
-                    className={`transition-transform duration-700 group-hover:scale-105 ${card.contain ? "object-contain bg-white/5" : "object-cover"}`}
+                    className={`transition-transform duration-700 group-hover:scale-105 ${card.contain ? "object-contain p-6 pb-10" : "object-cover"}`}
                   />
-                  {/* Subtle dark gradient for text readability */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                  {/* Subtle soft gradient only at the base */}
+                  <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/50 via-black/15 to-transparent pointer-events-none" />
 
-                  <h3 className="absolute bottom-4 left-4 right-4 text-white text-xl sm:text-2xl md:text-3xl font-bold font-sans">
+                  <h3 className="absolute bottom-4 left-5 right-5 text-white text-xl sm:text-2xl font-bold font-sans drop-shadow">
                     {card.title}
                   </h3>
                 </div>
 
                 <a
                   href={card.link}
-                  className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-3 px-8 w-max transition-colors inline-block"
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-2.5 px-6 w-max transition-colors inline-block text-sm"
                 >
                   Learn more
                 </a>

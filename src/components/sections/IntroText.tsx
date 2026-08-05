@@ -11,7 +11,7 @@ export function IntroText() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.9, ease: "easeOut" }}
-          className="text-foreground/80 text-xl md:text-2xl lg:text-3xl font-light leading-relaxed tracking-wide text-center font-sans"
+          className="text-foreground/80 text-[16.5px] md:text-[20px] leading-relaxed text-center font-sans max-w-4xl mx-auto"
         >
           I&apos;m{" "}
           <span className="text-brand-navy font-semibold font-serif">Maha Jouini</span>{" "}
