@@ -71,12 +71,10 @@
     @apply border-border outline-ring/50;
   }
   body {
-    font-family: "Hanken Grotesk", sans-serif;
     @apply bg-background text-foreground overflow-x-hidden;
   }
   html {
-    font-family: "Hanken Grotesk", sans-serif;
-    @apply antialiased overflow-x-hidden;
+    @apply font-sans antialiased overflow-x-hidden;
   }
   h1,
   h2,
