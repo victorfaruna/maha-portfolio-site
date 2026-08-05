@@ -3,8 +3,20 @@
 import { useRef, useState, useEffect } from "react";
 import { useInView, motion } from "framer-motion";
 
+// Extend the Window type to include the YouTube IFrame API globals
+declare global {
+  interface Window {
+    YT: typeof YT;
+    onYouTubeIframeAPIReady: () => void;
+  }
+}
+
+const VIDEO_ID = "wYy9CqunS8g";
+const PLAYER_ELEMENT_ID = "yt-bg-player";
+
 export function VideoSection() {
   const ref = useRef(null);
+  const playerRef = useRef<YT.Player | null>(null);
   // Trigger when the video section is partially in view
   const isInView = useInView(ref, { once: true, amount: 0.3 });
   const [shouldPlay, setShouldPlay] = useState(false);
@@ -14,6 +26,67 @@ export function VideoSection() {
       setShouldPlay(true);
     }
   }, [isInView]);
+
+  // Load the YouTube IFrame API script once the section is in view
+  useEffect(() => {
+    if (!shouldPlay) return;
+
+    const initPlayer = () => {
+      playerRef.current = new window.YT.Player(PLAYER_ELEMENT_ID, {
+        videoId: VIDEO_ID,
+        playerVars: {
+          autoplay: 1,
+          mute: 1,
+          controls: 0,
+          rel: 0,
+          modestbranding: 1,
+          cc_load_policy: 0,
+          start: 30,
+          // Disable annotations and info cards as well
+          iv_load_policy: 3,
+        } as YT.PlayerVars,
+        events: {
+          onReady: (event: YT.PlayerEvent) => {
+            // Ensure the player is muted via the API as well
+            event.target.mute();
+            // Unload the captions/subtitles module
+            event.target.unloadModule("captions");
+            event.target.playVideo();
+          },
+        },
+      });
+    };
+
+    // If the API is already ready, initialise immediately; otherwise set the
+    // global callback that the script calls when it finishes loading.
+    if (window.YT && window.YT.Player) {
+      initPlayer();
+    } else {
+      // Preserve any existing callback registered by other components
+      const previousCallback = window.onYouTubeIframeAPIReady;
+      window.onYouTubeIframeAPIReady = () => {
+        if (typeof previousCallback === "function") previousCallback();
+        initPlayer();
+      };
+
+      // Only inject the script tag once
+      if (!document.getElementById("yt-iframe-api-script")) {
+        const script = document.createElement("script");
+        script.id = "yt-iframe-api-script";
+        script.src = "https://www.youtube.com/iframe_api";
+        script.async = true;
+        document.body.appendChild(script);
+      }
+    }
+
+    return () => {
+      // Clean up the player instance on unmount
+      if (playerRef.current) {
+        playerRef.current.destroy();
+        playerRef.current = null;
+      }
+    };
+  }, [shouldPlay]);
 
   return (
     <section className="relative pt-10 pb-24 bg-background">
@@ -30,7 +103,7 @@ export function VideoSection() {
             viewport={{ once: true }}
             className="text-4xl md:text-5xl lg:text-6xl text-foreground font-serif mb-6"
           >
-            Insights & Perspectives
+            Insights &amp; Perspectives
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
@@ -52,14 +125,11 @@ export function VideoSection() {
           className="relative w-full aspect-video overflow-hidden shadow-2xl bg-black border border-border"
         >
           {shouldPlay ? (
-            <iframe
+            /* The YouTube IFrame API replaces this div with the player iframe */
+            <div
+              id={PLAYER_ELEMENT_ID}
               className="absolute inset-0 w-full h-full"
-              src="https://www.youtube.com/embed/wYy9CqunS8g?autoplay=1&mute=1&controls=1&rel=0&modestbranding=1"
-              title="YouTube video player"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-            ></iframe>
+            />
           ) : (
             <div className="absolute inset-0 flex flex-col items-center justify-center bg-zinc-900">
               <div className="w-12 h-12 border-4 border-brand-cyan border-t-transparent rounded-full animate-spin mb-4"></div>
