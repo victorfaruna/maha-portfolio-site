@@ -63,7 +63,7 @@ export default function AboutPage() {
 
       {/* ── Bio & Philosophy ─────────────────────────────────────────── */}
       <section className="py-16 px-6 md:px-12 max-w-7xl mx-auto">
-        <div className="max-w-4xl mx-auto space-y-6 text-foreground/80 text-[16.5px] md:text-[20px] leading-relaxed">
+        <div className="space-y-6 text-foreground/80 text-[16.5px] md:text-[20px] leading-relaxed">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
             <p className="mb-4">
               Maha Jouini is an internationally recognized AI governance expert, researcher, and entrepreneur dedicated to advancing responsible, human-centered, and culturally grounded artificial intelligence. Her work bridges technology, public policy, ethics, healthcare, and sustainable development, with a particular focus on ensuring that AI reflects the realities and values of the Global South.
@@ -121,7 +121,7 @@ export default function AboutPage() {
           <h3 className="text-xl md:text-2xl font-serif text-brand-pink mb-4">
             Building Responsible AI Through Policy, Governance, and Human-Centered Innovation
           </h3>
-          <div className="text-foreground/80 text-lg leading-relaxed space-y-4 max-w-4xl">
+          <div className="text-foreground/80 text-lg leading-relaxed space-y-4">
             <p>
               For more than a decade, my work has been driven by a single conviction: technology should strengthen institutions, expand opportunity, and improve people&apos;s lives. My professional journey has taken me across Africa, the Middle East, Europe, and Asia, working at the intersection of artificial intelligence, digital governance, public policy, and social innovation.
             </p>
@@ -131,7 +131,7 @@ export default function AboutPage() {
             <p className="font-semibold text-brand-navy">
               It began with people.
             </p>
-            <div className="mt-8 overflow-hidden rounded-2xl shadow-lg border border-border/40 max-w-4xl">
+            <div className="mt-8 overflow-hidden rounded-2xl shadow-lg border border-border/40">
               <img
                 src="/images/myjourneyimage.jpeg"
                 alt="My Journey - Maha Jouini"

@@ -1,21 +1,104 @@
 "use client";
 
+import { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
-import Image from "next/image";
+
+declare global {
+  interface Window {
+    YT: any;
+    onYouTubeIframeAPIReady: () => void;
+  }
+}
+
+const VIDEO_ID = "gcnLfZ4VI74";
+const PLAYER_ELEMENT_ID = "hero-yt-player";
 
 export function Hero() {
+  const playerRef = useRef<any>(null);
+
+  useEffect(() => {
+    const initPlayer = () => {
+      playerRef.current = new window.YT.Player(PLAYER_ELEMENT_ID, {
+        videoId: VIDEO_ID,
+        playerVars: {
+          autoplay: 1,
+          mute: 1,
+          loop: 1,
+          playlist: VIDEO_ID,
+          controls: 0,
+          showinfo: 0,
+          rel: 0,
+          modestbranding: 1,
+          iv_load_policy: 3,
+          cc_load_policy: 0,
+          cc_lang_pref: 0,
+          start: 30,
+          playsinline: 1,
+          vq: "hd1080",
+        } as any,
+        events: {
+          onReady: (event: any) => {
+            event.target.mute();
+            event.target.setPlaybackQuality("hd1080");
+            // Aggressively disable all subtitle/caption tracks
+            const disableCaptions = (player: any) => {
+              try { player.unloadModule("captions"); } catch (_) {}
+              try { player.unloadModule("cc"); } catch (_) {}
+              try { player.setOption("captions", "track", {}); } catch (_) {}
+              try { player.setOption("captions", "reload", true); } catch (_) {}
+            };
+            disableCaptions(event.target);
+            // Retry after short delay to catch auto-loaded captions
+            setTimeout(() => disableCaptions(event.target), 1000);
+            setTimeout(() => disableCaptions(event.target), 3000);
+            event.target.playVideo();
+          },
+          onStateChange: (event: any) => {
+            // Keep looping
+            if (event.data === window.YT.PlayerState.ENDED) {
+              event.target.seekTo(30);
+              event.target.playVideo();
+            }
+          },
+        },
+      });
+    };
+
+    if (window.YT && window.YT.Player) {
+      initPlayer();
+    } else {
+      const previousCallback = window.onYouTubeIframeAPIReady;
+      window.onYouTubeIframeAPIReady = () => {
+        if (typeof previousCallback === "function") previousCallback();
+        initPlayer();
+      };
+
+      if (!document.getElementById("yt-iframe-api-script")) {
+        const script = document.createElement("script");
+        script.id = "yt-iframe-api-script";
+        script.src = "https://www.youtube.com/iframe_api";
+        document.head.appendChild(script); // inject into <head> for fastest load
+      }
+    }
+
+    return () => {
+      if (playerRef.current) {
+        try { playerRef.current.destroy(); } catch (_) {}
+        playerRef.current = null;
+      }
+    };
+  }, []);
+
   return (
     <section className="relative min-h-[65vh] md:min-h-screen flex items-center justify-center overflow-hidden bg-black">
       {/* Background Video */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-        <iframe
-          src="https://www.youtube.com/embed/gcnLfZ4VI74?autoplay=1&mute=1&loop=1&playlist=gcnLfZ4VI74&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&playsinline=1"
-          className="absolute top-1/2 left-1/2 w-[100vw] h-[56.25vw] min-h-[100vh] min-w-[177.77vh] -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-80"
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
+        {/* YouTube IFrame API replaces this div */}
+        <div
+          id={PLAYER_ELEMENT_ID}
+          className="absolute top-1/2 left-1/2 w-[100vw] h-[56.25vw] min-h-[100vh] min-w-[177.77vh] -translate-x-1/2 -translate-y-1/2 pointer-events-none"
         />
-        {/* Subtle overlay to ensure text readability */}
+        {/* Overlay for text readability */}
         <div className="absolute inset-0 bg-black/20" />
       </div>
 
@@ -25,7 +108,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeOut" }}
-          className="flex flex-col items-center "
+          className="flex flex-col items-center"
         >
           {/* Line 1: serif text */}
           <h1
@@ -35,7 +118,7 @@ export function Hero() {
             Inclusive AI Is
           </h1>
 
-          {/* Line 2: script image — sits directly below, same left edge */}
+          {/* Line 2: script image */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
