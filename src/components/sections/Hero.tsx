@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 declare global {
@@ -12,12 +12,16 @@ declare global {
 
 const VIDEO_ID = "gcnLfZ4VI74";
 const PLAYER_ELEMENT_ID = "hero-yt-player";
+// Show YouTube's own thumbnail instantly — no black flash
+const THUMBNAIL_URL = `https://img.youtube.com/vi/${VIDEO_ID}/maxresdefault.jpg`;
 
 export function Hero() {
   const playerRef = useRef<any>(null);
+  const [videoPlaying, setVideoPlaying] = useState(false);
 
   useEffect(() => {
     const initPlayer = () => {
+      if (playerRef.current) return; // Avoid double-init
       playerRef.current = new window.YT.Player(PLAYER_ELEMENT_ID, {
         videoId: VIDEO_ID,
         playerVars: {
@@ -40,21 +44,22 @@ export function Hero() {
           onReady: (event: any) => {
             event.target.mute();
             event.target.setPlaybackQuality("hd1080");
-            // Aggressively disable all subtitle/caption tracks
             const disableCaptions = (player: any) => {
               try { player.unloadModule("captions"); } catch (_) {}
               try { player.unloadModule("cc"); } catch (_) {}
               try { player.setOption("captions", "track", {}); } catch (_) {}
-              try { player.setOption("captions", "reload", true); } catch (_) {}
             };
             disableCaptions(event.target);
-            // Retry after short delay to catch auto-loaded captions
             setTimeout(() => disableCaptions(event.target), 1000);
             setTimeout(() => disableCaptions(event.target), 3000);
             event.target.playVideo();
           },
           onStateChange: (event: any) => {
-            // Keep looping
+            // Fade out thumbnail the moment video is actually playing
+            if (event.data === window.YT.PlayerState.PLAYING) {
+              setVideoPlaying(true);
+            }
+            // Loop from start=30 when video ends
             if (event.data === window.YT.PlayerState.ENDED) {
               event.target.seekTo(30);
               event.target.playVideo();
@@ -64,6 +69,7 @@ export function Hero() {
       });
     };
 
+    // If the API was already loaded by layout.tsx <script> tag, use it immediately
     if (window.YT && window.YT.Player) {
       initPlayer();
     } else {
@@ -72,12 +78,12 @@ export function Hero() {
         if (typeof previousCallback === "function") previousCallback();
         initPlayer();
       };
-
+      // Fallback: inject script if layout.tsx script hasn't fired yet
       if (!document.getElementById("yt-iframe-api-script")) {
         const script = document.createElement("script");
         script.id = "yt-iframe-api-script";
         script.src = "https://www.youtube.com/iframe_api";
-        document.head.appendChild(script); // inject into <head> for fastest load
+        document.head.appendChild(script);
       }
     }
 
@@ -98,8 +104,19 @@ export function Hero() {
           id={PLAYER_ELEMENT_ID}
           className="absolute top-1/2 left-1/2 w-[100vw] h-[56.25vw] min-h-[100vh] min-w-[177.77vh] -translate-x-1/2 -translate-y-1/2 pointer-events-none"
         />
+
+        {/* Thumbnail overlay — visible immediately, fades out when video plays */}
+        <div
+          className="absolute inset-0 bg-cover bg-center transition-opacity duration-1000"
+          style={{
+            backgroundImage: `url(${THUMBNAIL_URL})`,
+            opacity: videoPlaying ? 0 : 1,
+            pointerEvents: "none",
+          }}
+        />
+
         {/* Overlay for text readability */}
-        <div className="absolute inset-0 bg-black/20" />
+        <div className="absolute inset-0 bg-black/30" />
       </div>
 
       {/* Text Overlay */}

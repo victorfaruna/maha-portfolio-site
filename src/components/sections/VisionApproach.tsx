@@ -6,7 +6,7 @@ export function VisionApproach() {
   return (
     <section id="vision-approach" className="py-20 bg-background border-t border-border/40">
       <div className="container mx-auto px-6 md:px-12 max-w-7xl">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 items-stretch">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 items-start">
           {/* Left Column: Approach Text */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -52,13 +52,14 @@ export function VisionApproach() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="h-full flex flex-col"
+            className="w-full"
           >
-            <div className="relative w-full h-full flex-1 rounded-2xl overflow-hidden shadow-2xl bg-black border border-border/40 min-h-[450px]">
+            <div className="relative w-full h-[762px] rounded-2xl overflow-hidden shadow-2xl bg-black border border-border/40">
               <img
                 src="/images/mahaholdingbook.jpeg"
                 alt="Maha Jouini holding book"
-                className="w-full h-full object-cover object-top"
+                className="w-full h-full object-cover"
+                style={{ objectPosition: "50% 20%" }}
               />
             </div>
           </motion.div>
