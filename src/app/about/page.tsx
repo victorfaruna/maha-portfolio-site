@@ -84,6 +84,14 @@ export default function AboutPage() {
               <strong>Beyond her work in AI, Maha is a recognized Arab storyteller and author.</strong> She has written <em>عاشقة من إفريقيا</em> (A Lover from Africa) and <em>الرقصة الأخيرة: من قرطاج إلى الصين</em> (The Last Dance: From Carthage to China). Her books are held in the official library of the Tunisian Ministry of Women and in the Tunisian National Library — a reflection of the same conviction that runs through her technical work: that wisdom, memory, and human stories are as vital to shaping the future as innovation itself.
             </p>
 
+            <div className="my-8 overflow-hidden rounded-2xl shadow-lg border border-border/40 max-w-3xl mx-auto">
+              <img
+                src="/images/booksimages.jpeg"
+                alt="Maha Jouini Books - عاشقة من إفريقيا and الرقصة الأخيرة"
+                className="w-full h-auto object-cover"
+              />
+            </div>
+
             <h3 className="text-2xl font-serif text-brand-navy mb-4 mt-12">From Storytelling and Poetry to AI Systems</h3>
             <p className="mb-4">
               Before algorithms, there were words. Maha Jouini&apos;s journey began not in code, but in poetry and prose — in <em>عاشقة من إفريقيا</em> and <em>الرقصة الأخيرة: من قرطاج إلى الصين</em>, where she explored identity, memory, and belonging across continents. That same instinct carried her into artificial intelligence: the belief that every system, like every story, carries a worldview — and that whoever writes it decides whose humanity is seen.
@@ -131,12 +139,21 @@ export default function AboutPage() {
             <p className="font-semibold text-brand-navy">
               It began with people.
             </p>
-            <div className="mt-8 overflow-hidden rounded-2xl shadow-lg border border-border/40">
-              <img
-                src="/images/myjourneyimage.jpeg"
-                alt="My Journey - Maha Jouini"
-                className="w-full h-auto max-h-[480px] object-cover"
-              />
+            <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div className="overflow-hidden rounded-2xl shadow-lg border border-border/40">
+                <img
+                  src="/images/myjourneyimage.jpeg"
+                  alt="My Journey - Maha Jouini"
+                  className="w-full h-[320px] object-cover"
+                />
+              </div>
+              <div className="overflow-hidden rounded-2xl shadow-lg border border-border/40">
+                <img
+                  src="/images/1.jpeg"
+                  alt="Maha Jouini speaking at a conference"
+                  className="w-full h-[320px] object-cover object-top"
+                />
+              </div>
             </div>
           </div>
         </motion.div>
@@ -220,6 +237,40 @@ export default function AboutPage() {
                   </>
                 )
               },
+            ].map((item, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.55, delay: idx * 0.04 }}
+                className="relative flex flex-col sm:flex-row gap-3 sm:gap-0"
+              >
+                <div className="hidden sm:flex w-[120px] flex-shrink-0 justify-end pr-8 pt-[3px]">
+                  <span className="text-[11px] font-bold uppercase tracking-widest text-brand-pink text-right leading-tight">
+                    {item.period}
+                  </span>
+                </div>
+                <div className="hidden sm:block absolute left-[116px] top-[5px] w-[9px] h-[9px] rounded-full bg-brand-navy border-2 border-background shadow-sm" />
+                <div className="sm:pl-10 flex-1">
+                  <span className="sm:hidden text-[11px] font-bold uppercase tracking-widest text-brand-pink mb-1 block">
+                    {item.period}
+                  </span>
+                  <h3 className="text-xl md:text-2xl font-semibold text-brand-navy font-serif mb-3 leading-snug">
+                    {item.title}
+                  </h3>
+                  <div className="text-foreground/75 text-[15.5px] leading-relaxed max-w-3xl">
+                    {item.content}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="relative">
+            <div className="absolute left-[120px] top-2 bottom-2 w-px bg-border hidden sm:block" />
+            <div className="space-y-12">
+            {[
               {
                 period: "2023",
                 title: "Measuring Responsible AI Across Africa",
@@ -340,7 +391,39 @@ export default function AboutPage() {
               </motion.div>
             ))}
           </div>
+          </div>
         </div>
+
+        {/* Journey Photos */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-5"
+        >
+          <div className="overflow-hidden rounded-2xl shadow-lg border border-border/40 aspect-[4/3]">
+            <img
+              src="/images/myjourney1.jpeg"
+              alt="Maha Jouini – My Journey"
+              className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+            />
+          </div>
+          <div className="overflow-hidden rounded-2xl shadow-lg border border-border/40 aspect-[4/3]">
+            <img
+              src="/images/myjourney2.jpeg"
+              alt="Maha Jouini – My Journey"
+              className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
+            />
+          </div>
+          <div className="overflow-hidden rounded-2xl shadow-lg border border-border/40 aspect-[4/3]">
+            <img
+              src="/images/2.jpeg"
+              alt="Maha Jouini speaking at the African Commission on Human and Peoples' Rights panel"
+              className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-500"
+            />
+          </div>
+        </motion.div>
 
         {/* Looking Ahead */}
         <motion.div
@@ -370,14 +453,29 @@ export default function AboutPage() {
 
       {/* ── 2. Academia Journey ──────────────────────────────────────────── */}
       <section className="py-16 px-6 md:px-12 max-w-7xl mx-auto border-t border-border bg-brand-navy/5 rounded-3xl mb-16">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-3xl md:text-4xl lg:text-5xl font-serif text-brand-navy mb-12"
-        >
-          Academia Journey
-        </motion.h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-12">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-3xl md:text-4xl lg:text-5xl font-serif text-brand-navy"
+          >
+            Academia Journey
+          </motion.h2>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.97 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="overflow-hidden rounded-2xl shadow-lg border border-border/40 aspect-video"
+          >
+            <img
+              src="/images/3.jpeg"
+              alt="Maha Jouini speaking at a Tunisian event"
+              className="w-full h-full object-cover object-top"
+            />
+          </motion.div>
+        </div>
 
         <div className="space-y-0">
           {[
