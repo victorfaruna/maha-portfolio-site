@@ -49,14 +49,14 @@ export function VisionApproach() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="w-full h-full flex flex-col"
+            className="w-full relative h-[480px] md:h-full"
           >
-            <div className="relative w-full h-full min-h-[480px] rounded-2xl overflow-hidden shadow-2xl bg-black border border-border/40">
+            <div className="w-full h-full md:absolute md:inset-0 rounded-2xl overflow-hidden shadow-2xl bg-black border border-border/40">
               <img
                 src="/images/mahaholdingbook.jpeg"
                 alt="Maha Jouini holding book"
                 className="w-full h-full object-cover"
-                style={{ objectPosition: "50% 0%" }}
+                style={{ objectPosition: "50% 12%" }}
               />
             </div>
           </motion.div>
