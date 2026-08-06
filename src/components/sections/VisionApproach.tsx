@@ -37,6 +37,9 @@ export function VisionApproach() {
               <blockquote className="border-l-3 border-brand-navy pl-5 italic text-lg text-brand-navy font-serif py-1 my-2">
                 &quot;Yesterday I was clever, so I wanted to change the world. Today I am wise, so I am changing myself.&quot;
               </blockquote>
+              <p>
+                I believe that the next generation of AI will not be defined solely by larger models or greater computational power, but by our ability to embed <strong>wisdom, empathy, cultural diversity, and human dignity</strong> into the systems we create.
+              </p>
             </div>
           </motion.div>
 
