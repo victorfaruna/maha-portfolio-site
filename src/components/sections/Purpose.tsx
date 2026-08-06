@@ -100,23 +100,13 @@ export function Purpose() {
             </div>
             <div className="space-y-6 text-foreground font-sans text-lg">
               <p>
-                Maha Jouini is a Tunisian AI thought leader, researcher, and
-                Pan-African advocate working at the intersection of artificial
-                intelligence, ethics, public policy, and human development. My
-                work is dedicated to ensuring that AI serves people, strengthens
-                institutions, and advances social justice across Africa and the
-                Global South.
+                My purpose is to ensure that artificial intelligence serves people, strengthens public institutions, and advances social justice across Africa and the broader Global South.
               </p>
               <p className="font-semibold text-foreground text-xl leading-relaxed py-4">
-                Technology alone cannot guarantee justice; AI must be guided by
-                wisdom, dignity, and human resilience.
+                I believe technology alone cannot guarantee justice; AI must be guided by wisdom, human dignity, and lived experience.
               </p>
               <p>
-                As the Founder of CHIFAA, a survivor-led initiative, I develop
-                responsible AI solutions for women affected by breast and
-                cervical cancer across North Africa. Inspired by my own
-                experience, CHIFAA combines ethical AI, multilingual
-                accessibility, and community-centered design.
+                As a researcher, advocate, and cancer survivor, I bridge ethics, public policy, and technology to build community-centered AI solutions like CHIFAA that deliver accessible healthcare and real impact where it is needed most.
               </p>
             </div>
           </motion.div>

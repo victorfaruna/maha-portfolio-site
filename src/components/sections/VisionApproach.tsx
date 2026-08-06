@@ -23,16 +23,13 @@ export function VisionApproach() {
             </div>
             <div className="space-y-5 text-foreground/80 font-sans text-lg md:text-[19px] leading-relaxed">
               <p>
-                Artificial intelligence is not only an engineering challenge—it is a human one.
+                My approach is to treat artificial intelligence not merely as an engineering challenge, but as a deeply human and cultural one.
               </p>
               <p>
-                My approach combines <strong>technology, ethics, philosophy, healthcare, and public policy</strong> to create AI that is trustworthy, inclusive, and rooted in the cultures and communities it serves.
+                I combine <strong>technology, philosophy, public health, and policy</strong> to build AI systems that are trustworthy, compassionate, and rooted in community wisdom.
               </p>
               <p>
-                Through <strong>CHIFAA</strong>, I transform responsible AI principles into practical healthcare solutions that empower women affected by breast and cervical cancer across North Africa.
-              </p>
-              <p>
-                Through <strong>HIKMA AI</strong>, I promote a vision inspired by the intellectual traditions of <strong>Timbuktu, Kairouan, Baghdad</strong>, and the timeless wisdom of <strong>Mawlānā Jalāl al-Dīn Rūmī</strong>, reminding us that intelligence without compassion is incomplete.
+                Through <strong>HIKMA AI</strong> and <strong>CHIFAA</strong>, I draw inspiration from timeless civilizational knowledge from Timbuktu to Baghdad to ensure the next generation of AI is defined by empathy, multilingual accessibility, and ethical design.
               </p>
               <p className="italic pt-2 text-foreground/75">
                 As Rūmī wrote:
@@ -40,9 +37,6 @@ export function VisionApproach() {
               <blockquote className="border-l-3 border-brand-navy pl-5 italic text-lg text-brand-navy font-serif py-1 my-2">
                 &quot;Yesterday I was clever, so I wanted to change the world. Today I am wise, so I am changing myself.&quot;
               </blockquote>
-              <p>
-                I believe that the next generation of AI will not be defined solely by larger models or greater computational power, but by our ability to embed <strong>wisdom, empathy, cultural diversity, and human dignity</strong> into the systems we create.
-              </p>
             </div>
           </motion.div>
 
