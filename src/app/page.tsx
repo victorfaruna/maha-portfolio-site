@@ -3,6 +3,7 @@ import { Hero } from "@/components/sections/Hero";
 import { IntroText } from "@/components/sections/IntroText";
 
 import { Purpose } from "@/components/sections/Purpose";
+import { VisionApproach } from "@/components/sections/VisionApproach";
 import { JoinMovement } from "@/components/sections/JoinMovement";
 import { MoonshotMission } from "@/components/sections/MoonshotMission";
 
@@ -20,6 +21,7 @@ export default function Home() {
       <IntroText />
 
       <Purpose />
+      <VisionApproach />
       <MoonshotMission />
       <JoinMovement />
 

@@ -61,108 +61,54 @@ export default function AboutPage() {
         </div>
       </section>
 
-
-
       {/* ── Bio & Philosophy ─────────────────────────────────────────── */}
-      <section className="py-16 px-4 md:px-8 max-w-7xl mx-auto">
+      <section className="py-16 px-6 md:px-12 max-w-7xl mx-auto">
+        <div className="max-w-4xl mx-auto space-y-6 text-foreground/80 text-[16.5px] md:text-[20px] leading-relaxed">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
+            <p className="mb-4">
+              Maha Jouini is an internationally recognized AI governance expert, researcher, and entrepreneur dedicated to advancing responsible, human-centered, and culturally grounded artificial intelligence. Her work bridges technology, public policy, ethics, healthcare, and sustainable development, with a particular focus on ensuring that AI reflects the realities and values of the Global South.
+            </p>
+            <p className="mb-4">
+              She is the Founder of <strong>CHIFAA</strong>, a survivor-led responsible AI initiative developing culturally grounded AI solutions to support women affected by breast and cervical cancer across North Africa. Drawing on her own experience as a bilateral breast cancer survivor, she has transformed lived experience into innovation — demonstrating how AI can strengthen healthcare systems while preserving dignity, trust, and community.
+            </p>
+            <p className="mb-4">
+              She is also the Founder of <strong>HIKMA AI</strong>, a platform dedicated to advancing AI governance, AI safety, and ethical AI through Arab and African perspectives. Through initiatives such as Salam AI, she promotes responsible AI systems designed to foster safer digital spaces, address online harms, and amplify the knowledge systems of the regions they serve.
+            </p>
+            <p className="mb-4">
+              Her expertise spans AI governance, AI policy, AI safety, responsible AI, digital health, human-centered AI design, multilingual language technologies, and multi-stakeholder collaboration. She advises governments, international organizations, academic institutions, and civil society on developing AI strategies that are inclusive, trustworthy, and aligned with human rights and sustainable development.
+            </p>
+            <p className="mb-4">
+              Maha has contributed to numerous international initiatives on AI governance and ethics, and has spoken at global conferences hosted by organizations including UNESCO, the African Union, the United Nations system, and leading academic and research institutions. She has authored research and policy publications on responsible AI, digital inclusion, and governance, with a particular focus on Africa and the Arab region.
+            </p>
+            <p className="mb-8">
+              <strong>Beyond her work in AI, Maha is a recognized Arab storyteller and author.</strong> She has written <em>عاشقة من إفريقيا</em> (A Lover from Africa) and <em>الرقصة الأخيرة: من قرطاج إلى الصين</em> (The Last Dance: From Carthage to China). Her books are held in the official library of the Tunisian Ministry of Women and in the Tunisian National Library — a reflection of the same conviction that runs through her technical work: that wisdom, memory, and human stories are as vital to shaping the future as innovation itself.
+            </p>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
-          <div className="lg:col-span-8 space-y-6 text-foreground/80 text-[15.5px] leading-relaxed">
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-              <p className="mb-4">
-                Maha Jouini is an internationally recognized AI governance expert, researcher, and entrepreneur dedicated to advancing responsible, human-centered, and culturally grounded artificial intelligence. Her work bridges technology, public policy, ethics, healthcare, and sustainable development, with a particular focus on ensuring that AI reflects the realities and values of the Global South.
-              </p>
-              <p className="mb-4">
-                She is the Founder of <strong>CHIFAA</strong>, a survivor-led responsible AI initiative developing culturally grounded AI solutions to support women affected by breast and cervical cancer across North Africa. Drawing on her own experience as a bilateral breast cancer survivor, she has transformed lived experience into innovation — demonstrating how AI can strengthen healthcare systems while preserving dignity, trust, and community.
-              </p>
-              <p className="mb-4">
-                She is also the Founder of <strong>HIKMA AI</strong>, a platform dedicated to advancing AI governance, AI safety, and ethical AI through Arab and African perspectives. Through initiatives such as Salam AI, she promotes responsible AI systems designed to foster safer digital spaces, address online harms, and amplify the knowledge systems of the regions they serve.
-              </p>
-              <p className="mb-4">
-                Her expertise spans AI governance, AI policy, AI safety, responsible AI, digital health, human-centered AI design, multilingual language technologies, and multi-stakeholder collaboration. She advises governments, international organizations, academic institutions, and civil society on developing AI strategies that are inclusive, trustworthy, and aligned with human rights and sustainable development.
-              </p>
-              <p className="mb-4">
-                Maha has contributed to numerous international initiatives on AI governance and ethics, and has spoken at global conferences hosted by organizations including UNESCO, the African Union, the United Nations system, and leading academic and research institutions. She has authored research and policy publications on responsible AI, digital inclusion, and governance, with a particular focus on Africa and the Arab region.
-              </p>
-              <p className="mb-8">
-                <strong>Beyond her work in AI, Maha is a recognized Arab storyteller and author.</strong> She has written <em>عاشقة من إفريقيا</em> (A Lover from Africa) and <em>الرقصة الأخيرة: من قرطاج إلى الصين</em> (The Last Dance: From Carthage to China). Her books are held in the official library of the Tunisian Ministry of Women and in the Tunisian National Library — a reflection of the same conviction that runs through her technical work: that wisdom, memory, and human stories are as vital to shaping the future as innovation itself.
-              </p>
+            <h3 className="text-2xl font-serif text-brand-navy mb-4 mt-12">From Storytelling and Poetry to AI Systems</h3>
+            <p className="mb-4">
+              Before algorithms, there were words. Maha Jouini&apos;s journey began not in code, but in poetry and prose — in <em>عاشقة من إفريقيا</em> and <em>الرقصة الأخيرة: من قرطاج إلى الصين</em>, where she explored identity, memory, and belonging across continents. That same instinct carried her into artificial intelligence: the belief that every system, like every story, carries a worldview — and that whoever writes it decides whose humanity is seen.
+            </p>
+            <p className="mb-8">
+              Today, she moves fluidly between both worlds. As a novelist, she gives voice to lived experience. As an AI governance expert and founder of CHIFAA and HIKMA AI, she ensures that voice — and the wisdom of the Global South — is written into the systems shaping our future.
+            </p>
 
-              <h3 className="text-2xl font-serif text-brand-navy mb-4 mt-12">From Storytelling and Poetry to AI Systems</h3>
+            <div className="bg-brand-navy/5 p-6 rounded-xl border border-brand-navy/10 mb-12">
               <p className="mb-4">
-                Before algorithms, there were words. Maha Jouini&apos;s journey began not in code, but in poetry and prose — in <em>عاشقة من إفريقيا</em> and <em>الرقصة الأخيرة: من قرطاج إلى الصين</em>, where she explored identity, memory, and belonging across continents. That same instinct carried her into artificial intelligence: the belief that every system, like every story, carries a worldview — and that whoever writes it decides whose humanity is seen.
+                Her contributions have been recognized internationally. She is the recipient of the <strong>She Shapes AI Global Award for AI Thought Leadership (2026)</strong> and was previously named among <strong>UNESCO&apos;s Top 20 Women AI Change Makers in the MENA Region</strong>. She also serves as <strong>Vice President of the Agence Francophone et Africaine de l'Intelligence Artificielle (AFRIA)</strong>.
               </p>
-              <p className="mb-8">
-                Today, she moves fluidly between both worlds. As a novelist, she gives voice to lived experience. As an AI governance expert and founder of CHIFAA and HIKMA AI, she ensures that voice — and the wisdom of the Global South — is written into the systems shaping our future.
+              <p className="mb-4">
+                Through her work — technical and literary alike — Maha advocates for a future where AI is not only advanced but socially responsible, culturally grounded, and designed to improve lives across diverse communities.
               </p>
-
-              <div className="bg-brand-navy/5 p-6 rounded-xl border border-brand-navy/10 mb-12">
-                <p className="mb-4">
-                  Her contributions have been recognized internationally. She is the recipient of the <strong>She Shapes AI Global Award for AI Thought Leadership (2026)</strong> and was previously named among <strong>UNESCO&apos;s Top 20 Women AI Change Makers in the MENA Region</strong>. She also serves as <strong>Vice President of the Agence Francophone et Africaine de l'Intelligence Artificielle (AFRIA)</strong>.
-                </p>
-                <p className="mb-4">
-                  Through her work — technical and literary alike — Maha advocates for a future where AI is not only advanced but socially responsible, culturally grounded, and designed to improve lives across diverse communities.
-                </p>
-                <blockquote className="italic font-serif text-brand-navy text-lg text-center mt-6">
-                  &quot;The future of AI will not be built by one region alone. It must be co-created by the communities it seeks to serve.&quot;
-                </blockquote>
-              </div>
-            </motion.div>
-          </div>
-
-          <div className="lg:col-span-4 space-y-12">
-            {/* Vision */}
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-1 h-8 bg-brand-pink" />
-                <h3 className="text-xl font-semibold text-brand-navy font-serif">
-                  What is my vision?
-                </h3>
-              </div>
-              <p className="text-foreground/75 leading-relaxed text-[15px] mb-4">
-                My vision is to ensure that the <strong>Global South becomes a global architect of responsible artificial intelligence</strong>, contributing not only technology and talent, but also wisdom, ethical leadership, and culturally grounded innovation.
-              </p>
-              <p className="text-foreground/75 leading-relaxed text-[15px]">
-                I believe the future of AI should be shaped by many civilizations, languages, and knowledge systems. By bringing together science, philosophy, and public policy, I work to build AI that serves humanity, protects human dignity, and advances sustainable development for all.
-              </p>
-            </motion.div>
-
-            {/* Approach */}
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1 }}>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-1 h-8 bg-brand-cyan" />
-                <h3 className="text-xl font-semibold text-brand-navy font-serif">
-                  The Approach
-                </h3>
-              </div>
-              <p className="text-foreground/75 leading-relaxed text-[15px] mb-4">
-                Artificial intelligence is not only an engineering challenge—it is a human one.
-              </p>
-              <p className="text-foreground/75 leading-relaxed text-[15px] mb-4">
-                My approach combines <strong>technology, ethics, philosophy, healthcare, and public policy</strong> to create AI that is trustworthy, inclusive, and rooted in the cultures and communities it serves.
-              </p>
-              <p className="text-foreground/75 leading-relaxed text-[15px] mb-4">
-                Through <strong>CHIFAA</strong>, I transform responsible AI principles into practical healthcare solutions that empower women affected by breast and cervical cancer across North Africa.
-              </p>
-              <p className="text-foreground/75 leading-relaxed text-[15px] mb-4">
-                Through <strong>HIKMA AI</strong>, I promote a vision inspired by the intellectual traditions of <strong>Timbuktu, Kairouan, Baghdad</strong>, and the timeless wisdom of <strong>Mawlānā Jalāl al-Dīn Rūmī</strong>, reminding us that intelligence without compassion is incomplete.
-              </p>
-              <p className="text-foreground/75 leading-relaxed text-[15px] mb-3 italic">
-                As Rūmī wrote:
-              </p>
-              <blockquote className="border-l-2 border-brand-navy pl-4 italic text-[15px] text-brand-navy mb-4">
-                &quot;Yesterday I was clever, so I wanted to change the world. Today I am wise, so I am changing myself.&quot;
+              <blockquote className="italic font-serif text-brand-navy text-lg text-center mt-6">
+                &quot;The future of AI will not be built by one region alone. It must be co-created by the communities it seeks to serve.&quot;
               </blockquote>
-              <p className="text-foreground/75 leading-relaxed text-[15px]">
-                I believe that the next generation of AI will not be defined solely by larger models or greater computational power, but by our ability to embed <strong>wisdom, empathy, cultural diversity, and human dignity</strong> into the systems we create.
-              </p>
-            </motion.div>
-          </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
       {/* ── 1. My Journey (Timeline) ────────────────────────────────────── */}
-      <section className="py-16 px-4 md:px-8 max-w-7xl mx-auto border-t border-border">
+      <section className="py-16 px-6 md:px-12 max-w-7xl mx-auto border-t border-border">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -185,6 +131,13 @@ export default function AboutPage() {
             <p className="font-semibold text-brand-navy">
               It began with people.
             </p>
+            <div className="mt-8 overflow-hidden rounded-2xl shadow-lg border border-border/40 max-w-4xl">
+              <img
+                src="/images/myjourneyimage.jpeg"
+                alt="My Journey - Maha Jouini"
+                className="w-full h-auto max-h-[480px] object-cover"
+              />
+            </div>
           </div>
         </motion.div>
 
@@ -395,15 +348,15 @@ export default function AboutPage() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="mt-20 max-w-3xl sm:pl-[130px]"
+          className="mt-20 max-w-4xl mx-auto mb-16"
         >
           <h3 className="text-2xl md:text-3xl font-serif text-brand-navy mb-5">
             Looking Ahead
           </h3>
-          <p className="text-foreground/75 text-[15.5px] leading-relaxed mb-4">
+          <p className="text-foreground/75 text-[15.5px] md:text-[18px] leading-relaxed mb-4">
             My work continues through HIKMA AI, an initiative dedicated to advancing ethical, culturally grounded, and human-centred artificial intelligence inspired by the intellectual traditions of Africa and the Global South.
           </p>
-          <p className="text-foreground/75 text-[15.5px] leading-relaxed mb-8">
+          <p className="text-foreground/75 text-[15.5px] md:text-[18px] leading-relaxed mb-8">
             Across every role I have held—from youth engagement and continental policy to AI governance and public sector digital transformation—one principle has remained constant:
           </p>
           
@@ -416,7 +369,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── 2. Academia Journey ──────────────────────────────────────────── */}
-      <section className="py-16 px-4 md:px-8 max-w-7xl mx-auto border-t border-border bg-brand-navy/5 rounded-3xl mb-16">
+      <section className="py-16 px-6 md:px-12 max-w-7xl mx-auto border-t border-border bg-brand-navy/5 rounded-3xl mb-16">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

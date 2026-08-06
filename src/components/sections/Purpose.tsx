@@ -9,7 +9,7 @@ export function Purpose() {
     <section id="purpose" className="py-24 bg-background">
       <div className="container mx-auto px-6 md:px-12 max-w-7xl">
         {/* Top Section: Vision */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-20 mb-16 md:mb-32 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-20 mb-16 md:mb-32 items-stretch">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -17,23 +17,18 @@ export function Purpose() {
             transition={{ duration: 0.8 }}
             className="space-y-6 order-2 md:order-1"
           >
-            <div className="w-16 h-px bg-foreground mb-8"></div>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl text-foreground font-serif mb-6">
-              What is my vision?
-            </h2>
-            <div className="space-y-6 text-foreground font-sans text-lg">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-1.5 h-8 bg-brand-cyan rounded-full" />
+              <h2 className="text-3xl md:text-4xl lg:text-5xl text-brand-navy font-serif font-semibold">
+                What is my vision?
+              </h2>
+            </div>
+            <div className="space-y-6 text-foreground/80 font-sans text-lg md:text-[19px] leading-relaxed">
               <p>
-                My vision is to ensure that the Global South becomes a global
-                architect of responsible artificial intelligence, contributing
-                not only technology and talent, but also wisdom, ethical
-                leadership, and culturally grounded innovation.
+                My vision is to ensure that the <strong>Global South becomes a global architect of responsible artificial intelligence</strong>, contributing not only technology and talent, but also wisdom, ethical leadership, and culturally grounded innovation.
               </p>
               <p>
-                I believe the future of AI should be shaped by many
-                civilizations, languages, and knowledge systems. By bringing
-                together science, philosophy, and public policy, I work to build
-                AI that serves humanity, protects human dignity, and advances
-                sustainable development for all.
+                I believe the future of AI should be shaped by many civilizations, languages, and knowledge systems. By bringing together science, philosophy, and public policy, I work to build AI that serves humanity, protects human dignity, and advances sustainable development for all.
               </p>
 
               {/* <h3 className="text-foreground font-semibold pt-2 text-xl">
@@ -89,7 +84,7 @@ export function Purpose() {
         </div>
 
         {/* Bottom Section: Purpose */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 items-stretch">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -97,10 +92,12 @@ export function Purpose() {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="space-y-6 order-2 md:order-1"
           >
-            <div className="w-16 h-px bg-foreground mb-8"></div>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl text-foreground font-serif mb-6">
-              My purpose
-            </h2>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-1.5 h-8 bg-brand-pink rounded-full" />
+              <h2 className="text-3xl md:text-4xl lg:text-5xl text-brand-navy font-serif font-semibold">
+                My purpose
+              </h2>
+            </div>
             <div className="space-y-6 text-foreground font-sans text-lg">
               <p>
                 Maha Jouini is a Tunisian AI thought leader, researcher, and
@@ -129,7 +126,7 @@ export function Purpose() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8 }}
-            className="relative w-full aspect-video md:aspect-[4/5] rounded-xl overflow-hidden shadow-2xl order-1 md:order-2"
+            className="relative w-full h-full min-h-[380px] rounded-xl overflow-hidden shadow-2xl order-1 md:order-2"
           >
             <Image
               src="/images/From Storytelling and Poetry to AI Systems.jpg"
