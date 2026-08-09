@@ -17,8 +17,8 @@ export function VisionApproach() {
           >
             <div className="flex items-center gap-3 mb-6">
               <div className="w-1.5 h-8 bg-brand-cyan rounded-full" />
-              <h2 className="text-3xl md:text-4xl text-brand-navy font-serif font-semibold">
-                The Approach
+              <h2 className="text-3xl md:text-4xl lg:text-5xl text-brand-navy font-serif font-semibold">
+                What is my approach?
               </h2>
             </div>
             <div className="space-y-5 text-foreground/80 font-sans text-lg md:text-[19px] leading-relaxed">

@@ -82,8 +82,8 @@ export function EmpathyNews() {
                 alt={channel.title}
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-              <h3 className="absolute bottom-6 left-6 right-6 text-white text-xl md:text-2xl font-bold font-sans">
+              <div className="absolute bottom-0 inset-x-0 h-1/2 bg-gradient-to-t from-black/60 via-black/20 to-transparent pointer-events-none" />
+              <h3 className="absolute bottom-6 left-6 right-6 text-white text-xl md:text-2xl font-bold font-sans drop-shadow-md">
                 {channel.title}
               </h3>
             </motion.div>

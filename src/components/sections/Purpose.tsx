@@ -95,7 +95,7 @@ export function Purpose() {
             <div className="flex items-center gap-3 mb-6">
               <div className="w-1.5 h-8 bg-brand-pink rounded-full" />
               <h2 className="text-3xl md:text-4xl lg:text-5xl text-brand-navy font-serif font-semibold">
-                My purpose
+                What is my purpose?
               </h2>
             </div>
             <div className="space-y-6 text-foreground font-sans text-lg">
