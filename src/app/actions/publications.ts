@@ -42,14 +42,24 @@ export async function uploadPublicationImage(formData: FormData): Promise<{ url?
   const ext = file.name.split('.').pop() ?? 'jpg';
   const path = `inline/${Date.now()}_${Math.random().toString(36).substring(2, 7)}.${ext}`;
 
-  const { error } = await supabase.storage
-    .from('publication-images')
-    .upload(path, file, { contentType: file.type, upsert: false });
+  try {
+    const { error } = await supabase.storage
+      .from('publication-images')
+      .upload(path, file, { contentType: file.type || 'image/jpeg', upsert: true });
 
-  if (error) return { error: error.message };
+    if (!error) {
+      const { data } = supabase.storage.from('publication-images').getPublicUrl(path);
+      if (data?.publicUrl) return { url: data.publicUrl };
+    }
+  } catch {
+    // Fallback if storage upload fails
+  }
 
-  const { data } = supabase.storage.from('publication-images').getPublicUrl(path);
-  return { url: data.publicUrl };
+  // Fallback to Data URL
+  const arrayBuffer = await file.arrayBuffer();
+  const base64 = Buffer.from(arrayBuffer).toString('base64');
+  const mimeType = file.type || 'image/jpeg';
+  return { url: `data:${mimeType};base64,${base64}` };
 }
 
 export async function createPublication(

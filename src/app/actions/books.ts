@@ -12,16 +12,26 @@ async function uploadBookCover(file: File): Promise<string | null> {
 
   const supabase = createServerClient();
   const ext = file.name.split('.').pop() ?? 'jpg';
-  const path = `covers/${Date.now()}.${ext}`;
+  const path = `covers/${Date.now()}_${Math.random().toString(36).substring(2, 7)}.${ext}`;
 
-  const { error } = await supabase.storage
-    .from('book-covers')
-    .upload(path, file, { contentType: file.type, upsert: false });
+  try {
+    const { error } = await supabase.storage
+      .from('book-covers')
+      .upload(path, file, { contentType: file.type || 'image/jpeg', upsert: true });
 
-  if (error) throw new Error(`Image upload failed: ${error.message}`);
+    if (!error) {
+      const { data } = supabase.storage.from('book-covers').getPublicUrl(path);
+      if (data?.publicUrl) return data.publicUrl;
+    }
+  } catch {
+    // Fallback if storage upload fails
+  }
 
-  const { data } = supabase.storage.from('book-covers').getPublicUrl(path);
-  return data.publicUrl;
+  // Fallback to Data URL so cover image upload never fails
+  const arrayBuffer = await file.arrayBuffer();
+  const base64 = Buffer.from(arrayBuffer).toString('base64');
+  const mimeType = file.type || 'image/jpeg';
+  return `data:${mimeType};base64,${base64}`;
 }
 
 export async function createBook(
@@ -32,12 +42,16 @@ export async function createBook(
 
   let coverUrl: string | null = null;
   const coverFile = formData.get('cover_image') as File | null;
+  const directUrl = (formData.get('cover_image_url') as string | null)?.trim();
+
   if (coverFile && coverFile.size > 0) {
     try {
       coverUrl = await uploadBookCover(coverFile);
     } catch (e: unknown) {
       return { error: e instanceof Error ? e.message : 'Upload failed.' };
     }
+  } else if (directUrl) {
+    coverUrl = directUrl;
   }
 
   const data: BookInsert = {
@@ -72,7 +86,8 @@ export async function updateBook(
 
   let coverUrl: string | null = null;
   const coverFile = formData.get('cover_image') as File | null;
-  const existingUrl = formData.get('existing_cover_url') as string | null;
+  const directUrl = (formData.get('cover_image_url') as string | null)?.trim();
+  const existingUrl = (formData.get('existing_cover_url') as string | null)?.trim();
 
   if (coverFile && coverFile.size > 0) {
     try {
@@ -80,6 +95,8 @@ export async function updateBook(
     } catch (e: unknown) {
       return { error: e instanceof Error ? e.message : 'Upload failed.' };
     }
+  } else if (directUrl) {
+    coverUrl = directUrl;
   } else {
     coverUrl = existingUrl || null;
   }

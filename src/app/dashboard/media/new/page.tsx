@@ -29,9 +29,8 @@ export default function NewMediaPage() {
 
       <form action={action} className="space-y-6 bg-white border border-gray-100 shadow-sm p-8" encType="multipart/form-data">
         <FormField
-          label="Image"
+          label="Image File"
           name="image"
-          required
           hint="Upload the gallery image (JPG, PNG, WebP). Recommended: 16:10 aspect ratio."
         >
           <input
@@ -39,8 +38,23 @@ export default function NewMediaPage() {
             name="image"
             type="file"
             accept="image/*"
-            required
             className="w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:border file:border-gray-200 file:text-xs file:font-semibold file:text-[#0B1F4D] file:bg-gray-50 hover:file:bg-gray-100 file:cursor-pointer"
+          />
+        </FormField>
+
+        <div className="relative flex py-1 items-center">
+          <div className="flex-grow border-t border-gray-200"></div>
+          <span className="shrink mx-3 text-xs font-semibold text-gray-400 uppercase tracking-widest">OR</span>
+          <div className="flex-grow border-t border-gray-200"></div>
+        </div>
+
+        <FormField label="Image URL" name="image_url" hint="Or paste a direct web link to an image (e.g. https://... or /images/...)">
+          <input
+            id="image_url"
+            name="image_url"
+            type="text"
+            placeholder="https://example.com/photo.jpg"
+            className={inputClass}
           />
         </FormField>
 

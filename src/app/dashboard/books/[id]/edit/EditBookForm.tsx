@@ -91,7 +91,7 @@ export default function EditBookForm({ book }: { book: Book }) {
                   alt="Current cover"
                   fill
                   className="object-cover"
-                  unoptimized={book.cover_image_url.startsWith('/')}
+                  unoptimized={true}
                 />
               </div>
             </div>
@@ -102,6 +102,16 @@ export default function EditBookForm({ book }: { book: Book }) {
             type="file"
             accept="image/*"
             className="w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:border file:border-gray-200 file:text-xs file:font-semibold file:text-[#0B1F4D] file:bg-gray-50 hover:file:bg-gray-100 file:cursor-pointer"
+          />
+        </FormField>
+
+        <FormField label="Or New Cover Image URL" name="cover_image_url" hint="Or enter a direct image URL to replace the current cover.">
+          <input
+            id="cover_image_url"
+            name="cover_image_url"
+            type="text"
+            placeholder="https://example.com/cover.jpg"
+            className={inputClass}
           />
         </FormField>
 

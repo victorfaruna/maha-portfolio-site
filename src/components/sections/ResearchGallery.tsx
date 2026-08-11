@@ -122,7 +122,7 @@ export function ResearchGallery({ mediaItems }: Props) {
                     fill
                     className="object-cover"
                     priority
-                    unoptimized={currentItem.image_url.startsWith("/")}
+                    unoptimized={true}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-60" />
                 </motion.div>
@@ -215,7 +215,7 @@ export function ResearchGallery({ mediaItems }: Props) {
                     alt={item.title ?? ""}
                     fill
                     className="object-cover"
-                    unoptimized={item.image_url.startsWith("/")}
+                    unoptimized={true}
                   />
                 </button>
               ))}

@@ -47,7 +47,7 @@ export default function BooksSection({ books }: { books: Book[] }) {
                     alt={book.title_english}
                     fill
                     className="object-cover"
-                    unoptimized={book.cover_image_url.startsWith("/")}
+                    unoptimized={true}
                   />
                 </div>
               )}
