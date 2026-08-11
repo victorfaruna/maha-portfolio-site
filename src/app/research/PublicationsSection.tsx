@@ -66,15 +66,8 @@ export default function PublicationsSection({ publications }: { publications: Pu
             const articleSlug = pub.slug || slugify(pub.title);
             const hasContent = Boolean(pub.content || pub.slug);
 
-            return (
-              <motion.div
-                key={pub.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: idx * 0.06 }}
-                className="group bg-background border border-border hover:border-brand-navy/30 transition-all duration-500 flex flex-col justify-between p-5 sm:p-8 hover:shadow-lg relative"
-              >
+            const cardInnerContent = (
+              <div className="flex flex-col justify-between h-full p-5 sm:p-8">
                 <div>
                   {/* Category Tag & Year */}
                   <div className="flex items-center justify-between mb-4 md:mb-6 text-xs uppercase tracking-widest font-semibold">
@@ -102,19 +95,38 @@ export default function PublicationsSection({ publications }: { publications: Pu
                   </p>
                 </div>
 
-                {/* Read Article Link */}
+                {/* Read Article Link Indicator */}
+                {hasContent ? (
+                  <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold uppercase tracking-wider text-brand-navy group-hover:text-brand-pink transition-colors pt-4 border-t border-border/60">
+                    Read Article
+                    <ArrowUpRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </div>
+                ) : (
+                  <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold uppercase tracking-wider text-foreground/30 pt-4 border-t border-border/60 cursor-not-allowed">
+                    Coming Soon
+                  </div>
+                )}
+              </div>
+            );
+
+            return (
+              <motion.div
+                key={pub.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: idx * 0.06 }}
+                className="group bg-background border border-border hover:border-brand-navy/30 transition-all duration-500 hover:shadow-lg relative"
+              >
                 {hasContent ? (
                   <Link
                     href={`/research/${articleSlug}`}
-                    className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold uppercase tracking-wider text-brand-navy group-hover:text-brand-pink transition-colors pt-4 border-t border-border/60"
+                    className="block h-full cursor-pointer"
                   >
-                    Read Article
-                    <ArrowUpRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    {cardInnerContent}
                   </Link>
                 ) : (
-                  <span className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold uppercase tracking-wider text-foreground/30 pt-4 border-t border-border/60 cursor-not-allowed">
-                    Coming Soon
-                  </span>
+                  <div className="h-full">{cardInnerContent}</div>
                 )}
               </motion.div>
             );
