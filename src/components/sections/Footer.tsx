@@ -189,14 +189,19 @@ export function Footer({ showGradient = false }: { showGradient?: boolean }) {
         <div className="pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-6 text-foreground/50 text-sm">
           <div className="space-y-1 text-center md:text-left">
             <p>© {new Date().getFullYear()} Maha Jouini. All rights reserved.</p>
-            <p className="text-foreground/50 font-normal">
-              Made with ♥ for Africa by{" "}
+            <p className="text-foreground/50 font-normal flex items-center justify-center md:justify-start gap-1.5 flex-wrap">
+              Made with <span className="text-red-500">♥</span> for Africa by{" "}
               <a
                 href="https://talkafricang.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-foreground underline underline-offset-2 transition-colors"
+                className="hover:text-foreground underline underline-offset-2 transition-colors inline-flex items-center gap-1.5 font-medium"
               >
+                <img
+                  src="/images/talkafricang-logo.jpg"
+                  alt="TalkAfricaNG Logo"
+                  className="w-4 h-4 rounded-full object-cover border border-border shrink-0"
+                />
                 TalkAfricaNG
               </a>
             </p>
