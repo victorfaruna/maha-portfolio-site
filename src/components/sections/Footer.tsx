@@ -187,7 +187,20 @@ export function Footer({ showGradient = false }: { showGradient?: boolean }) {
 
         {/* Footer Bottom Line */}
         <div className="pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-6 text-foreground/50 text-sm">
-          <p>© {new Date().getFullYear()} Maha Jouini. All rights reserved.</p>
+          <div className="space-y-1 text-center md:text-left">
+            <p>© {new Date().getFullYear()} Maha Jouini. All rights reserved.</p>
+            <p className="text-foreground/50 font-normal">
+              Made with ♥ for Africa by{" "}
+              <a
+                href="https://talkafricang.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-foreground underline underline-offset-2 transition-colors"
+              >
+                TalkAfricaNG
+              </a>
+            </p>
+          </div>
           <div className="flex gap-8 uppercase tracking-widest text-xs font-semibold">
             <a href="#" className="hover:text-foreground transition-colors">
               Privacy Policy
