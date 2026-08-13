@@ -168,8 +168,15 @@ export function RichTextEditor({
   });
 
   const addImage = useCallback(() => {
-    fileInputRef.current?.click();
-  }, []);
+    if (!editor) return;
+    const url = window.prompt('Enter image URL (or leave blank to choose a file from your device):');
+    if (url === null) return; // User cancelled
+    if (url.trim()) {
+      editor.chain().focus().setImage({ src: url.trim() }).run();
+    } else {
+      fileInputRef.current?.click();
+    }
+  }, [editor]);
 
   const addVideoEmbed = useCallback(() => {
     if (!editor) return;
@@ -184,17 +191,36 @@ export function RichTextEditor({
 
     setIsUploading(true);
     try {
-      const formData = new FormData();
-      formData.append('image', file);
-      const res = await uploadPublicationImage(formData);
+      let imageUrl: string | null = null;
 
-      if (res.url) {
-        editor.chain().focus().setImage({ src: res.url }).run();
-      } else if (res.error) {
-        alert(`Image upload error: ${res.error}`);
+      // 1. Try server action upload first
+      try {
+        const formData = new FormData();
+        formData.append('image', file);
+        const res = await uploadPublicationImage(formData);
+        if (res?.url) {
+          imageUrl = res.url;
+        }
+      } catch (serverErr) {
+        console.warn('Server upload failed, switching to client FileReader:', serverErr);
       }
-    } catch {
-      alert('Failed to upload image.');
+
+      // 2. Client-side fallback via FileReader (reads image directly in browser if server request fails)
+      if (!imageUrl) {
+        imageUrl = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result as string);
+          reader.onerror = () => reject(new Error('Failed to read image file'));
+          reader.readAsDataURL(file);
+        });
+      }
+
+      if (imageUrl) {
+        editor.chain().focus().setImage({ src: imageUrl }).run();
+      }
+    } catch (err: any) {
+      console.error('Image insertion error:', err);
+      alert(err?.message || 'Failed to insert image.');
     } finally {
       setIsUploading(false);
       if (fileInputRef.current) fileInputRef.current.value = '';
