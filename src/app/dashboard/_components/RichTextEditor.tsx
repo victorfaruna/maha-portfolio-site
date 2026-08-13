@@ -168,15 +168,8 @@ export function RichTextEditor({
   });
 
   const addImage = useCallback(() => {
-    if (!editor) return;
-    const url = window.prompt('Enter image URL (or leave blank to choose a file from your device):');
-    if (url === null) return; // User cancelled
-    if (url.trim()) {
-      editor.chain().focus().setImage({ src: url.trim() }).run();
-    } else {
-      fileInputRef.current?.click();
-    }
-  }, [editor]);
+    fileInputRef.current?.click();
+  }, []);
 
   const addVideoEmbed = useCallback(() => {
     if (!editor) return;
