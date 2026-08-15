@@ -250,7 +250,7 @@ export default function AboutPage() {
                 period: "2022",
                 title: "Contributing to the Global Conversation on AI Ethics",
                 images: [
-                  "/images/pictures for research and publicaton/4fd4bb39-b22a-4a9e-a909-342a02f131bb.jpg",
+                  "/images/pictures for research and publicaton/replacement 2.jpg",
                   "/images/pictures for research and publicaton/replacemet.JPG",
                 ],
                 content: (
