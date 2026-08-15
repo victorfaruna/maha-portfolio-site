@@ -75,8 +75,8 @@ export default async function ResearchPage() {
       {/* ── 3. PUBLICATIONS & ARTICLES GRID ──────────────────────────────── */}
       <PublicationsSection publications={publications} />
 
-      {/* ── 4. BOOKS SECTION ─────────────────────────────────────────────── */}
-      <BooksSection books={books} />
+      {/* ── 4. BOOKS SECTION (Temporarily removed) ───────────────────────── */}
+      {/* <BooksSection books={books} /> */}
 
       {/* ── 5. MEDIA & PHOTO CAROUSEL GALLERY ───────────────────────────── */}
       <ResearchGallery mediaItems={media} />

@@ -2,6 +2,7 @@
 
 import { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { Volume2, VolumeX } from "lucide-react";
 
 declare global {
   interface Window {
@@ -18,6 +19,22 @@ const THUMBNAIL_URL = `https://img.youtube.com/vi/${VIDEO_ID}/maxresdefault.jpg`
 export function Hero() {
   const playerRef = useRef<any>(null);
   const [videoPlaying, setVideoPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+
+  const toggleMute = () => {
+    if (!playerRef.current) return;
+    try {
+      if (playerRef.current.isMuted()) {
+        playerRef.current.unMute();
+        setIsMuted(false);
+      } else {
+        playerRef.current.mute();
+        setIsMuted(true);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   useEffect(() => {
     const initPlayer = () => {
@@ -26,7 +43,7 @@ export function Hero() {
         videoId: VIDEO_ID,
         playerVars: {
           autoplay: 1,
-          mute: 1,
+          mute: 0,
           loop: 1,
           playlist: VIDEO_ID,
           controls: 0,
@@ -42,7 +59,18 @@ export function Hero() {
         } as any,
         events: {
           onReady: (event: any) => {
-            event.target.mute();
+            try {
+              event.target.unMute();
+              event.target.setVolume(100);
+            } catch (_) {}
+
+            // Check if browser muted audio due to autoplay restrictions
+            if (event.target.isMuted && event.target.isMuted()) {
+              setIsMuted(true);
+            } else {
+              setIsMuted(false);
+            }
+
             event.target.setPlaybackQuality("hd1080");
             const disableCaptions = (player: any) => {
               try { player.unloadModule("captions"); } catch (_) {}
@@ -58,6 +86,9 @@ export function Hero() {
             // Fade out thumbnail the moment video is actually playing
             if (event.data === window.YT.PlayerState.PLAYING) {
               setVideoPlaying(true);
+              if (event.target.isMuted && event.target.isMuted()) {
+                setIsMuted(true);
+              }
             }
             // Loop from start=30 when video ends
             if (event.data === window.YT.PlayerState.ENDED) {
@@ -118,6 +149,19 @@ export function Hero() {
         {/* Overlay for text readability */}
         <div className="absolute inset-0 bg-black/30" />
       </div>
+
+      {/* Mute / Unmute Manual Toggle Button */}
+      <button
+        onClick={toggleMute}
+        aria-label={isMuted ? "Unmute video audio" : "Mute video audio"}
+        className="absolute bottom-6 right-6 z-20 p-3 rounded-full bg-black/60 hover:bg-black/90 backdrop-blur-md border border-white/20 text-white transition-all duration-300 hover:scale-105 shadow-xl cursor-pointer group"
+      >
+        {isMuted ? (
+          <VolumeX className="w-5 h-5 text-white/80 group-hover:text-white" />
+        ) : (
+          <Volume2 className="w-5 h-5 text-white/80 group-hover:text-white" />
+        )}
+      </button>
 
       {/* Text Overlay */}
       <div className="container mx-auto px-6 relative z-10 flex flex-col items-center justify-center text-center mt-12">
