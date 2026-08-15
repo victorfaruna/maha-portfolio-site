@@ -19,13 +19,14 @@ const THUMBNAIL_URL = `https://img.youtube.com/vi/${VIDEO_ID}/maxresdefault.jpg`
 export function Hero() {
   const playerRef = useRef<any>(null);
   const [videoPlaying, setVideoPlaying] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
 
   const toggleMute = () => {
     if (!playerRef.current) return;
     try {
       if (playerRef.current.isMuted()) {
         playerRef.current.unMute();
+        playerRef.current.setVolume(100);
         setIsMuted(false);
       } else {
         playerRef.current.mute();
@@ -43,7 +44,7 @@ export function Hero() {
         videoId: VIDEO_ID,
         playerVars: {
           autoplay: 1,
-          mute: 0,
+          mute: 1, // Muted initially to bypass strict browser autoplay restrictions
           loop: 1,
           playlist: VIDEO_ID,
           controls: 0,
@@ -60,18 +61,10 @@ export function Hero() {
         events: {
           onReady: (event: any) => {
             try {
-              event.target.unMute();
-              event.target.setVolume(100);
+              event.target.mute();
+              event.target.setPlaybackQuality("hd1080");
             } catch (_) {}
 
-            // Check if browser muted audio due to autoplay restrictions
-            if (event.target.isMuted && event.target.isMuted()) {
-              setIsMuted(true);
-            } else {
-              setIsMuted(false);
-            }
-
-            event.target.setPlaybackQuality("hd1080");
             const disableCaptions = (player: any) => {
               try { player.unloadModule("captions"); } catch (_) {}
               try { player.unloadModule("cc"); } catch (_) {}
@@ -86,9 +79,6 @@ export function Hero() {
             // Fade out thumbnail the moment video is actually playing
             if (event.data === window.YT.PlayerState.PLAYING) {
               setVideoPlaying(true);
-              if (event.target.isMuted && event.target.isMuted()) {
-                setIsMuted(true);
-              }
             }
             // Loop from start=30 when video ends
             if (event.data === window.YT.PlayerState.ENDED) {
@@ -154,12 +144,18 @@ export function Hero() {
       <button
         onClick={toggleMute}
         aria-label={isMuted ? "Unmute video audio" : "Mute video audio"}
-        className="absolute bottom-6 right-6 z-20 p-3 rounded-full bg-black/60 hover:bg-black/90 backdrop-blur-md border border-white/20 text-white transition-all duration-300 hover:scale-105 shadow-xl cursor-pointer group"
+        className="absolute bottom-6 right-6 z-20 flex items-center gap-2 px-4 py-2.5 rounded-full bg-black/60 hover:bg-black/90 backdrop-blur-md border border-white/20 text-white transition-all duration-300 hover:scale-105 shadow-xl cursor-pointer group"
       >
         {isMuted ? (
-          <VolumeX className="w-5 h-5 text-white/80 group-hover:text-white" />
+          <>
+            <VolumeX className="w-4 h-4 text-white/80 group-hover:text-white" />
+            <span className="text-xs font-sans tracking-wide text-white/90">Enable Sound</span>
+          </>
         ) : (
-          <Volume2 className="w-5 h-5 text-white/80 group-hover:text-white" />
+          <>
+            <Volume2 className="w-4 h-4 text-brand-pink group-hover:text-white" />
+            <span className="text-xs font-sans tracking-wide text-white">Mute Sound</span>
+          </>
         )}
       </button>
 
