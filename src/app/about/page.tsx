@@ -167,6 +167,10 @@ export default function AboutPage() {
               {
                 period: "2011–2013",
                 title: "Empowering Youth During Tunisia&apos;s Democratic Transition",
+                images: [
+                  "/images/pictures for research and publicaton/0e64c0cb-c976-4ad6-9bcb-fdef4a2333bc.jpg",
+                  "/images/pictures for research and publicaton/1afd7321-37a8-41cf-ba37-e4f7c64ee9b0.jpg",
+                ],
                 content: (
                   <>
                     <p className="mb-3">My professional career started during one of the most transformative moments in Tunisia&apos;s modern history. Following the 2011 Revolution, I joined the Tunisian Forum for Youth Development, where I helped young people become active participants in rebuilding democratic institutions.</p>
@@ -179,6 +183,10 @@ export default function AboutPage() {
               {
                 period: "2014–2017",
                 title: "Advancing Regional Policy at the African Union",
+                images: [
+                  "/images/pictures for research and publicaton/1bcaeb96-1e8d-45f1-ba1f-925cc6e9cde1.jpg",
+                  "/images/pictures for research and publicaton/20FB1A0E-3D74-4192-9F03-41A3A1911D8E.jpg",
+                ],
                 content: (
                   <>
                     <p className="mb-3">I joined the African Union Campaign to End Child Marriage in Africa, based in Addis Ababa, where I contributed to one of the continent&apos;s largest policy and advocacy initiatives focused on protecting girls' rights.</p>
@@ -192,6 +200,10 @@ export default function AboutPage() {
               {
                 period: "2018–2020",
                 title: "Driving Digital Transformation Across the African Union",
+                images: [
+                  "/images/pictures for research and publicaton/293dfc98-f4d6-4cba-b18f-56615b22c2ac.jpg",
+                  "/images/pictures for research and publicaton/294fab47-e0c9-4d93-81ac-e35e280e5288.jpg",
+                ],
                 content: (
                   <>
                     <p className="mb-3">Following my regional policy experience, I joined the Office of the African Union Special Youth Envoy as Youth, Gender and Digital Transformation Advisor.</p>
@@ -206,6 +218,10 @@ export default function AboutPage() {
               {
                 period: "2020–2022",
                 title: "Human Rights, Digital Inclusion, and Responsible Innovation",
+                images: [
+                  "/images/pictures for research and publicaton/2b13e991-0851-46c5-a8bc-1a8701aae387.jpg",
+                  "/images/pictures for research and publicaton/2d970942-e29e-4a3a-b66d-bfb336c58865.jpg",
+                ],
                 content: (
                   <>
                     <p className="mb-3">Returning to Tunisia, I joined the Arab Institute for Human Rights as Senior Advocacy Specialist, where my work expanded beyond traditional human rights into the growing relationship between technology and society.</p>
@@ -218,6 +234,10 @@ export default function AboutPage() {
               {
                 period: "2022",
                 title: "Advancing National Digital Transformation in Mauritania and STEM.",
+                images: [
+                  "/images/pictures for research and publicaton/41e47944-46a4-4349-80f1-336ddc1278fe.jpg",
+                  "/images/pictures for research and publicaton/42093f66-8a5e-441f-b30f-1c7ca0c774a2.jpg",
+                ],
                 content: (
                   <>
                     <p className="mb-3">In 2022, I joined Infolog Group as a Digital Transformation and Digital Inclusion Consultant, contributing to the implementation of Mauritania&apos;s National Digital Transformation Strategy through the CACHILY Project. Working alongside government institutions, telecommunications operators, financial institutions, development partners, and local stakeholders, I supported initiatives designed to expand access to digital technologies and strengthen financial inclusion.</p>
@@ -229,6 +249,10 @@ export default function AboutPage() {
               {
                 period: "2022",
                 title: "Contributing to the Global Conversation on AI Ethics",
+                images: [
+                  "/images/pictures for research and publicaton/4fd4bb39-b22a-4a9e-a909-342a02f131bb.jpg",
+                  "/images/pictures for research and publicaton/52d8133d-3a01-4206-abc0-eca75824e529.jpg",
+                ],
                 content: (
                   <>
                     <p className="mb-3">As artificial intelligence began reshaping societies around the world, I increasingly focused my work on understanding its ethical, social, and governance implications.</p>
@@ -262,6 +286,19 @@ export default function AboutPage() {
                   <div className="text-foreground/75 text-[15.5px] leading-relaxed max-w-3xl">
                     {item.content}
                   </div>
+                  {item.images && item.images.length > 0 && (
+                    <div className="mt-4 grid grid-cols-2 gap-3 max-w-2xl">
+                      {item.images.map((src: string, i: number) => (
+                        <div key={i} className="overflow-hidden rounded-xl border border-border/40 shadow-sm aspect-[4/3]">
+                          <img
+                            src={src}
+                            alt={`${item.title} – photo ${i + 1}`}
+                            className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </motion.div>
             ))}
@@ -274,6 +311,10 @@ export default function AboutPage() {
               {
                 period: "2023",
                 title: "Measuring Responsible AI Across Africa",
+                images: [
+                  "/images/pictures for research and publicaton/5363f808-d1c1-44c7-bb73-e5e71185594d.jpg",
+                  "/images/pictures for research and publicaton/5385af7f-c6b7-4233-a21e-5a27d0f54056.jpg",
+                ],
                 content: (
                   <>
                     <p className="mb-3">In 2023, I joined the Global Index on Responsible AI (GIRAI) as an AI Policy Researcher and Francophone Africa Lead, a role that significantly expanded my work across the African continent.</p>
@@ -287,6 +328,10 @@ export default function AboutPage() {
               {
                 period: "2024",
                 title: "Helping Shape Tunisia&apos;s Responsible AI Landscape",
+                images: [
+                  "/images/pictures for research and publicaton/5e155215-5741-4580-bb88-7010e5e5e6ce.jpg",
+                  "/images/pictures for research and publicaton/5ebd63ac-2e63-4b4d-9c31-5f4429d546c1.jpg",
+                ],
                 content: (
                   <>
                     <p className="mb-3">In 2024, I served as AI Policy Advocacy Consultant for GIZ Tunisia, supporting national and regional discussions on responsible artificial intelligence.</p>
@@ -299,6 +344,10 @@ export default function AboutPage() {
               {
                 period: "2025",
                 title: "Leading Research on AI Governance and Gender",
+                images: [
+                  "/images/pictures for research and publicaton/6bc7fb48-c078-4743-a7b6-142f1a3bb07e.jpg",
+                  "/images/pictures for research and publicaton/6e471ec5-3e2e-4903-a643-a92170d6d825.jpg",
+                ],
                 content: (
                   <>
                     <p className="mb-3">My appointment as AI and Gender Fellow Researcher at the Global Center on AI Governance marked another important milestone in my career.</p>
@@ -311,6 +360,10 @@ export default function AboutPage() {
               {
                 period: "2025",
                 title: "Supervising Responsible AI Research Across Africa and the MENA Region",
+                images: [
+                  "/images/pictures for research and publicaton/71cf29c8-b724-4e2e-acf4-637912824267.jpg",
+                  "/images/pictures for research and publicaton/75b06a93-c1d7-41a8-af48-80867c4da5b1.jpg",
+                ],
                 content: (
                   <>
                     <p className="mb-3">As Regional Supervisor (MENA & Africa) for the Global Index on Responsible AI, I oversee multidisciplinary research teams responsible for evaluating national AI governance systems across multiple countries.</p>
@@ -323,6 +376,10 @@ export default function AboutPage() {
               {
                 period: "2025-2026",
                 title: "Educating the Next Generation of Responsible AI Leaders",
+                images: [
+                  "/images/pictures for research and publicaton/8250d636-083a-4a40-b2e2-4d80a6381af1.jpg",
+                  "/images/pictures for research and publicaton/8a574c0d-3241-46b2-ab0a-28c519cabe4e.jpg",
+                ],
                 content: (
                   <>
                     <p className="mb-3">Education has become an essential pillar of my work.</p>
@@ -335,6 +392,10 @@ export default function AboutPage() {
               {
                 period: "Present",
                 title: "Advising on Artificial Intelligence and Technology-Facilitated Gender-Based Violence",
+                images: [
+                  "/images/pictures for research and publicaton/8d51fae2-316e-4856-9a73-c1f2c0da5aa3.jpg",
+                  "/images/pictures for research and publicaton/99.jpeg",
+                ],
                 content: (
                   <>
                     <p className="mb-3">As a member of the UNFPA Tunisia Expert Group on Technology-Facilitated Gender-Based Violence and Artificial Intelligence, I contribute technical expertise to one of the most urgent policy challenges created by emerging technologies.</p>
@@ -346,6 +407,10 @@ export default function AboutPage() {
               {
                 period: "Present",
                 title: "Building CHIFAA: Responsible AI for Women's Health",
+                images: [
+                  "/images/pictures for research and publicaton/a60b04fa-cacf-4c4a-8bd8-ce55ad9ae91f.jpg",
+                  "/images/pictures for research and publicaton/ad66eab3-51c4-4cf2-be58-b000843d8892.jpg",
+                ],
                 content: (
                   <>
                     <p className="mb-3">While my work with governments and international organisations has shaped policies, my most personal project is CHIFAA.</p>
@@ -387,6 +452,19 @@ export default function AboutPage() {
                   <div className="text-foreground/75 text-[15.5px] leading-relaxed max-w-3xl">
                     {item.content}
                   </div>
+                  {item.images && item.images.length > 0 && (
+                    <div className="mt-4 grid grid-cols-2 gap-3 max-w-2xl">
+                      {item.images.map((src: string, i: number) => (
+                        <div key={i} className="overflow-hidden rounded-xl border border-border/40 shadow-sm aspect-[4/3]">
+                          <img
+                            src={src}
+                            alt={`${item.title} – photo ${i + 1}`}
+                            className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </motion.div>
             ))}
