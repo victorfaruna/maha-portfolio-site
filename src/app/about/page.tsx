@@ -251,7 +251,7 @@ export default function AboutPage() {
                 title: "Contributing to the Global Conversation on AI Ethics",
                 images: [
                   "/images/pictures for research and publicaton/4fd4bb39-b22a-4a9e-a909-342a02f131bb.jpg",
-                  "/images/pictures for research and publicaton/52d8133d-3a01-4206-abc0-eca75824e529.jpg",
+                  "/images/pictures for research and publicaton/replacemet.JPG",
                 ],
                 content: (
                   <>
