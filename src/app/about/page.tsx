@@ -287,7 +287,7 @@ export default function AboutPage() {
                     {item.content}
                   </div>
                   {item.images && item.images.length > 0 && (
-                    <div className="mt-4 grid grid-cols-2 gap-3 max-w-2xl">
+                    <div className="mt-4 grid grid-cols-2 gap-3 max-w-2xl mx-auto">
                       {item.images.map((src: string, i: number) => (
                         <div key={i} className="overflow-hidden rounded-xl border border-border/40 shadow-sm aspect-[4/3]">
                           <img
@@ -453,7 +453,7 @@ export default function AboutPage() {
                     {item.content}
                   </div>
                   {item.images && item.images.length > 0 && (
-                    <div className="mt-4 grid grid-cols-2 gap-3 max-w-2xl">
+                    <div className="mt-4 grid grid-cols-2 gap-3 max-w-2xl mx-auto">
                       {item.images.map((src: string, i: number) => (
                         <div key={i} className="overflow-hidden rounded-xl border border-border/40 shadow-sm aspect-[4/3]">
                           <img
