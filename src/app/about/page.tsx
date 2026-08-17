@@ -293,7 +293,7 @@ export default function AboutPage() {
                           <img
                             src={src}
                             alt={`${item.title} – photo ${i + 1}`}
-                            className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                            className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
                           />
                         </div>
                       ))}
@@ -459,7 +459,7 @@ export default function AboutPage() {
                           <img
                             src={src}
                             alt={`${item.title} – photo ${i + 1}`}
-                            className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                            className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
                           />
                         </div>
                       ))}
