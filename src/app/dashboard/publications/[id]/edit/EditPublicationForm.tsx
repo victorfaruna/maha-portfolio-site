@@ -142,21 +142,6 @@ export default function EditPublicationForm({ publication }: { publication: Publ
           />
         </FormField>
 
-        <FormField
-          label="Custom Cover Image URL (Optional)"
-          name="cover_image_url"
-          hint="Optional custom cover image URL. If left empty, it automatically uses the first image inserted in the article content above."
-        >
-          <input
-            id="cover_image_url"
-            name="cover_image_url"
-            type="url"
-            defaultValue={publication.cover_image_url ?? ''}
-            placeholder="https://..."
-            className={inputClass}
-          />
-        </FormField>
-
         <FormField label="Original Source / External Link (Optional)" name="link">
           <input
             id="link"

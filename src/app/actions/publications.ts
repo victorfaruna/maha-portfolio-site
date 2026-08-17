@@ -78,7 +78,6 @@ export async function createPublication(
   const sourceLabel = (formData.get('source_label') as string)?.trim() || null;
   const year = (formData.get('year') as string).trim();
   const link = (formData.get('link') as string)?.trim() || null;
-  const coverImageUrl = (formData.get('cover_image_url') as string)?.trim() || null;
   const contentRaw = formData.get('content') as string;
 
   if (!title || !category || !excerpt || !year) {
@@ -96,7 +95,7 @@ export async function createPublication(
 
   const slug = customSlug ? slugify(customSlug) : await generateUniqueSlug(title);
 
-  const data: PublicationInsert & { cover_image_url?: string | null } = {
+  const data: PublicationInsert = {
     title,
     slug,
     category,
@@ -104,7 +103,6 @@ export async function createPublication(
     source_label: sourceLabel,
     year,
     link,
-    cover_image_url: coverImageUrl,
     content: contentJson,
   };
 
@@ -129,7 +127,6 @@ export async function updatePublication(
   const sourceLabel = (formData.get('source_label') as string)?.trim() || null;
   const year = (formData.get('year') as string).trim();
   const link = (formData.get('link') as string)?.trim() || null;
-  const coverImageUrl = (formData.get('cover_image_url') as string)?.trim() || null;
   const contentRaw = formData.get('content') as string;
 
   if (!title || !category || !excerpt || !year) {
@@ -147,7 +144,7 @@ export async function updatePublication(
 
   const slug = customSlug ? slugify(customSlug) : await generateUniqueSlug(title, id);
 
-  const data: Partial<PublicationInsert> & { cover_image_url?: string | null } = {
+  const data: Partial<PublicationInsert> = {
     title,
     slug,
     category,
@@ -155,7 +152,6 @@ export async function updatePublication(
     source_label: sourceLabel,
     year,
     link,
-    cover_image_url: coverImageUrl,
     content: contentJson,
   };
 
