@@ -1,9 +1,8 @@
 import Image from "next/image";
 import { Navbar } from "@/components/sections/Navbar";
 import { Footer } from "@/components/sections/Footer";
-import { ResearchGallery } from "@/components/sections/ResearchGallery";
 import { createAnonServerClient } from "@/lib/supabase/server";
-import type { Publication, Book, MediaItem } from "@/lib/supabase/types";
+import type { Publication, Book } from "@/lib/supabase/types";
 import PublicationsSection from "./PublicationsSection";
 import BooksSection from "./BooksSection";
 
@@ -12,21 +11,19 @@ export const dynamic = "force-dynamic";
 async function getData() {
   const supabase = createAnonServerClient();
 
-  const [pubRes, bookRes, mediaRes] = await Promise.all([
+  const [pubRes, bookRes] = await Promise.all([
     supabase.from("publications").select("*").order("year", { ascending: false }),
     supabase.from("books").select("*").order("published_year", { ascending: false }),
-    supabase.from("media_gallery").select("*").order("sort_order", { ascending: true }),
   ]);
 
   return {
     publications: (pubRes.data ?? []) as Publication[],
     books: (bookRes.data ?? []) as Book[],
-    media: (mediaRes.data ?? []) as MediaItem[],
   };
 }
 
 export default async function ResearchPage() {
-  const { publications, books, media } = await getData();
+  const { publications, books } = await getData();
 
   return (
     <main className="min-h-screen bg-background text-foreground overflow-hidden">
@@ -74,12 +71,6 @@ export default async function ResearchPage() {
 
       {/* ── 3. PUBLICATIONS & ARTICLES GRID ──────────────────────────────── */}
       <PublicationsSection publications={publications} />
-
-      {/* ── 4. BOOKS SECTION (Temporarily removed) ───────────────────────── */}
-      {/* <BooksSection books={books} /> */}
-
-      {/* ── 5. MEDIA & PHOTO CAROUSEL GALLERY ───────────────────────────── */}
-      <ResearchGallery mediaItems={media} />
 
       {/* Footer */}
       <Footer showGradient />

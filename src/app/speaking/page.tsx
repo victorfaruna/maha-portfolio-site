@@ -17,13 +17,14 @@ export default function SpeakingPage() {
       {/* ── 1. HERO SECTION ──────────────────────────────────────────────── */}
       <section className="relative w-full h-[60vh] md:h-[75vh] min-h-[420px] flex items-end pb-10 md:pb-16 overflow-hidden">
         <Image
-          src="/images/1.jpeg"
+          src="/images/pictures for research and publicaton/99.jpeg"
           alt="Maha Jouini – Speaking, Press & Public Voice"
           fill
           className="object-cover object-center"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/30" />
+        {/* Lighter overlay for clear, bright visibility */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-black/10" />
 
         <div className="container mx-auto px-5 sm:px-8 md:px-12 lg:px-20 relative z-10">
           <div className="max-w-4xl">
@@ -32,7 +33,7 @@ export default function SpeakingPage() {
             </span>
             <h1
               className="text-2xl sm:text-4xl md:text-6xl lg:text-7xl text-white font-serif tracking-tight leading-[1.1] mb-4 md:mb-6"
-              style={{ textShadow: "0px 4px 16px rgba(0,0,0,0.5)" }}
+              style={{ textShadow: "0px 2px 12px rgba(0,0,0,0.6)" }}
             >
               Speaking, Press &amp; Public Voice
             </h1>

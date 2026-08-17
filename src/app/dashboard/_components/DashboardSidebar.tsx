@@ -25,8 +25,7 @@ export function DashboardSidebar() {
 
   const isResearchActive =
     pathname.startsWith('/dashboard/publications') ||
-    pathname.startsWith('/dashboard/books') ||
-    pathname.startsWith('/dashboard/media');
+    pathname.startsWith('/dashboard/books');
 
   const [researchOpen, setResearchOpen] = useState(true);
 
@@ -130,19 +129,6 @@ export function DashboardSidebar() {
               >
                 <BookOpen className="w-3.5 h-3.5 shrink-0" />
                 <span>Books</span>
-              </Link>
-
-              <Link
-                href="/dashboard/media"
-                onClick={closeMobile}
-                className={`flex items-center gap-2.5 px-3 py-2 text-xs font-medium transition-colors ${
-                  pathname.startsWith('/dashboard/media')
-                    ? 'text-[#EC4899] font-semibold'
-                    : 'text-white/60 hover:text-white'
-                }`}
-              >
-                <ImageIcon className="w-3.5 h-3.5 shrink-0" />
-                <span>Media Gallery</span>
               </Link>
             </div>
           )}

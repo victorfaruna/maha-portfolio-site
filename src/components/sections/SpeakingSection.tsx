@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Download, ArrowRight, Mic, Newspaper, Radio, Globe } from "lucide-react";
+import { ArrowUpRight, ArrowRight, Mic, Newspaper, Radio, Globe } from "lucide-react";
 import { speakingData, type MediaItem, type MediaCategory } from "@/data/speaking";
 
 const CATEGORIES = [
@@ -60,7 +60,7 @@ export default function SpeakingSection() {
 
   return (
     <div className="w-full">
-      {/* ── 2. INTRO FRAMING & PRESS KIT DOWNLOAD ────────────────────────── */}
+      {/* ── 2. INTRO FRAMING ──────────────────────────────────────────────── */}
       <section className="py-12 md:py-16 bg-secondary/40 border-b border-border">
         <div className="container mx-auto px-5 sm:px-8 md:px-12 max-w-4xl text-center">
           <motion.p
@@ -81,24 +81,14 @@ export default function SpeakingSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.15 }}
-            className="flex flex-wrap items-center justify-center gap-4"
+            className="flex items-center justify-center"
           >
-            <a
-              href="/press-kit.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2.5 px-6 py-3.5 bg-brand-navy text-white text-xs sm:text-sm font-semibold uppercase tracking-wider hover:bg-brand-pink transition-all duration-300 shadow-md group"
-            >
-              <Download className="w-4 h-4 transition-transform group-hover:-translate-y-0.5" />
-              Download Press Kit (PDF)
-            </a>
-
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 px-6 py-3.5 border border-brand-navy/30 text-brand-navy text-xs sm:text-sm font-semibold uppercase tracking-wider hover:bg-brand-navy hover:text-white transition-all duration-300"
+              className="inline-flex items-center gap-2 px-7 py-3.5 bg-brand-navy text-white text-xs sm:text-sm font-semibold uppercase tracking-wider hover:bg-brand-pink transition-all duration-300 shadow-md group"
             >
               Booking &amp; Media Inquiries
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
             </Link>
           </motion.div>
         </div>
@@ -156,58 +146,60 @@ export default function SpeakingSection() {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: idx * 0.05 }}
-                  className="group bg-background border border-border hover:border-brand-navy/30 transition-all duration-500 hover:shadow-lg relative flex flex-col justify-between p-6 sm:p-8"
+                  transition={{ duration: 0.5, delay: idx * 0.04 }}
+                  className="h-full"
                 >
-                  <div>
-                    {/* Meta Bar: Category Tag & Year */}
-                    <div className="flex items-center justify-between mb-4 text-xs uppercase tracking-widest font-semibold">
-                      <span className="bg-brand-soft-pink text-brand-pink px-2.5 py-1 font-bold text-[10px] sm:text-xs inline-flex items-center gap-1.5">
-                        {getCategoryIcon(item.category)}
-                        {item.category}
-                      </span>
-                      {item.year && (
-                        <span className="text-foreground/50 text-xs font-semibold">
-                          {item.year}
+                  <a
+                    href={item.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group bg-background border border-border hover:border-brand-pink/50 transition-all duration-300 hover:shadow-xl relative flex flex-col justify-between h-full p-6 sm:p-8 cursor-pointer"
+                  >
+                    <div>
+                      {/* Meta Bar: Category Tag & Year */}
+                      <div className="flex items-center justify-between mb-4 text-xs uppercase tracking-widest font-semibold">
+                        <span className="bg-brand-soft-pink text-brand-pink px-2.5 py-1 font-bold text-[10px] sm:text-xs inline-flex items-center gap-1.5">
+                          {getCategoryIcon(item.category)}
+                          {item.category}
                         </span>
+                        {item.year && (
+                          <span className="text-foreground/50 text-xs font-semibold">
+                            {item.year}
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Outlet Name */}
+                      <p className="text-xs font-semibold text-brand-pink uppercase tracking-widest mb-2">
+                        {item.outlet}
+                      </p>
+
+                      {/* Title */}
+                      <h3 className="text-lg sm:text-xl font-serif text-brand-navy mb-3 leading-snug group-hover:text-brand-pink transition-colors">
+                        {item.title}
+                      </h3>
+
+                      {/* Description */}
+                      {item.description && (
+                        <p
+                          dir={item.isRTL ? "rtl" : "ltr"}
+                          className={`text-foreground/75 font-sans text-xs sm:text-sm leading-relaxed mb-6 font-normal ${
+                            item.isRTL ? "text-right font-serif" : "text-left"
+                          }`}
+                        >
+                          {item.description}
+                        </p>
                       )}
                     </div>
 
-                    {/* Outlet Name */}
-                    <p className="text-xs font-semibold text-brand-pink uppercase tracking-widest mb-2">
-                      {item.outlet}
-                    </p>
-
-                    {/* Title */}
-                    <h3 className="text-lg sm:text-xl font-serif text-brand-navy mb-3 leading-snug group-hover:text-brand-pink transition-colors">
-                      {item.title}
-                    </h3>
-
-                    {/* Description */}
-                    {item.description && (
-                      <p
-                        dir={item.isRTL ? "rtl" : "ltr"}
-                        className={`text-foreground/75 font-sans text-xs sm:text-sm leading-relaxed mb-6 font-normal ${
-                          item.isRTL ? "text-right font-serif" : "text-left"
-                        }`}
-                      >
-                        {item.description}
-                      </p>
-                    )}
-                  </div>
-
-                  {/* External Link Divider & Button */}
-                  <div className="pt-4 border-t border-border/60 mt-auto">
-                    <a
-                      href={item.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-between w-full text-xs sm:text-sm font-semibold uppercase tracking-wider text-brand-navy group-hover:text-brand-pink transition-colors"
-                    >
-                      <span>{getLinkLabel(item.category)}</span>
-                      <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                    </a>
-                  </div>
+                    {/* External Link Divider & Action */}
+                    <div className="pt-4 border-t border-border/60 mt-auto">
+                      <div className="inline-flex items-center justify-between w-full text-xs sm:text-sm font-semibold uppercase tracking-wider text-brand-navy group-hover:text-brand-pink transition-colors">
+                        <span>{getLinkLabel(item.category)}</span>
+                        <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                      </div>
+                    </div>
+                  </a>
                 </motion.div>
               );
             })}

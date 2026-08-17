@@ -1,25 +1,22 @@
 import Link from 'next/link';
-import { Plus, FileText, BookOpen, Image as ImageIcon } from 'lucide-react';
+import { Plus, FileText, BookOpen } from 'lucide-react';
 import { createAnonServerClient } from '@/lib/supabase/server';
 import { DashboardTable, type ColumnDef, type RowDef } from './_components/DashboardTable';
 import { deletePublication } from '@/app/actions/publications';
 import { deleteBook } from '@/app/actions/books';
-import { deleteMediaItem } from '@/app/actions/media';
-import type { Publication, Book, MediaItem } from '@/lib/supabase/types';
+import type { Publication, Book } from '@/lib/supabase/types';
 
 async function getData() {
   const supabase = createAnonServerClient();
 
-  const [pubRes, bookRes, mediaRes] = await Promise.all([
+  const [pubRes, bookRes] = await Promise.all([
     supabase.from('publications').select('*').order('year', { ascending: false }),
     supabase.from('books').select('*').order('published_year', { ascending: false }),
-    supabase.from('media_gallery').select('*').order('sort_order', { ascending: true }),
   ]);
 
   return {
     publications: (pubRes.data ?? []) as Publication[],
     books: (bookRes.data ?? []) as Book[],
-    media: (mediaRes.data ?? []) as MediaItem[],
   };
 }
 
@@ -29,7 +26,7 @@ export default async function DashboardPage({
   searchParams: Promise<{ section?: string; flash?: string }>;
 }) {
   const { section: activeSection = 'publications', flash } = await searchParams;
-  const { publications, books, media } = await getData();
+  const { publications, books } = await getData();
 
   const pubColumns: ColumnDef[] = [
     { header: 'Title', className: 'max-w-xs' },
@@ -61,26 +58,9 @@ export default async function DashboardPage({
     ],
   }));
 
-  const mediaColumns: ColumnDef[] = [
-    { header: 'Title', className: 'max-w-xs' },
-    { header: 'Category' },
-    { header: 'Year' },
-    { header: 'Order' },
-  ];
-  const mediaRows: RowDef[] = media.map((m) => ({
-    id: m.id,
-    cells: [
-      <span key="title" className="font-medium line-clamp-1">{m.title ?? '—'}</span>,
-      m.category_tag ?? '—',
-      m.year ?? '—',
-      m.sort_order,
-    ],
-  }));
-
   const sections = [
     { key: 'publications', label: 'Publications', icon: <FileText className="w-4 h-4" />, count: publications.length },
     { key: 'books', label: 'Books', icon: <BookOpen className="w-4 h-4" />, count: books.length },
-    { key: 'media', label: 'Gallery', icon: <ImageIcon className="w-4 h-4" />, count: media.length },
   ];
 
   return (
@@ -101,11 +81,11 @@ export default async function DashboardPage({
       )}
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-3 gap-3 mb-6">
+      <div className="grid grid-cols-2 gap-4 mb-6">
         {sections.map((s) => (
           <div
             key={s.key}
-            className="bg-white border border-gray-100 shadow-sm px-3 sm:px-6 py-4 sm:py-5 flex items-center gap-3"
+            className="bg-white border border-gray-100 shadow-sm px-4 sm:px-6 py-4 sm:py-5 flex items-center gap-4"
           >
             <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#0B1F4D]/5 flex items-center justify-center text-[#0B1F4D] shrink-0">
               {s.icon}
@@ -143,7 +123,6 @@ export default async function DashboardPage({
           <p className="text-sm font-medium text-gray-700 truncate">
             {activeSection === 'publications' && `${publications.length} publications`}
             {activeSection === 'books' && `${books.length} books`}
-            {activeSection === 'media' && `${media.length} gallery items`}
           </p>
           <Link
             href={`/dashboard/${activeSection}/new`}
@@ -173,15 +152,6 @@ export default async function DashboardPage({
               editBasePath="/dashboard/books"
               onDelete={deleteBook}
               emptyMessage="No books yet. Click 'Add New' to add one."
-            />
-          )}
-          {activeSection === 'media' && (
-            <DashboardTable
-              columns={mediaColumns}
-              rows={mediaRows}
-              editBasePath="/dashboard/media"
-              onDelete={deleteMediaItem}
-              emptyMessage="No media gallery items yet. Click 'Add New' to upload one."
             />
           )}
         </div>
