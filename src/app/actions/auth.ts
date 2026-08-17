@@ -3,11 +3,15 @@
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 import { SignJWT } from 'jose';
-import bcrypt from 'bcryptjs';
+import { scrypt, timingSafeEqual } from 'crypto';
+import { promisify } from 'util';
 
 // ── Constants ────────────────────────────────────────────────────────────────
 const COOKIE_NAME = 'admin_session';
 const SESSION_DURATION_SECONDS = 60 * 60 * 8; // 8 hours
+const SCRYPT_KEYLEN = 64;
+
+const scryptAsync = promisify(scrypt);
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -20,14 +24,38 @@ function getJwtSecret(): Uint8Array {
   return new TextEncoder().encode(secret);
 }
 
-/** Constant-time string comparison to avoid timing attacks on email. */
-function safeEqual(a: string, b: string): boolean {
-  if (a.length !== b.length) return false;
-  let diff = 0;
-  for (let i = 0; i < a.length; i++) {
-    diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
+/**
+ * Verifies a password against a stored scrypt hash.
+ * Hash format: "<salt_hex>:<hash_hex>"  — no special characters.
+ * Uses Node.js crypto.timingSafeEqual to prevent timing attacks.
+ */
+async function verifyPassword(password: string, storedHash: string): Promise<boolean> {
+  const parts = storedHash.split(':');
+  if (parts.length !== 2) return false;
+  const [saltHex, hashHex] = parts;
+
+  try {
+    const salt = Buffer.from(saltHex, 'hex');
+    const storedHashBuf = Buffer.from(hashHex, 'hex');
+    const derivedBuf = (await scryptAsync(password, salt, SCRYPT_KEYLEN)) as Buffer;
+    // timingSafeEqual prevents timing-based attacks
+    return timingSafeEqual(derivedBuf, storedHashBuf);
+  } catch {
+    return false;
   }
-  return diff === 0;
+}
+
+/**
+ * Constant-time string comparison to avoid timing-based email enumeration.
+ * Pads shorter string to prevent length-based timing leaks.
+ */
+function safeStringEqual(a: string, b: string): boolean {
+  const maxLen = Math.max(a.length, b.length);
+  const bufA = Buffer.alloc(maxLen);
+  const bufB = Buffer.alloc(maxLen);
+  bufA.write(a);
+  bufB.write(b);
+  return timingSafeEqual(bufA, bufB);
 }
 
 // ── Actions ───────────────────────────────────────────────────────────────────
@@ -37,33 +65,33 @@ export async function loginAction(
   formData: FormData
 ): Promise<{ error?: string }> {
   // 1. Basic input validation
-  const email = (formData.get('email') as string | null)?.trim() ?? '';
-  const password = (formData.get('password') as string | null) ?? '';
+  const email    = (formData.get('email')    as string | null)?.trim() ?? '';
+  const password = (formData.get('password') as string | null)         ?? '';
 
   if (!email || !password) {
     return { error: 'Email and password are required.' };
   }
 
-  // 2. Read credentials from env (never from client input)
-  const adminEmail = process.env.ADMIN_EMAIL ?? '';
+  // 2. Read credentials from env (never from client-controlled input)
+  const adminEmail = process.env.ADMIN_EMAIL         ?? '';
   const adminHash  = process.env.ADMIN_PASSWORD_HASH ?? '';
 
   if (!adminEmail || !adminHash) {
-    // Misconfigured server — don't leak details
     console.error('[Auth] ADMIN_EMAIL or ADMIN_PASSWORD_HASH env vars are not set.');
     return { error: 'Server configuration error. Contact the site administrator.' };
   }
 
-  // 3. Verify email (constant-time) + password (bcrypt)
-  const emailMatch    = safeEqual(email.toLowerCase(), adminEmail.toLowerCase());
-  // Always run bcrypt even on email mismatch to prevent timing-based enumeration
-  const passwordMatch = await bcrypt.compare(password, adminHash);
+  // 3. Verify email (constant-time) AND password (scrypt + timingSafeEqual).
+  //    Both checks always run to prevent timing-based enumeration.
+  const emailMatch    = safeStringEqual(email.toLowerCase(), adminEmail.toLowerCase());
+  const passwordMatch = await verifyPassword(password, adminHash);
 
   if (!emailMatch || !passwordMatch) {
+    // Generic message — never reveal which field failed
     return { error: 'Invalid email or password.' };
   }
 
-  // 4. Sign a short-lived JWT
+  // 4. Sign a short-lived HS256 JWT
   let token: string;
   try {
     token = await new SignJWT({ role: 'admin' })
@@ -77,14 +105,14 @@ export async function loginAction(
     return { error: 'Failed to create session. Please try again.' };
   }
 
-  // 5. Persist token in a secure HTTP-only cookie
+  // 5. Persist token in a secure HTTP-only cookie scoped to /dashboard
   const cookieStore = await cookies();
   cookieStore.set(COOKIE_NAME, token, {
-    httpOnly: true,                                        // not accessible to JS
-    secure: process.env.NODE_ENV === 'production',         // HTTPS only in prod
-    sameSite: 'lax',                                       // CSRF protection
-    path: '/dashboard',                                    // scoped to dashboard
-    maxAge: SESSION_DURATION_SECONDS,
+    httpOnly: true,                                     // not accessible to JS
+    secure:   process.env.NODE_ENV === 'production',    // HTTPS only in prod
+    sameSite: 'lax',                                    // CSRF protection
+    path:     '/dashboard',                             // scoped to dashboard
+    maxAge:   SESSION_DURATION_SECONDS,
   });
 
   redirect('/dashboard');
@@ -92,13 +120,13 @@ export async function loginAction(
 
 export async function logoutAction(): Promise<void> {
   const cookieStore = await cookies();
-  // Clear the session cookie by setting maxAge to 0
+  // Overwrite with empty value + zero maxAge to immediately expire
   cookieStore.set(COOKIE_NAME, '', {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
+    secure:   process.env.NODE_ENV === 'production',
     sameSite: 'lax',
-    path: '/dashboard',
-    maxAge: 0,
+    path:     '/dashboard',
+    maxAge:   0,
   });
 
   redirect('/dashboard/login');
