@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { slugify } from "@/lib/slug";
+import { getPublicationCoverImage } from "@/lib/publicationUtils";
 import type { Publication } from "@/lib/supabase/types";
 
 const CATEGORIES = ["All", "Policy Brief", "Academic Paper", "Article"];
@@ -65,47 +66,61 @@ export default function PublicationsSection({ publications }: { publications: Pu
           {filtered.map((pub: Publication, idx: number) => {
             const articleSlug = pub.slug || slugify(pub.title);
             const hasContent = Boolean(pub.content || pub.slug);
+            const coverImage = getPublicationCoverImage(pub);
 
             const cardInnerContent = (
-              <div className="flex flex-col justify-between h-full p-5 sm:p-8">
-                <div>
-                  {/* Category Tag & Year */}
-                  <div className="flex items-center justify-between mb-4 md:mb-6 text-xs uppercase tracking-widest font-semibold">
-                    <span className="bg-brand-soft-pink text-brand-pink px-2.5 py-1 font-bold text-[10px] sm:text-xs">
-                      {pub.category}
-                    </span>
-                    <span className="text-foreground/50">{pub.year}</span>
-                  </div>
-
-                  {/* Title */}
-                  <h3 className="text-lg sm:text-xl md:text-2xl font-serif text-brand-navy mb-3 leading-tight group-hover:text-brand-pink transition-colors">
-                    {pub.title}
-                  </h3>
-
-                  {/* Publisher badge */}
-                  {pub.source_label && (
-                    <p className="text-xs text-foreground/50 uppercase tracking-wider mb-3">
-                      {pub.source_label}
-                    </p>
-                  )}
-
-                  {/* Short Excerpt */}
-                  <p className="text-foreground/70 font-sans text-sm leading-relaxed line-clamp-3 mb-6 md:mb-8">
-                    {pub.excerpt}
-                  </p>
-                </div>
-
-                {/* Read Article Link Indicator */}
-                {hasContent ? (
-                  <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold uppercase tracking-wider text-brand-navy group-hover:text-brand-pink transition-colors pt-4 border-t border-border/60">
-                    Read Article
-                    <ArrowUpRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                  </div>
-                ) : (
-                  <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold uppercase tracking-wider text-foreground/30 pt-4 border-t border-border/60 cursor-not-allowed">
-                    Coming Soon
+              <div className="flex flex-col justify-between h-full">
+                {/* Optional Cover Image Banner */}
+                {coverImage && (
+                  <div className="relative aspect-[16/9] w-full overflow-hidden bg-secondary/30 border-b border-border/60">
+                    <img
+                      src={coverImage}
+                      alt={pub.title}
+                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                    />
                   </div>
                 )}
+
+                <div className="flex flex-col justify-between flex-1 p-5 sm:p-8">
+                  <div>
+                    {/* Category Tag & Year */}
+                    <div className="flex items-center justify-between mb-4 md:mb-6 text-xs uppercase tracking-widest font-semibold">
+                      <span className="bg-brand-soft-pink text-brand-pink px-2.5 py-1 font-bold text-[10px] sm:text-xs">
+                        {pub.category}
+                      </span>
+                      <span className="text-foreground/50">{pub.year}</span>
+                    </div>
+
+                    {/* Title */}
+                    <h3 className="text-lg sm:text-xl md:text-2xl font-serif text-brand-navy mb-3 leading-tight group-hover:text-brand-pink transition-colors">
+                      {pub.title}
+                    </h3>
+
+                    {/* Publisher badge */}
+                    {pub.source_label && (
+                      <p className="text-xs text-foreground/50 uppercase tracking-wider mb-3">
+                        {pub.source_label}
+                      </p>
+                    )}
+
+                    {/* Short Excerpt */}
+                    <p className="text-foreground/70 font-sans text-sm leading-relaxed line-clamp-3 mb-6 md:mb-8">
+                      {pub.excerpt}
+                    </p>
+                  </div>
+
+                  {/* Read Article Link Indicator */}
+                  {hasContent ? (
+                    <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold uppercase tracking-wider text-brand-navy group-hover:text-brand-pink transition-colors pt-4 border-t border-border/60 mt-auto">
+                      Read Article
+                      <ArrowUpRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    </div>
+                  ) : (
+                    <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold uppercase tracking-wider text-foreground/30 pt-4 border-t border-border/60 cursor-not-allowed mt-auto">
+                      Coming Soon
+                    </div>
+                  )}
+                </div>
               </div>
             );
 
@@ -116,7 +131,7 @@ export default function PublicationsSection({ publications }: { publications: Pu
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: idx * 0.06 }}
-                className="group bg-background border border-border hover:border-brand-navy/30 transition-all duration-500 hover:shadow-lg relative"
+                className="group bg-background border border-border hover:border-brand-navy/30 transition-all duration-500 hover:shadow-lg relative overflow-hidden flex flex-col"
               >
                 {hasContent ? (
                   <Link

@@ -7,6 +7,7 @@ import { Footer } from '@/components/sections/Footer';
 import { ArticleBody } from '@/components/sections/ArticleBody';
 import { createAnonServerClient } from '@/lib/supabase/server';
 import { slugify } from '@/lib/slug';
+import { getPublicationCoverImage } from '@/lib/publicationUtils';
 import type { Publication } from '@/lib/supabase/types';
 
 export const dynamic = 'force-dynamic';
@@ -113,6 +114,21 @@ export default async function PublicationArticlePage({
               </p>
             </div>
           )}
+
+          {/* Article Cover Image Banner */}
+          {(() => {
+            const coverImage = getPublicationCoverImage(publication);
+            if (!coverImage) return null;
+            return (
+              <div className="my-8 overflow-hidden border border-border shadow-md aspect-[16/9] md:aspect-[21/9] w-full relative">
+                <img
+                  src={coverImage}
+                  alt={publication.title}
+                  className="w-full h-full object-cover object-center"
+                />
+              </div>
+            );
+          })()}
 
           {/* Original External Link badge if present */}
           {publication.link && publication.link !== '#' && (

@@ -115,7 +115,6 @@ export default function NewPublicationPage() {
               type="text"
               required
               placeholder="2024"
-              maxLength={4}
               className={inputClass}
             />
           </FormField>
@@ -146,6 +145,20 @@ export default function NewPublicationPage() {
           <RichTextEditor
             onChange={(json) => setContentJson(json)}
             placeholder="Write the full publication content here…"
+          />
+        </FormField>
+
+        <FormField
+          label="Custom Cover Image URL (Optional)"
+          name="cover_image_url"
+          hint="Optional custom cover image URL. If left empty, it automatically uses the first image inserted in the article content above."
+        >
+          <input
+            id="cover_image_url"
+            name="cover_image_url"
+            type="url"
+            placeholder="https://..."
+            className={inputClass}
           />
         </FormField>
 

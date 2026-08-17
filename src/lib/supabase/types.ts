@@ -9,6 +9,7 @@ export type Publication = {
   source_label: string | null;
   year: string;
   link: string | null;
+  cover_image_url?: string | null;
   content: any | null; // Tiptap JSON content object
   created_at: string;
   updated_at: string;
