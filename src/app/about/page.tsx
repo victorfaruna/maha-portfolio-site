@@ -151,7 +151,7 @@ export default function AboutPage() {
                 <img
                   src="/images/1.jpeg"
                   alt="Maha Jouini speaking at a conference"
-                  className="w-full h-[320px] object-cover object-top"
+                  className="w-full h-[320px] object-cover object-center"
                 />
               </div>
             </div>
@@ -168,8 +168,8 @@ export default function AboutPage() {
                 period: "2011–2013",
                 title: "Empowering Youth During Tunisia&apos;s Democratic Transition",
                 images: [
-                  "/images/pictures for research and publicaton/0e64c0cb-c976-4ad6-9bcb-fdef4a2333bc.jpg",
-                  "/images/pictures for research and publicaton/1afd7321-37a8-41cf-ba37-e4f7c64ee9b0.jpg",
+                  { src: "/images/pictures for research and publicaton/0e64c0cb-c976-4ad6-9bcb-fdef4a2333bc.jpg", position: "center 60%" },
+                  { src: "/images/pictures for research and publicaton/1afd7321-37a8-41cf-ba37-e4f7c64ee9b0.jpg", position: "center 55%" },
                 ],
                 content: (
                   <>
@@ -184,8 +184,8 @@ export default function AboutPage() {
                 period: "2014–2017",
                 title: "Advancing Regional Policy at the African Union",
                 images: [
-                  "/images/pictures for research and publicaton/1bcaeb96-1e8d-45f1-ba1f-925cc6e9cde1.jpg",
-                  "/images/pictures for research and publicaton/20FB1A0E-3D74-4192-9F03-41A3A1911D8E.jpg",
+                  { src: "/images/pictures for research and publicaton/1bcaeb96-1e8d-45f1-ba1f-925cc6e9cde1.jpg", position: "center 30%" },
+                  { src: "/images/pictures for research and publicaton/20FB1A0E-3D74-4192-9F03-41A3A1911D8E.jpg", position: "center 40%" },
                 ],
                 content: (
                   <>
@@ -236,7 +236,7 @@ export default function AboutPage() {
                 title: "Advancing National Digital Transformation in Mauritania and STEM.",
                 images: [
                   "/images/pictures for research and publicaton/41e47944-46a4-4349-80f1-336ddc1278fe.jpg",
-                  "/images/pictures for research and publicaton/42093f66-8a5e-441f-b30f-1c7ca0c774a2.jpg",
+                  { src: "/images/pictures for research and publicaton/42093f66-8a5e-441f-b30f-1c7ca0c774a2.jpg", position: "center 35%" },
                 ],
                 content: (
                   <>
@@ -251,7 +251,7 @@ export default function AboutPage() {
                 title: "Contributing to the Global Conversation on AI Ethics",
                 images: [
                   "/images/pictures for research and publicaton/replacement 2.jpg",
-                  "/images/pictures for research and publicaton/replacemet.JPG",
+                  { src: "/images/pictures for research and publicaton/replacemet.JPG", position: "center 45%" },
                 ],
                 content: (
                   <>
@@ -288,15 +288,20 @@ export default function AboutPage() {
                   </div>
                   {item.images && item.images.length > 0 && (
                     <div className="mt-4 grid grid-cols-2 gap-3 max-w-2xl mx-auto">
-                      {item.images.map((src: string, i: number) => (
-                        <div key={i} className="overflow-hidden rounded-xl border border-border/40 shadow-sm aspect-[4/3]">
-                          <img
-                            src={src}
-                            alt={`${item.title} – photo ${i + 1}`}
-                            className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
-                          />
-                        </div>
-                      ))}
+                      {item.images.map((img: string | { src: string; position?: string }, i: number) => {
+                        const src = typeof img === "string" ? img : img.src;
+                        const position = typeof img === "string" ? "center" : (img.position || "center");
+                        return (
+                          <div key={i} className="overflow-hidden rounded-xl border border-border/40 shadow-sm aspect-[4/3]">
+                            <img
+                              src={src}
+                              alt={`${item.title} – photo ${i + 1}`}
+                              className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                              style={{ objectPosition: position }}
+                            />
+                          </div>
+                        );
+                      })}
                     </div>
                   )}
                 </div>
@@ -312,8 +317,8 @@ export default function AboutPage() {
                 period: "2023",
                 title: "Measuring Responsible AI Across Africa",
                 images: [
-                  "/images/pictures for research and publicaton/5363f808-d1c1-44c7-bb73-e5e71185594d.jpg",
-                  "/images/pictures for research and publicaton/5385af7f-c6b7-4233-a21e-5a27d0f54056.jpg",
+                  { src: "/images/pictures for research and publicaton/5363f808-d1c1-44c7-bb73-e5e71185594d.jpg", position: "center 25%" },
+                  { src: "/images/pictures for research and publicaton/5385af7f-c6b7-4233-a21e-5a27d0f54056.jpg", position: "center 68%" },
                 ],
                 content: (
                   <>
@@ -346,7 +351,7 @@ export default function AboutPage() {
                 title: "Leading Research on AI Governance and Gender",
                 images: [
                   "/images/pictures for research and publicaton/6bc7fb48-c078-4743-a7b6-142f1a3bb07e.jpg",
-                  "/images/pictures for research and publicaton/6e471ec5-3e2e-4903-a643-a92170d6d825.jpg",
+                  { src: "/images/pictures for research and publicaton/6e471ec5-3e2e-4903-a643-a92170d6d825.jpg", position: "center 25%" },
                 ],
                 content: (
                   <>
@@ -377,7 +382,7 @@ export default function AboutPage() {
                 period: "2025-2026",
                 title: "Educating the Next Generation of Responsible AI Leaders",
                 images: [
-                  "/images/pictures for research and publicaton/8250d636-083a-4a40-b2e2-4d80a6381af1.jpg",
+                  { src: "/images/pictures for research and publicaton/8250d636-083a-4a40-b2e2-4d80a6381af1.jpg", position: "center 25%" },
                   "/images/pictures for research and publicaton/8a574c0d-3241-46b2-ab0a-28c519cabe4e.jpg",
                 ],
                 content: (
@@ -394,7 +399,7 @@ export default function AboutPage() {
                 title: "Advising on Artificial Intelligence and Technology-Facilitated Gender-Based Violence",
                 images: [
                   "/images/pictures for research and publicaton/8d51fae2-316e-4856-9a73-c1f2c0da5aa3.jpg",
-                  "/images/pictures for research and publicaton/99.jpeg",
+                  { src: "/images/pictures for research and publicaton/99.jpeg", position: "center 30%" },
                 ],
                 content: (
                   <>
@@ -454,15 +459,20 @@ export default function AboutPage() {
                   </div>
                   {item.images && item.images.length > 0 && (
                     <div className="mt-4 grid grid-cols-2 gap-3 max-w-2xl mx-auto">
-                      {item.images.map((src: string, i: number) => (
-                        <div key={i} className="overflow-hidden rounded-xl border border-border/40 shadow-sm aspect-[4/3]">
-                          <img
-                            src={src}
-                            alt={`${item.title} – photo ${i + 1}`}
-                            className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
-                          />
-                        </div>
-                      ))}
+                      {item.images.map((img: string | { src: string; position?: string }, i: number) => {
+                        const src = typeof img === "string" ? img : img.src;
+                        const position = typeof img === "string" ? "center" : (img.position || "center");
+                        return (
+                          <div key={i} className="overflow-hidden rounded-xl border border-border/40 shadow-sm aspect-[4/3]">
+                            <img
+                              src={src}
+                              alt={`${item.title} – photo ${i + 1}`}
+                              className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                              style={{ objectPosition: position }}
+                            />
+                          </div>
+                        );
+                      })}
                     </div>
                   )}
                 </div>
@@ -491,7 +501,7 @@ export default function AboutPage() {
             <img
               src="/images/myjourney2.jpeg"
               alt="Maha Jouini – My Journey"
-              className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
+              className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-500"
             />
           </div>
           <div className="overflow-hidden rounded-2xl shadow-lg border border-border/40 aspect-[4/3]">
@@ -550,7 +560,7 @@ export default function AboutPage() {
             <img
               src="/images/3.jpeg"
               alt="Maha Jouini speaking at a Tunisian event"
-              className="w-full h-full object-cover object-top"
+              className="w-full h-full object-cover object-center"
             />
           </motion.div>
         </div>
