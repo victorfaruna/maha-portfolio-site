@@ -42,20 +42,23 @@ export async function uploadPublicationImage(formData: FormData): Promise<{ url?
   const ext = file.name.split('.').pop() ?? 'jpg';
   const path = `inline/${Date.now()}_${Math.random().toString(36).substring(2, 7)}.${ext}`;
 
-  try {
-    const { error } = await supabase.storage
-      .from('publication-images')
-      .upload(path, file, { contentType: file.type || 'image/jpeg', upsert: true });
+  const buckets = ['publication-images', 'media-gallery', 'book-covers'];
+  for (const bucket of buckets) {
+    try {
+      const { error } = await supabase.storage
+        .from(bucket)
+        .upload(path, file, { contentType: file.type || 'image/jpeg', upsert: true });
 
-    if (!error) {
-      const { data } = supabase.storage.from('publication-images').getPublicUrl(path);
-      if (data?.publicUrl) return { url: data.publicUrl };
+      if (!error) {
+        const { data } = supabase.storage.from(bucket).getPublicUrl(path);
+        if (data?.publicUrl) return { url: data.publicUrl };
+      }
+    } catch {
+      // Continue to next bucket
     }
-  } catch {
-    // Fallback if storage upload fails
   }
 
-  // Fallback to Data URL
+  // Fallback to Data URL if storage bucket uploads fail
   const arrayBuffer = await file.arrayBuffer();
   const base64 = Buffer.from(arrayBuffer).toString('base64');
   const mimeType = file.type || 'image/jpeg';

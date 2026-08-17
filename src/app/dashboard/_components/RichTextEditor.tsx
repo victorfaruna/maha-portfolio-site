@@ -161,11 +161,79 @@ export function RichTextEditor({
       transformPastedHTML(html) {
         return cleanPasteHtml(html);
       },
+      handlePaste(_view, event) {
+        const items = Array.from(event.clipboardData?.items || []);
+        const imageItem = items.find((item) => item.type.startsWith('image/'));
+        if (imageItem) {
+          const file = imageItem.getAsFile();
+          if (file) {
+            event.preventDefault();
+            uploadAndInsertFile(file);
+            return true;
+          }
+        }
+        return false;
+      },
+      handleDrop(_view, event, _slice, moved) {
+        if (!moved && event.dataTransfer?.files?.length) {
+          const file = event.dataTransfer.files[0];
+          if (file && file.type.startsWith('image/')) {
+            event.preventDefault();
+            uploadAndInsertFile(file);
+            return true;
+          }
+        }
+        return false;
+      },
     },
     onUpdate: ({ editor: ed }) => {
       handleEditorUpdate(ed);
     },
   });
+
+  const uploadAndInsertFile = useCallback(
+    async (file: File) => {
+      if (!file || !editor) return;
+
+      setIsUploading(true);
+      try {
+        let imageUrl: string | null = null;
+
+        // 1. Try server action upload first
+        try {
+          const formData = new FormData();
+          formData.append('image', file);
+          const res = await uploadPublicationImage(formData);
+          if (res?.url) {
+            imageUrl = res.url;
+          }
+        } catch (serverErr) {
+          console.warn('Server upload failed, switching to client FileReader:', serverErr);
+        }
+
+        // 2. Client-side fallback via FileReader (reads image directly in browser if server request fails)
+        if (!imageUrl) {
+          imageUrl = await new Promise<string>((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result as string);
+            reader.onerror = () => reject(new Error('Failed to read image file'));
+            reader.readAsDataURL(file);
+          });
+        }
+
+        if (imageUrl) {
+          editor.chain().focus().setImage({ src: imageUrl }).run();
+        }
+      } catch (err: any) {
+        console.error('Image insertion error:', err);
+        alert(err?.message || 'Failed to insert image.');
+      } finally {
+        setIsUploading(false);
+        if (fileInputRef.current) fileInputRef.current.value = '';
+      }
+    },
+    [editor]
+  );
 
   const addImage = useCallback(() => {
     fileInputRef.current?.click();
@@ -180,43 +248,8 @@ export function RichTextEditor({
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (!file || !editor) return;
-
-    setIsUploading(true);
-    try {
-      let imageUrl: string | null = null;
-
-      // 1. Try server action upload first
-      try {
-        const formData = new FormData();
-        formData.append('image', file);
-        const res = await uploadPublicationImage(formData);
-        if (res?.url) {
-          imageUrl = res.url;
-        }
-      } catch (serverErr) {
-        console.warn('Server upload failed, switching to client FileReader:', serverErr);
-      }
-
-      // 2. Client-side fallback via FileReader (reads image directly in browser if server request fails)
-      if (!imageUrl) {
-        imageUrl = await new Promise<string>((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onload = () => resolve(reader.result as string);
-          reader.onerror = () => reject(new Error('Failed to read image file'));
-          reader.readAsDataURL(file);
-        });
-      }
-
-      if (imageUrl) {
-        editor.chain().focus().setImage({ src: imageUrl }).run();
-      }
-    } catch (err: any) {
-      console.error('Image insertion error:', err);
-      alert(err?.message || 'Failed to insert image.');
-    } finally {
-      setIsUploading(false);
-      if (fileInputRef.current) fileInputRef.current.value = '';
+    if (file) {
+      await uploadAndInsertFile(file);
     }
   };
 

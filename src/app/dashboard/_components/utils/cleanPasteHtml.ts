@@ -86,6 +86,14 @@ export function cleanPasteHtml(html: string): string {
         }
       }
 
+      // Clean img elements (strip local file:/// or invalid paths pasted from desktop Word documents)
+      if (newEl.tagName.toLowerCase() === 'img') {
+        const src = newEl.getAttribute('src') || '';
+        if (src.startsWith('file://')) {
+          newEl.removeAttribute('src');
+        }
+      }
+
       // 4. Clean style attributes (strip font-family, mso-*, margins, line-height overrides)
       if (newEl.hasAttribute('style')) {
         const style = newEl.style;
