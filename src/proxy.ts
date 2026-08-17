@@ -1,23 +1,29 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { jwtVerify } from 'jose';
 
 /**
  * Route guard for /dashboard routes.
  *
  * Next.js 16: middleware is renamed to "proxy".
- * This file must export a function named `proxy` (not `middleware`).
- *
- * Auth strategy:
- * - Supabase writes a session cookie named "sb-{project-ref}-auth-token"
- *   after a successful signInWithPassword() call.
- * - We check for ANY cookie that starts with "sb-" and ends with "-auth-token"
- *   as a lightweight gate. The actual session is validated server-side in
- *   each dashboard page/action using the service role client.
+ * Auth strategy: verify a signed HS256 JWT stored in an HTTP-only cookie.
+ * The JWT is issued by loginAction() in src/app/actions/auth.ts.
  *
  * Public routes within /dashboard that skip the guard:
  * - /dashboard/login
  */
-export function proxy(request: NextRequest) {
+
+const COOKIE_NAME = 'admin_session';
+
+function getJwtSecret(): Uint8Array {
+  const secret = process.env.JWT_SECRET;
+  if (!secret || secret.length < 32) {
+    throw new Error('JWT_SECRET env var is missing or too short.');
+  }
+  return new TextEncoder().encode(secret);
+}
+
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Only guard /dashboard routes
@@ -30,22 +36,39 @@ export function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Check for any Supabase auth session cookie
-  const cookies = request.cookies.getAll();
-  const hasSession = cookies.some(
-    (c) =>
-      (c.name.startsWith('sb-') && c.name.endsWith('-auth-token')) ||
-      c.name === 'sb-access-token'
-  );
+  // Retrieve session cookie
+  const token = request.cookies.get(COOKIE_NAME)?.value;
 
-  if (!hasSession) {
-    const loginUrl = new URL('/dashboard/login', request.url);
-    // Pass the attempted URL so we can redirect back after login
-    loginUrl.searchParams.set('next', pathname);
-    return NextResponse.redirect(loginUrl);
+  if (!token) {
+    return redirectToLogin(request, pathname);
   }
 
-  return NextResponse.next();
+  // Verify JWT signature + expiry
+  try {
+    await jwtVerify(token, getJwtSecret(), {
+      algorithms: ['HS256'],
+    });
+    // Valid token — allow request through
+    return NextResponse.next();
+  } catch {
+    // Token is expired, tampered, or invalid — force re-login
+    return redirectToLogin(request, pathname);
+  }
+}
+
+function redirectToLogin(request: NextRequest, pathname: string) {
+  const loginUrl = new URL('/dashboard/login', request.url);
+  loginUrl.searchParams.set('next', pathname);
+  const response = NextResponse.redirect(loginUrl);
+  // Clear any stale/invalid cookie
+  response.cookies.set(COOKIE_NAME, '', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
+    path: '/dashboard',
+    maxAge: 0,
+  });
+  return response;
 }
 
 export const config = {

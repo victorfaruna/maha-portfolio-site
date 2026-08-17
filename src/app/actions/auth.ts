@@ -2,84 +2,89 @@
 
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
-import { createClient } from '@supabase/supabase-js';
+import { SignJWT } from 'jose';
+import bcrypt from 'bcryptjs';
 
-// Polyfill WebSocket for Node 20 server environment to prevent RealtimeClient initialization crashes
-if (typeof globalThis.WebSocket === 'undefined') {
-  class DummyWebSocket {
-    constructor() {}
-    addEventListener() {}
-    removeEventListener() {}
-    close() {}
+// ── Constants ────────────────────────────────────────────────────────────────
+const COOKIE_NAME = 'admin_session';
+const SESSION_DURATION_SECONDS = 60 * 60 * 8; // 8 hours
+
+// ── Helpers ──────────────────────────────────────────────────────────────────
+
+/** Returns the JWT secret as a Uint8Array for jose. Throws if missing. */
+function getJwtSecret(): Uint8Array {
+  const secret = process.env.JWT_SECRET;
+  if (!secret || secret.length < 32) {
+    throw new Error('JWT_SECRET env var is missing or too short (min 32 chars).');
   }
-  (globalThis as any).WebSocket = DummyWebSocket;
+  return new TextEncoder().encode(secret);
 }
 
-function createAuthClient() {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-  if (!url || !key) {
-    throw new Error('Supabase environment variables (URL/ANON_KEY) are missing. Please restart your dev server.');
+/** Constant-time string comparison to avoid timing attacks on email. */
+function safeEqual(a: string, b: string): boolean {
+  if (a.length !== b.length) return false;
+  let diff = 0;
+  for (let i = 0; i < a.length; i++) {
+    diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
   }
-
-  return createClient(url, key, {
-    auth: {
-      autoRefreshToken: false,
-      persistSession: false,
-    },
-  });
+  return diff === 0;
 }
+
+// ── Actions ───────────────────────────────────────────────────────────────────
 
 export async function loginAction(
   _prevState: { error?: string } | undefined,
   formData: FormData
 ): Promise<{ error?: string }> {
-  const email = (formData.get('email') as string)?.trim();
-  const password = (formData.get('password') as string)?.trim();
+  // 1. Basic input validation
+  const email = (formData.get('email') as string | null)?.trim() ?? '';
+  const password = (formData.get('password') as string | null) ?? '';
 
   if (!email || !password) {
     return { error: 'Email and password are required.' };
   }
 
-  let sessionData: any = null;
+  // 2. Read credentials from env (never from client input)
+  const adminEmail = process.env.ADMIN_EMAIL ?? '';
+  const adminHash  = process.env.ADMIN_PASSWORD_HASH ?? '';
 
-  try {
-    const supabase = createAuthClient();
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-
-    if (error) {
-      const errMsg = typeof error === 'string' ? error : error?.message ? String(error.message) : 'Invalid email or password.';
-      return { error: errMsg };
-    }
-
-    if (!data?.session) {
-      return { error: 'Failed to establish session. Please verify your credentials.' };
-    }
-
-    sessionData = data.session;
-  } catch (err: any) {
-    const rawMsg = typeof err === 'string' ? err : err?.message ? String(err.message) : '';
-    if (rawMsg.includes('fetch failed')) {
-      return { error: 'Network connection error while connecting to Supabase. Please verify your internet connection or try again in a moment.' };
-    }
-    return { error: rawMsg || 'An unexpected error occurred.' };
+  if (!adminEmail || !adminHash) {
+    // Misconfigured server — don't leak details
+    console.error('[Auth] ADMIN_EMAIL or ADMIN_PASSWORD_HASH env vars are not set.');
+    return { error: 'Server configuration error. Contact the site administrator.' };
   }
 
-  // Persist session tokens in HTTP-only cookies
-  const cookieStore = await cookies();
-  const cookieOpts = {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax' as const,
-    path: '/',
-    maxAge: sessionData.expires_in,
-  };
+  // 3. Verify email (constant-time) + password (bcrypt)
+  const emailMatch    = safeEqual(email.toLowerCase(), adminEmail.toLowerCase());
+  // Always run bcrypt even on email mismatch to prevent timing-based enumeration
+  const passwordMatch = await bcrypt.compare(password, adminHash);
 
-  cookieStore.set('sb-access-token', sessionData.access_token, cookieOpts);
-  cookieStore.set('sb-refresh-token', sessionData.refresh_token, {
-    ...cookieOpts,
-    maxAge: 60 * 60 * 24 * 7, // 7 days
+  if (!emailMatch || !passwordMatch) {
+    return { error: 'Invalid email or password.' };
+  }
+
+  // 4. Sign a short-lived JWT
+  let token: string;
+  try {
+    token = await new SignJWT({ role: 'admin' })
+      .setProtectedHeader({ alg: 'HS256' })
+      .setIssuedAt()
+      .setExpirationTime(`${SESSION_DURATION_SECONDS}s`)
+      .setSubject(adminEmail)
+      .sign(getJwtSecret());
+  } catch (err) {
+    console.error('[Auth] JWT signing failed:', err);
+    return { error: 'Failed to create session. Please try again.' };
+  }
+
+  // 5. Persist token in a secure HTTP-only cookie
+  const cookieStore = await cookies();
+  cookieStore.set(COOKIE_NAME, token, {
+    httpOnly: true,                                        // not accessible to JS
+    secure: process.env.NODE_ENV === 'production',         // HTTPS only in prod
+    sameSite: 'lax',                                       // CSRF protection
+    path: '/dashboard',                                    // scoped to dashboard
+    maxAge: SESSION_DURATION_SECONDS,
   });
 
   redirect('/dashboard');
@@ -87,15 +92,14 @@ export async function loginAction(
 
 export async function logoutAction(): Promise<void> {
   const cookieStore = await cookies();
-  cookieStore.delete('sb-access-token');
-  cookieStore.delete('sb-refresh-token');
-
-  const all = cookieStore.getAll();
-  for (const c of all) {
-    if (c.name.startsWith('sb-')) {
-      cookieStore.delete(c.name);
-    }
-  }
+  // Clear the session cookie by setting maxAge to 0
+  cookieStore.set(COOKIE_NAME, '', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
+    path: '/dashboard',
+    maxAge: 0,
+  });
 
   redirect('/dashboard/login');
 }
