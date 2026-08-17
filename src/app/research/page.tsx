@@ -58,18 +58,7 @@ export default async function ResearchPage() {
         </div>
       </section>
 
-      {/* ── 2. INTRO / FRAMING PARAGRAPH ─────────────────────────────────── */}
-      <section className="py-12 md:py-20 bg-background border-b border-border">
-        <div className="container mx-auto px-5 sm:px-8 md:px-12 max-w-5xl">
-          <div className="relative pl-4 md:pl-10 border-l-2 border-brand-pink">
-            <p className="text-base sm:text-xl md:text-2xl text-brand-navy font-serif leading-relaxed">
-              My research focuses on building ethical, context-aware AI governance frameworks that center local dignity, cultural context, and human rights. By bridging policy, technological innovation, and lived experience in North Africa, my work advocates for sovereign AI development and digital equity across the Global South.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* ── 3. PUBLICATIONS & ARTICLES GRID ──────────────────────────────── */}
+      {/* ── 2. PUBLICATIONS & ARTICLES GRID ──────────────────────────────── */}
       <PublicationsSection publications={publications} />
 
       {/* Footer */}
