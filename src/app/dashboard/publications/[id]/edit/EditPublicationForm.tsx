@@ -112,7 +112,6 @@ export default function EditPublicationForm({ publication }: { publication: Publ
               type="text"
               required
               defaultValue={publication.year}
-              maxLength={4}
               className={inputClass}
             />
           </FormField>
