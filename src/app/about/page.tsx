@@ -501,7 +501,8 @@ export default function AboutPage() {
             <img
               src="/images/myjourney2.jpeg"
               alt="Maha Jouini – My Journey"
-              className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-500"
+              className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+              style={{ objectPosition: "center 12%" }}
             />
           </div>
           <div className="overflow-hidden rounded-2xl shadow-lg border border-border/40 aspect-[4/3]">
