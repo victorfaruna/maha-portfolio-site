@@ -54,7 +54,7 @@ export function ArticleBody({ content }: { content: any }) {
       }),
       TiptapImage.configure({
         HTMLAttributes: {
-          class: 'my-8 shadow-lg max-w-full h-auto mx-auto border border-border',
+          class: 'my-8 shadow-xl max-w-full h-auto mx-auto border border-border/60 rounded-2xl md:rounded-3xl overflow-hidden object-cover block',
         },
       }),
     ],

@@ -142,3 +142,26 @@ iframe[data-youtube-video] {
   border-radius: 0;
   display: block;
 }
+
+/* Rounded corners for all article & publication images */
+.article-body-wrapper img,
+.article-body-content img,
+.prose img,
+.tiptap img,
+.ProseMirror img,
+div[data-type="image"] img {
+  border-radius: 1rem !important;
+  overflow: hidden !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.08) !important;
+}
+
+@media (min-width: 768px) {
+  .article-body-wrapper img,
+  .article-body-content img,
+  .prose img,
+  .tiptap img,
+  .ProseMirror img,
+  div[data-type="image"] img {
+    border-radius: 1.5rem !important;
+  }
+}

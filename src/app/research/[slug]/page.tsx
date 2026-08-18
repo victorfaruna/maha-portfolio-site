@@ -128,20 +128,7 @@ export default async function PublicationArticlePage({
             </div>
           )}
 
-          {/* Article Cover Image Banner */}
-          {(() => {
-            const coverImage = getPublicationCoverImage(publication);
-            if (!coverImage) return null;
-            return (
-              <div className="my-8 overflow-hidden border border-border shadow-md aspect-[16/9] md:aspect-[21/9] w-full relative rounded-2xl">
-                <img
-                  src={coverImage}
-                  alt={publication.title}
-                  className="w-full h-full object-cover object-center"
-                />
-              </div>
-            );
-          })()}
+
 
           {/* Original External Link badge if present */}
           {publication.link && publication.link !== '#' && (
