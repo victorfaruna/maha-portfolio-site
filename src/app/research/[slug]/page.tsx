@@ -111,6 +111,7 @@ export default async function PublicationArticlePage({
 
           {/* Author, Views Count & Share Bar */}
           <ArticleShareBar
+            articleId={publication.id}
             title={publication.title}
             year={publication.year}
             sourceLabel={publication.source_label}
@@ -176,14 +177,16 @@ export default async function PublicationArticlePage({
             )}
           </div>
 
-          {/* Article Footer Author & Share Box */}
-          <div className="mt-16 pt-8 border-t-2 border-brand-pink/30">
+          {/* Article Bottom Share Only Bar */}
+          <div className="mt-12">
             <ArticleShareBar
+              articleId={publication.id}
               title={publication.title}
               year={publication.year}
               sourceLabel={publication.source_label}
               readTimeMinutes={readTimeMinutes}
               viewsCount={viewsCount}
+              shareOnly={true}
             />
           </div>
         </div>

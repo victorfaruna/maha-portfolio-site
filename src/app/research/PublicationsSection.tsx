@@ -149,7 +149,14 @@ export default function PublicationsSection({ publications }: { publications: Pu
                           <span className="text-foreground/30">•</span>
                           <span className="inline-flex items-center gap-1 text-[11px] text-brand-navy font-semibold font-mono">
                             <Eye className="w-3 h-3 text-brand-pink" />
-                            {viewsCount.toLocaleString()} views
+                            {(() => {
+                              if (typeof window !== "undefined") {
+                                const stored = localStorage.getItem(`article_views_total_${pub.id}`);
+                                if (stored) return parseInt(stored, 10).toLocaleString();
+                              }
+                              return viewsCount.toLocaleString();
+                            })()}{" "}
+                            views
                           </span>
                         </div>
                       </div>
