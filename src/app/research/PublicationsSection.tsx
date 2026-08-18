@@ -3,9 +3,9 @@
 import { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight, Sparkles } from "lucide-react";
+import { ArrowUpRight, Sparkles, Eye, Clock } from "lucide-react";
 import { slugify } from "@/lib/slug";
-import { getPublicationCoverImage } from "@/lib/publicationUtils";
+import { getPublicationCoverImage, calculateReadTimeAndViews } from "@/lib/publicationUtils";
 import type { Publication } from "@/lib/supabase/types";
 
 const CATEGORIES = ["All", "Policy Brief", "Academic Paper", "Article"];
@@ -77,6 +77,7 @@ export default function PublicationsSection({ publications }: { publications: Pu
               const articleSlug = pub.slug || slugify(pub.title);
               const hasContent = Boolean(pub.content || pub.slug);
               const coverImage = getPublicationCoverImage(pub);
+              const { readTimeMinutes, viewsCount } = calculateReadTimeAndViews(pub);
 
               const cardInnerContent = (
                 <div className="flex flex-col justify-between h-full">
@@ -130,6 +131,28 @@ export default function PublicationsSection({ publications }: { publications: Pu
                       <h3 className="text-lg sm:text-xl md:text-2xl font-serif text-brand-navy mb-3 leading-snug group-hover:text-brand-pink transition-colors duration-300 font-medium">
                         {pub.title}
                       </h3>
+
+                      {/* Author Mini Circle Avatar & Meta Row */}
+                      <div className="flex items-center gap-2.5 mb-4 py-2 border-y border-border/40 text-xs text-foreground/60 font-sans">
+                        <img
+                          src="/images/abouthero.JPG"
+                          alt="Maha Jouini"
+                          className="w-7 h-7 rounded-full object-cover object-center ring-1 ring-brand-pink/40 shrink-0"
+                        />
+                        <div className="flex flex-wrap items-center gap-2 leading-tight">
+                          <span className="font-semibold text-brand-navy text-[13px]">Maha Jouini</span>
+                          <span className="text-foreground/30">•</span>
+                          <span className="inline-flex items-center gap-1 text-[11px] text-foreground/60">
+                            <Clock className="w-3 h-3 text-brand-pink" />
+                            {readTimeMinutes} min
+                          </span>
+                          <span className="text-foreground/30">•</span>
+                          <span className="inline-flex items-center gap-1 text-[11px] text-brand-navy font-semibold font-mono">
+                            <Eye className="w-3 h-3 text-brand-pink" />
+                            {viewsCount.toLocaleString()} views
+                          </span>
+                        </div>
+                      </div>
 
                       {/* Short Excerpt */}
                       <p className="text-foreground/75 font-sans text-sm leading-relaxed line-clamp-3 mb-6">

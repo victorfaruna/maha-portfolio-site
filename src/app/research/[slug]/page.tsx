@@ -5,9 +5,10 @@ import { ArrowLeft, ExternalLink, Calendar, Building2 } from 'lucide-react';
 import { Navbar } from '@/components/sections/Navbar';
 import { Footer } from '@/components/sections/Footer';
 import { ArticleBody } from '@/components/sections/ArticleBody';
+import { ArticleShareBar } from '@/components/sections/ArticleShareBar';
 import { createAnonServerClient } from '@/lib/supabase/server';
 import { slugify } from '@/lib/slug';
-import { getPublicationCoverImage } from '@/lib/publicationUtils';
+import { getPublicationCoverImage, calculateReadTimeAndViews } from '@/lib/publicationUtils';
 import type { Publication } from '@/lib/supabase/types';
 
 export const dynamic = 'force-dynamic';
@@ -64,6 +65,8 @@ export default async function PublicationArticlePage({
     notFound();
   }
 
+  const { readTimeMinutes, viewsCount } = calculateReadTimeAndViews(publication);
+
   return (
     <main className="min-h-screen bg-background text-foreground flex flex-col">
       <Navbar />
@@ -106,6 +109,15 @@ export default async function PublicationArticlePage({
             {publication.title}
           </h1>
 
+          {/* Author, Views Count & Share Bar */}
+          <ArticleShareBar
+            title={publication.title}
+            year={publication.year}
+            sourceLabel={publication.source_label}
+            readTimeMinutes={readTimeMinutes}
+            viewsCount={viewsCount}
+          />
+
           {/* Excerpt framing quote box */}
           {publication.excerpt && (
             <div className="relative pl-6 md:pl-8 border-l-4 border-brand-pink bg-secondary/40 py-5 pr-6 my-8">
@@ -120,7 +132,7 @@ export default async function PublicationArticlePage({
             const coverImage = getPublicationCoverImage(publication);
             if (!coverImage) return null;
             return (
-              <div className="my-8 overflow-hidden border border-border shadow-md aspect-[16/9] md:aspect-[21/9] w-full relative">
+              <div className="my-8 overflow-hidden border border-border shadow-md aspect-[16/9] md:aspect-[21/9] w-full relative rounded-2xl">
                 <img
                   src={coverImage}
                   alt={publication.title}
@@ -132,7 +144,7 @@ export default async function PublicationArticlePage({
 
           {/* Original External Link badge if present */}
           {publication.link && publication.link !== '#' && (
-            <div className="mb-12 p-4 bg-brand-soft-blue border border-border flex items-center justify-between gap-4">
+            <div className="mb-12 p-4 bg-brand-soft-blue border border-border flex items-center justify-between gap-4 rounded-xl">
               <span className="text-xs text-foreground/70 font-sans">
                 Originally published via <strong>{publication.source_label || 'External Source'}</strong>
               </span>
@@ -140,7 +152,7 @@ export default async function PublicationArticlePage({
                 href={publication.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-brand-navy border border-brand-navy/20 hover:bg-brand-navy hover:text-white transition-all shrink-0"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold uppercase tracking-wider text-brand-navy border border-brand-navy/20 hover:bg-brand-navy hover:text-white transition-all shrink-0 rounded-full"
               >
                 View Original
                 <ExternalLink className="w-3 h-3" />
@@ -153,7 +165,7 @@ export default async function PublicationArticlePage({
             {publication.content ? (
               <ArticleBody content={publication.content} />
             ) : (
-              <div className="py-16 text-center bg-secondary/20 border border-dashed border-border p-8">
+              <div className="py-16 text-center bg-secondary/20 border border-dashed border-border p-8 rounded-2xl">
                 <p className="text-foreground/60 font-serif text-lg mb-2">
                   Article body content coming soon.
                 </p>
@@ -162,6 +174,17 @@ export default async function PublicationArticlePage({
                 </p>
               </div>
             )}
+          </div>
+
+          {/* Article Footer Author & Share Box */}
+          <div className="mt-16 pt-8 border-t-2 border-brand-pink/30">
+            <ArticleShareBar
+              title={publication.title}
+              year={publication.year}
+              sourceLabel={publication.source_label}
+              readTimeMinutes={readTimeMinutes}
+              viewsCount={viewsCount}
+            />
           </div>
         </div>
       </article>
