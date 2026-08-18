@@ -11,6 +11,7 @@ export type MediaItem = {
   outlet: string;
   description?: string;
   link: string;
+  videoId?: string; // YouTube video ID, only for Podcasts & Broadcasts
   isRTL?: boolean;
   year?: string;
 };
@@ -155,6 +156,7 @@ export const speakingData: MediaItem[] = [
     outlet: "Vambo AI in Africa Series (Ep. 9)",
     description: "Video podcast conversation on multilingual AI, language preservation, and digital advocacy in North Africa.",
     link: "https://www.youtube.com/watch?v=c7lJ-CJEbGo",
+    videoId: "c7lJ-CJEbGo",
     year: "2024",
   },
   {
@@ -163,6 +165,7 @@ export const speakingData: MediaItem[] = [
     outlet: "Frontrunners Development",
     description: "Broadcast interview on social impact entrepreneurship, health tech (CHIFAA), and digital inclusion.",
     link: "https://www.youtube.com/watch?v=LxkZd6NEKoQ",
+    videoId: "LxkZd6NEKoQ",
     year: "2024",
   },
   {
@@ -171,6 +174,7 @@ export const speakingData: MediaItem[] = [
     outlet: "News Central Agency | Nigeria",
     description: "Television broadcast segment on gender inclusion in tech policy, AI education, and digital economic empowerment.",
     link: "https://www.youtube.com/watch?v=wYy9CqunS8g&t=351s",
+    videoId: "wYy9CqunS8g",
     year: "2023",
   },
 
