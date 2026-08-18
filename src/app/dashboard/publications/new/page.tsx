@@ -10,7 +10,7 @@ import { slugify } from '@/lib/slug';
 
 type State = { error?: string } | undefined;
 
-const CATEGORIES = ['Policy Brief', 'Academic Paper', 'Article'];
+const CATEGORIES = ['Policy Brief', 'Academic Paper', 'Opinion'];
 
 export default function NewPublicationPage() {
   const [state, action, isPending] = useActionState<State, FormData>(

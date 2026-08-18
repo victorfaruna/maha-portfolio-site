@@ -8,7 +8,9 @@ import { slugify } from "@/lib/slug";
 import { getPublicationCoverImage, calculateReadTimeAndViews } from "@/lib/publicationUtils";
 import type { Publication } from "@/lib/supabase/types";
 
-const CATEGORIES = ["All", "Policy Brief", "Academic Paper", "Article"];
+const CATEGORIES = ["All", "Policy Brief", "Academic Paper", "Opinion"];
+
+const displayCategory = (cat: string) => (cat === "Article" ? "Opinion" : cat);
 
 export default function PublicationsSection({ publications }: { publications: Publication[] }) {
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
@@ -16,7 +18,7 @@ export default function PublicationsSection({ publications }: { publications: Pu
   const filtered =
     selectedCategory === "All"
       ? publications
-      : publications.filter((p) => p.category === selectedCategory);
+      : publications.filter((p) => displayCategory(p.category) === selectedCategory);
 
   return (
     <section className="py-14 md:py-24 bg-background overflow-hidden">
@@ -34,7 +36,7 @@ export default function PublicationsSection({ publications }: { publications: Pu
               SCHOLARLY WORKS &amp; POLICY
             </span>
             <h2 className="text-2xl sm:text-3xl md:text-5xl font-serif text-brand-navy leading-tight">
-              Featured Publications &amp; Articles
+              Featured Publications &amp; Opinions
             </h2>
           </motion.div>
 
@@ -78,6 +80,7 @@ export default function PublicationsSection({ publications }: { publications: Pu
               const hasContent = Boolean(pub.content || pub.slug);
               const coverImage = getPublicationCoverImage(pub);
               const { readTimeMinutes, viewsCount } = calculateReadTimeAndViews(pub);
+              const formattedCategory = displayCategory(pub.category);
 
               const cardInnerContent = (
                 <div className="flex flex-col justify-between h-full">
@@ -92,7 +95,7 @@ export default function PublicationsSection({ publications }: { publications: Pu
                     ) : (
                       <div className="w-full h-full bg-gradient-to-br from-brand-navy/15 via-brand-pink/10 to-brand-navy/5 flex items-center justify-center p-6 text-center">
                         <span className="font-serif italic text-brand-navy/40 text-sm">
-                          {pub.category}
+                          {formattedCategory}
                         </span>
                       </div>
                     )}
@@ -103,7 +106,7 @@ export default function PublicationsSection({ publications }: { publications: Pu
                     {/* Floating Category Tag on Cover Image */}
                     <div className="absolute top-3.5 left-3.5 z-10">
                       <span className="bg-white/95 backdrop-blur-md text-brand-pink border border-white/50 shadow-sm px-3 py-1 rounded-full text-[10px] font-extrabold tracking-widest uppercase inline-block">
-                        {pub.category}
+                        {formattedCategory}
                       </span>
                     </div>
 

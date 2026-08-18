@@ -11,7 +11,7 @@ import type { Publication } from '@/lib/supabase/types';
 
 type State = { error?: string } | undefined;
 
-const CATEGORIES = ['Policy Brief', 'Academic Paper', 'Article'];
+const CATEGORIES = ['Policy Brief', 'Academic Paper', 'Opinion'];
 
 export default function EditPublicationForm({ publication }: { publication: Publication }) {
   const updateWithId = updatePublication.bind(null, publication.id);

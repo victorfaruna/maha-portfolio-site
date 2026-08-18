@@ -85,8 +85,8 @@ export default async function PublicationArticlePage({
 
           {/* Header Metadata */}
           <div className="flex flex-wrap items-center gap-3 mb-6 text-xs uppercase tracking-widest font-semibold">
-            <span className="bg-brand-soft-pink text-brand-pink px-3 py-1 font-bold">
-              {publication.category}
+            <span className="bg-brand-soft-pink text-brand-pink px-3 py-1 font-bold uppercase">
+              {publication.category === 'Article' ? 'Opinion' : publication.category}
             </span>
             <span className="text-foreground/40">•</span>
             <span className="text-foreground/60 inline-flex items-center gap-1">

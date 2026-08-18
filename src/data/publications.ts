@@ -33,7 +33,7 @@ export const publications: Publication[] = [
   {
     id: "pub-3",
     title: "Decolonizing Algorithmic Infrastructure: Lived Experience as Policy",
-    category: "Article",
+    category: "Opinion",
     year: "2023",
     publisher: "Global AI Ethics Review",
     excerpt: "Exploring how lived experience in African communities should directly inform algorithmic auditing, international AI standards, and multilateral tech policy.",
@@ -63,7 +63,7 @@ export const publications: Publication[] = [
   {
     id: "pub-6",
     title: "Multilateral Governance & Sovereign Dataspaces across the African Continent",
-    category: "Article",
+    category: "Opinion",
     year: "2021",
     publisher: "Pan-African Digital Futures",
     excerpt: "Strategic recommendations for regional data sovereignty, cross-border privacy safeguards, and collaborative tech innovation.",
