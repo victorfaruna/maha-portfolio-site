@@ -20,7 +20,11 @@ import {
   Sparkles,
   Quote,
 } from "lucide-react";
-import { speakingData, type MediaItem, type MediaCategory } from "@/data/speaking";
+import {
+  speakingData,
+  type MediaItem,
+  type MediaCategory,
+} from "@/data/speaking";
 import { testimonials } from "@/data/testimonials";
 import { VideoModal } from "@/components/ui/VideoModal";
 
@@ -147,34 +151,37 @@ export default function SpeakingSection() {
 
   const filteredItems = speakingData.filter((item: MediaItem) => {
     if (selectedTab === "ALL") return true;
-    if (selectedTab === "KEYNOTES & TALKS") return item.category === "Keynote & Talk";
-    if (selectedTab === "PRESS FEATURES") return item.category === "Press Feature";
-    if (selectedTab === "PODCASTS & BROADCASTS") return item.category === "Podcast & Broadcast";
+    if (selectedTab === "KEYNOTES & TALKS")
+      return item.category === "Keynote & Talk";
+    if (selectedTab === "PRESS FEATURES")
+      return item.category === "Press Feature";
+    if (selectedTab === "PODCASTS & BROADCASTS")
+      return item.category === "Podcast & Broadcast";
     if (selectedTab === "ARABIC MEDIA") return item.category === "Arabic Media";
     return true;
   });
 
   const handlePrevTestimonial = () => {
     setActiveTestimonialIndex((prev) =>
-      prev === 0 ? testimonials.length - 1 : prev - 1
+      prev === 0 ? testimonials.length - 1 : prev - 1,
     );
   };
 
   const handleNextTestimonial = () => {
     setActiveTestimonialIndex((prev) =>
-      prev === testimonials.length - 1 ? 0 : prev + 1
+      prev === testimonials.length - 1 ? 0 : prev + 1,
     );
   };
 
   return (
     <div className="w-full overflow-hidden bg-background">
       {/* ── 1. STAT-DRIVEN HERO SECTION ────────────────────────────────────────── */}
-      <section className="relative w-full min-h-screen flex items-end pb-16 md:pb-24 pt-28 overflow-hidden">
+      <section className="relative w-full min-h-screen flex items-end pb-16 md:pb-24 overflow-hidden">
         {/* Background Image */}
         <img
           src="/images/pictures for research and publicaton/speaking4.jpeg"
           alt="Maha Jouini Speaking"
-          className="absolute inset-0 w-full h-full object-cover object-center"
+          className="absolute inset-0 w-full h-full object-cover object-[50%_25%]"
         />
         {/* Lighter Gradient Overlay for bright image visibility */}
         <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/75 via-black/20 to-black/10" />
@@ -200,7 +207,8 @@ export default function SpeakingSection() {
               className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl text-white font-serif tracking-tight leading-[1.1] mb-6"
               style={{ textShadow: "0px 4px 24px rgba(0,0,0,0.85)" }}
             >
-              {totalEngagements}+ Speaking Engagements, Press Features &amp; Broadcasts Across 3 Continents
+              {totalEngagements}+ Speaking Engagements, Press Features &amp;
+              Broadcasts Across 3 Continents
             </motion.h1>
 
             <motion.p
@@ -210,7 +218,9 @@ export default function SpeakingSection() {
               className="text-base sm:text-lg md:text-xl text-white/95 font-sans max-w-2xl font-normal leading-relaxed mb-8"
               style={{ textShadow: "0px 2px 14px rgba(0,0,0,0.85)" }}
             >
-              Keynote addresses, policy moderation, and expert commentary for global forums hosted by UNESCO, the African Union, GITEX Africa, and international news outlets.
+              Keynote addresses, policy moderation, and expert commentary for
+              global forums hosted by UNESCO, the African Union, GITEX Africa,
+              and international news outlets.
             </motion.p>
 
             <motion.div
@@ -439,7 +449,9 @@ export default function SpeakingSection() {
                   <span className="text-[10px] font-mono tracking-widest uppercase text-brand-pink bg-white/10 backdrop-blur-md px-3 py-1 rounded-full border border-white/20 inline-block mb-2">
                     Keynote Address
                   </span>
-                  <h4 className="text-xl font-serif text-white font-medium">Bridging Policy &amp; Ethics</h4>
+                  <h4 className="text-xl font-serif text-white font-medium">
+                    Bridging Policy &amp; Ethics
+                  </h4>
                 </div>
               </div>
             </motion.div>
@@ -482,10 +494,11 @@ export default function SpeakingSection() {
                     onClick={() => setSelectedTab(tab)}
                     whileHover={{ scale: 1.04 }}
                     whileTap={{ scale: 0.96 }}
-                    className={`px-4 sm:px-5 py-2 text-[11px] sm:text-xs uppercase tracking-wider rounded-full font-bold transition-all duration-300 whitespace-nowrap shrink-0 border ${isSelected
+                    className={`px-4 sm:px-5 py-2 text-[11px] sm:text-xs uppercase tracking-wider rounded-full font-bold transition-all duration-300 whitespace-nowrap shrink-0 border ${
+                      isSelected
                         ? "bg-brand-navy text-white border-brand-navy shadow-md ring-2 ring-brand-navy/20"
                         : "bg-secondary/40 text-foreground/70 border-border/60 hover:bg-brand-pink/10 hover:text-brand-pink hover:border-brand-pink/30"
-                      }`}
+                    }`}
                   >
                     {tab}
                   </motion.button>
@@ -550,8 +563,9 @@ export default function SpeakingSection() {
                         {item.description && (
                           <p
                             dir={item.isRTL ? "rtl" : "ltr"}
-                            className={`text-foreground/75 font-sans text-xs sm:text-sm leading-relaxed mb-6 font-normal ${item.isRTL ? "text-right font-serif" : "text-left"
-                              }`}
+                            className={`text-foreground/75 font-sans text-xs sm:text-sm leading-relaxed mb-6 font-normal ${
+                              item.isRTL ? "text-right font-serif" : "text-left"
+                            }`}
                           >
                             {item.description}
                           </p>
@@ -652,7 +666,9 @@ export default function SpeakingSection() {
             Ready to bring Maha to your next event, panel, or feature?
           </h3>
           <p className="text-white/80 text-sm sm:text-base md:text-lg mb-8 font-light max-w-xl mx-auto leading-relaxed">
-            Maha Jouini delivers compelling keynotes, policy moderation, and expert commentary for international summits, tech conferences, and global broadcasts.
+            Maha Jouini delivers compelling keynotes, policy moderation, and
+            expert commentary for international summits, tech conferences, and
+            global broadcasts.
           </p>
           <Link
             href="/contact"
@@ -667,7 +683,9 @@ export default function SpeakingSection() {
       {/* Video Modal Instance */}
       <VideoModal
         isOpen={modalState.isOpen}
-        onClose={() => setModalState({ isOpen: false, videoId: null, title: "" })}
+        onClose={() =>
+          setModalState({ isOpen: false, videoId: null, title: "" })
+        }
         videoId={modalState.videoId}
         title={modalState.title}
       />

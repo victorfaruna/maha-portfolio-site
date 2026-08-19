@@ -1,139 +1,32 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Volume2, VolumeX } from "lucide-react";
 
-declare global {
-  interface Window {
-    YT: any;
-    onYouTubeIframeAPIReady: () => void;
-  }
-}
-
-const VIDEO_ID = "gcnLfZ4VI74";
-const PLAYER_ELEMENT_ID = "hero-yt-player";
-// Show YouTube's own thumbnail instantly — no black flash
-const THUMBNAIL_URL = `https://img.youtube.com/vi/${VIDEO_ID}/maxresdefault.jpg`;
-
 export function Hero() {
-  const playerRef = useRef<any>(null);
-  const [videoPlaying, setVideoPlaying] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [isMuted, setIsMuted] = useState(true);
 
   const toggleMute = () => {
-    if (!playerRef.current) return;
-    try {
-      if (playerRef.current.isMuted()) {
-        playerRef.current.unMute();
-        playerRef.current.setVolume(100);
-        setIsMuted(false);
-      } else {
-        playerRef.current.mute();
-        setIsMuted(true);
-      }
-    } catch (err) {
-      console.error(err);
+    if (videoRef.current) {
+      videoRef.current.muted = !isMuted;
+      setIsMuted(!isMuted);
     }
   };
-
-  useEffect(() => {
-    const initPlayer = () => {
-      if (playerRef.current) return; // Avoid double-init
-      playerRef.current = new window.YT.Player(PLAYER_ELEMENT_ID, {
-        videoId: VIDEO_ID,
-        playerVars: {
-          autoplay: 1,
-          mute: 1, // Muted initially to bypass strict browser autoplay restrictions
-          loop: 1,
-          playlist: VIDEO_ID,
-          controls: 0,
-          showinfo: 0,
-          rel: 0,
-          modestbranding: 1,
-          iv_load_policy: 3,
-          cc_load_policy: 0,
-          cc_lang_pref: 0,
-          start: 30,
-          playsinline: 1,
-          vq: "hd1080",
-        } as any,
-        events: {
-          onReady: (event: any) => {
-            try {
-              event.target.mute();
-              event.target.setPlaybackQuality("hd1080");
-            } catch (_) {}
-
-            const disableCaptions = (player: any) => {
-              try { player.unloadModule("captions"); } catch (_) {}
-              try { player.unloadModule("cc"); } catch (_) {}
-              try { player.setOption("captions", "track", {}); } catch (_) {}
-            };
-            disableCaptions(event.target);
-            setTimeout(() => disableCaptions(event.target), 1000);
-            setTimeout(() => disableCaptions(event.target), 3000);
-            event.target.playVideo();
-          },
-          onStateChange: (event: any) => {
-            // Fade out thumbnail the moment video is actually playing
-            if (event.data === window.YT.PlayerState.PLAYING) {
-              setVideoPlaying(true);
-            }
-            // Loop from start=30 when video ends
-            if (event.data === window.YT.PlayerState.ENDED) {
-              event.target.seekTo(30);
-              event.target.playVideo();
-            }
-          },
-        },
-      });
-    };
-
-    // If the API was already loaded by layout.tsx <script> tag, use it immediately
-    if (window.YT && window.YT.Player) {
-      initPlayer();
-    } else {
-      const previousCallback = window.onYouTubeIframeAPIReady;
-      window.onYouTubeIframeAPIReady = () => {
-        if (typeof previousCallback === "function") previousCallback();
-        initPlayer();
-      };
-      // Fallback: inject script if layout.tsx script hasn't fired yet
-      if (!document.getElementById("yt-iframe-api-script")) {
-        const script = document.createElement("script");
-        script.id = "yt-iframe-api-script";
-        script.src = "https://www.youtube.com/iframe_api";
-        document.head.appendChild(script);
-      }
-    }
-
-    return () => {
-      if (playerRef.current) {
-        try { playerRef.current.destroy(); } catch (_) {}
-        playerRef.current = null;
-      }
-    };
-  }, []);
 
   return (
     <section className="relative min-h-[65vh] md:min-h-screen flex items-center justify-center overflow-hidden bg-black">
       {/* Background Video */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-        {/* YouTube IFrame API replaces this div */}
-        <div
-          id={PLAYER_ELEMENT_ID}
-          className="absolute top-1/2 left-1/2 w-[100vw] h-[56.25vw] min-h-[100vh] min-w-[177.77vh] -translate-x-1/2 -translate-y-1/2 pointer-events-none"
-        />
-
-        {/* Thumbnail overlay — visible immediately, fades out when video plays */}
-        <div
-          className="absolute inset-0 bg-cover bg-center transition-opacity duration-1000"
-          style={{
-            backgroundImage: `url(${THUMBNAIL_URL})`,
-            opacity: videoPlaying ? 0 : 1,
-            pointerEvents: "none",
-          }}
+        <video
+          ref={videoRef}
+          src="https://cdn.chainroll.org/maha/YTDown.com_YouTube_Maha-Jouini_Media_HT9GQdHrycg_001_1080p.mp4#t=26"
+          autoPlay
+          loop
+          muted={isMuted}
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
         />
 
         {/* Overlay for text readability */}
@@ -149,12 +42,16 @@ export function Hero() {
         {isMuted ? (
           <>
             <VolumeX className="w-4 h-4 text-white/80 group-hover:text-white" />
-            <span className="text-xs font-sans tracking-wide text-white/90">Enable Sound</span>
+            <span className="text-xs font-sans tracking-wide text-white/90">
+              Enable Sound
+            </span>
           </>
         ) : (
           <>
             <Volume2 className="w-4 h-4 text-brand-pink group-hover:text-white" />
-            <span className="text-xs font-sans tracking-wide text-white">Mute Sound</span>
+            <span className="text-xs font-sans tracking-wide text-white">
+              Mute Sound
+            </span>
           </>
         )}
       </button>

@@ -10,7 +10,7 @@ export const metadata = {
 
 export default function SpeakingPage() {
   return (
-    <main className="min-h-screen bg-background text-foreground overflow-hidden flex flex-col pt-20">
+    <main className="min-h-screen bg-background text-foreground overflow-hidden flex flex-col">
       <Navbar />
 
       {/* Main Interactive Speaking & Media Content */}
