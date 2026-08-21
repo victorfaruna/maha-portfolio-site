@@ -11,6 +11,7 @@ import {
   Presentation,
   Play,
   ArrowUpRight,
+  ArrowRight,
   ChevronLeft,
   ChevronRight,
   Newspaper,
