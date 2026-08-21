@@ -149,6 +149,33 @@ function getLinkLabel(cat: MediaCategory) {
   }
 }
 
+function CountUpNumber({ target = 50, duration = 1.8 }: { target?: number; duration?: number }) {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    let startTimestamp: number | null = null;
+    let animationFrameId: number;
+
+    const step = (timestamp: number) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / (duration * 1000), 1);
+      
+      const easeOutCubic = 1 - Math.pow(1 - progress, 3);
+      setCount(Math.floor(easeOutCubic * target));
+
+      if (progress < 1) {
+        animationFrameId = requestAnimationFrame(step);
+      }
+    };
+
+    animationFrameId = requestAnimationFrame(step);
+
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [target, duration]);
+
+  return <span>{count}</span>;
+}
+
 export default function SpeakingSection({
   publications = [],
   customSpeakingItems,
@@ -221,7 +248,7 @@ export default function SpeakingSection({
               className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl text-white font-serif tracking-tight leading-[1.1] mb-6"
               style={{ textShadow: "0px 4px 24px rgba(0,0,0,0.85)" }}
             >
-              50+ Speaking Engagements, Press Features and Broadcasts Across the Globe
+              <CountUpNumber target={50} duration={1.8} />+ Speaking Engagements, Press Features and Broadcasts Across the Globe
             </motion.h1>
 
             <motion.p
