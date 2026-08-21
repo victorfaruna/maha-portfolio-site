@@ -11,7 +11,6 @@ import {
   Presentation,
   Play,
   ArrowUpRight,
-  ArrowRight,
   ChevronLeft,
   ChevronRight,
   Newspaper,
@@ -586,30 +585,6 @@ export default function SpeakingSection({
               </button>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* ── 7. CLOSING CTA BANNER ────────────────────────────────────────────── */}
-      <section className="py-16 md:py-24 bg-brand-navy text-white text-center relative overflow-hidden">
-        <div className="container mx-auto px-5 sm:px-8 max-w-3xl relative z-10">
-          <span className="text-xs uppercase tracking-widest text-brand-pink font-extrabold mb-3 block">
-            SPEAKING &amp; EVENT INQUIRIES
-          </span>
-          <h3 className="text-2xl sm:text-3xl md:text-5xl font-serif text-white mb-5 leading-tight">
-            Ready to bring Maha to your next event, panel, or feature?
-          </h3>
-          <p className="text-white/80 text-sm sm:text-base md:text-lg mb-8 font-light max-w-xl mx-auto leading-relaxed">
-            Maha Jouini delivers compelling keynotes, policy moderation, and
-            expert commentary for international summits, tech conferences, and
-            global broadcasts.
-          </p>
-          <Link
-            href="/contact"
-            className="inline-flex items-center gap-2.5 px-8 py-4 bg-brand-pink text-white text-xs sm:text-sm font-extrabold uppercase tracking-wider rounded-full hover:bg-white hover:text-brand-navy transition-all duration-300 shadow-xl"
-          >
-            Book Maha to Speak
-            <ArrowRight className="w-4 h-4" />
-          </Link>
         </div>
       </section>
 
