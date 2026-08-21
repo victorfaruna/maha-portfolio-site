@@ -14,13 +14,13 @@ type NavLink = {
 };
 
 const navLinks: NavLink[] = [
+  { name: "Home", href: "/" },
   { name: "About", href: "/about" },
   { name: "AI Solutions", href: "/ai-solutions" },
   { name: "Research & Publications", href: "/research" },
   { name: "Speaking & Media", href: "/speaking" },
   { name: "Awards & Fellowships", href: "/awards" },
   { name: "Work With Me", href: "/work" },
-  { name: "Contact", href: "/contact" },
 ];
 
 export function Navbar() {

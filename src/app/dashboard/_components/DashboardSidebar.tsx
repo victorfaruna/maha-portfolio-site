@@ -4,18 +4,17 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
-  LayoutDashboard,
-  Cpu,
   FileText,
-  BookOpen,
-  Image as ImageIcon,
   Mic2,
+  Cpu,
   Award,
   ChevronDown,
   ChevronRight,
-  LogOut,
   Menu,
   X,
+  Play,
+  Newspaper,
+  LogOut,
 } from 'lucide-react';
 import { logoutAction } from '@/app/actions/auth';
 
@@ -23,11 +22,8 @@ export function DashboardSidebar() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const isResearchActive =
-    pathname.startsWith('/dashboard/publications') ||
-    pathname.startsWith('/dashboard/books');
-
-  const [researchOpen, setResearchOpen] = useState(true);
+  const isSpeakingActive = pathname.startsWith('/dashboard/speaking');
+  const [speakingOpen, setSpeakingOpen] = useState(true);
 
   const closeMobile = () => setMobileOpen(false);
 
@@ -56,93 +52,71 @@ export function DashboardSidebar() {
 
       {/* Navigation */}
       <nav className="flex-1 px-4 py-6 space-y-1.5 overflow-y-auto">
-        {/* 1. Overview */}
+        {/* 1. Research & Publications */}
         <Link
-          href="/dashboard"
+          href="/dashboard/publications"
           onClick={closeMobile}
           className={`flex items-center gap-3 px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
-            pathname === '/dashboard'
+            pathname.startsWith('/dashboard/publications')
               ? 'bg-white/10 text-white border-l-2 border-[#EC4899]'
-              : 'text-white/60 hover:bg-white/5 hover:text-white border-l-2 border-transparent'
+              : 'text-white/80 hover:bg-white/5 hover:text-white border-l-2 border-transparent'
           }`}
         >
-          <LayoutDashboard className="w-4 h-4 shrink-0" />
-          <span>Overview</span>
+          <FileText className="w-4 h-4 text-[#EC4899] shrink-0" />
+          <span>Research &amp; Publications</span>
         </Link>
 
-        {/* 2. AI Solutions (Placeholder) */}
-        <div className="flex items-center justify-between px-3 py-2.5 text-sm font-medium text-white/35 cursor-not-allowed border-l-2 border-transparent select-none">
-          <div className="flex items-center gap-3">
-            <Cpu className="w-4 h-4 text-white/30 shrink-0" />
-            <span>AI Solutions</span>
-          </div>
-          <span className="text-[10px] px-1.5 py-0.5 rounded bg-white/5 text-white/40 font-normal shrink-0">
-            Soon
-          </span>
-        </div>
-
-        {/* 3. Research & Publications (Functional Accordion) */}
+        {/* 2. Speaking & Media (Functional Accordion) */}
         <div>
           <button
             type="button"
-            onClick={() => setResearchOpen((prev) => !prev)}
+            onClick={() => setSpeakingOpen((prev) => !prev)}
             className={`w-full flex items-center justify-between px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
-              isResearchActive
+              isSpeakingActive
                 ? 'bg-white/10 text-white border-l-2 border-[#EC4899]'
                 : 'text-white/80 hover:bg-white/5 hover:text-white border-l-2 border-transparent'
             }`}
           >
             <div className="flex items-center gap-3 min-w-0">
-              <FileText className="w-4 h-4 text-[#EC4899] shrink-0" />
-              <span className="truncate">Research & Publications</span>
+              <Mic2 className="w-4 h-4 text-[#EC4899] shrink-0" />
+              <span className="truncate">Speaking & Media</span>
             </div>
-            {researchOpen ? (
+            {speakingOpen ? (
               <ChevronDown className="w-3.5 h-3.5 text-white/50 shrink-0" />
             ) : (
               <ChevronRight className="w-3.5 h-3.5 text-white/50 shrink-0" />
             )}
           </button>
 
-          {researchOpen && (
+          {speakingOpen && (
             <div className="mt-1 ml-4 pl-3 border-l border-white/10 space-y-1">
               <Link
-                href="/dashboard/publications"
+                href="/dashboard/speaking/videos"
                 onClick={closeMobile}
                 className={`flex items-center gap-2.5 px-3 py-2 text-xs font-medium transition-colors ${
-                  pathname.startsWith('/dashboard/publications')
+                  pathname.startsWith('/dashboard/speaking/videos')
                     ? 'text-[#EC4899] font-semibold'
                     : 'text-white/60 hover:text-white'
                 }`}
               >
-                <FileText className="w-3.5 h-3.5 shrink-0" />
-                <span>Publications</span>
+                <Play className="w-3.5 h-3.5 shrink-0" />
+                <span>Watch &amp; Listen</span>
               </Link>
 
               <Link
-                href="/dashboard/books"
+                href="/dashboard/speaking/press"
                 onClick={closeMobile}
                 className={`flex items-center gap-2.5 px-3 py-2 text-xs font-medium transition-colors ${
-                  pathname.startsWith('/dashboard/books')
+                  pathname.startsWith('/dashboard/speaking/press')
                     ? 'text-[#EC4899] font-semibold'
                     : 'text-white/60 hover:text-white'
                 }`}
               >
-                <BookOpen className="w-3.5 h-3.5 shrink-0" />
-                <span>Books</span>
+                <Newspaper className="w-3.5 h-3.5 shrink-0" />
+                <span>Press &amp; Media Archive</span>
               </Link>
             </div>
           )}
-        </div>
-
-        {/* 4. Speaking & Media (Placeholder) */}
-        <div className="flex items-center justify-between px-3 py-2.5 text-sm font-medium text-white/35 cursor-not-allowed border-l-2 border-transparent select-none">
-          <div className="flex items-center gap-3 min-w-0">
-            <Mic2 className="w-4 h-4 text-white/30 shrink-0" />
-            <span className="truncate">Speaking & Media</span>
-          </div>
-          <span className="text-[10px] px-1.5 py-0.5 rounded bg-white/5 text-white/40 font-normal shrink-0">
-            Soon
-          </span>
         </div>
 
         {/* 5. Awards & Fellowships (Placeholder) */}

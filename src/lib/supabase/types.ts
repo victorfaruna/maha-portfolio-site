@@ -39,7 +39,24 @@ export type MediaItem = {
   updated_at: string;
 };
 
+export type SpeakingItem = {
+  id: string;
+  section_type: 'video' | 'press';
+  category: 'Keynote & Talk' | 'Press Feature' | 'Podcast & Broadcast' | 'Arabic Media';
+  title: string;
+  outlet: string;
+  description: string | null;
+  link: string;
+  video_id: string | null;
+  og_image: string | null;
+  is_rtl: boolean;
+  year: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
 // Insert types (omit auto-generated fields)
 export type PublicationInsert = Omit<Publication, 'id' | 'created_at' | 'updated_at'>;
 export type BookInsert = Omit<Book, 'id' | 'created_at' | 'updated_at'>;
 export type MediaItemInsert = Omit<MediaItem, 'id' | 'created_at' | 'updated_at'>;
+export type SpeakingItemInsert = Omit<SpeakingItem, 'id' | 'created_at' | 'updated_at'>;

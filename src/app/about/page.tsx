@@ -28,7 +28,7 @@ export default function AboutPage() {
       <Navbar />
 
       {/* ── A: Hero ─────────────────────────────────────────────────────── */}
-      <section className="relative w-full h-[65vh] md:h-[75vh] overflow-hidden">
+      <section className="relative w-full h-[60vh] md:h-[75vh] min-h-[420px] flex items-end pb-10 md:pb-16 overflow-hidden">
         <Image
           src="/images/abouthero.JPG"
           alt="Maha Jouini – AI Governance Expert"
@@ -37,27 +37,23 @@ export default function AboutPage() {
           style={{ objectPosition: "center 30%" }}
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/15 to-black/55" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/30" />
 
-        {/* Rotating tagline */}
-        <div className="absolute inset-0 flex items-end pb-12 px-8 md:px-16">
-          <AnimatePresence mode="wait">
-            <motion.p
-              key={taglineIndex}
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.65, ease: "easeInOut" }}
-              className="text-white text-2xl md:text-4xl max-w-xl whitespace-pre-line font-script"
-              style={{
-                textShadow: "0px 2px 16px rgba(0,0,0,0.7)",
-                lineHeight: 1.45,
-                fontFamily: "'Yellowtail', cursive",
-              }}
+        <div className="container mx-auto px-5 sm:px-8 md:px-12 lg:px-20 relative z-10">
+          <div className="max-w-4xl">
+            <span className="text-[10px] sm:text-xs uppercase tracking-widest text-brand-pink font-semibold mb-3 block">
+              ABOUT MAHA JOUINI
+            </span>
+            <h1
+              className="text-2xl sm:text-4xl md:text-6xl lg:text-7xl text-white font-serif tracking-tight leading-[1.1] mb-4 md:mb-6"
+              style={{ textShadow: "0px 4px 16px rgba(0,0,0,0.5)" }}
             >
-              {taglines[taglineIndex]}
-            </motion.p>
-          </AnimatePresence>
+              I build AI with wisdom, not just data.
+            </h1>
+            <p className="text-sm sm:text-base md:text-xl text-white/90 font-sans max-w-2xl font-light leading-relaxed">
+              Advancing ethical AI governance, digital sovereignty, survivor-led healthcare innovation, and Pan-African technological futures across the Global South.
+            </p>
+          </div>
         </div>
       </section>
 

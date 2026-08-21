@@ -19,6 +19,12 @@ import {
   Globe,
   Sparkles,
   Quote,
+  ShieldCheck,
+  Heart,
+  Scale,
+  Building2,
+  Lightbulb,
+  Trophy,
 } from "lucide-react";
 import {
   speakingData,
@@ -27,6 +33,9 @@ import {
 } from "@/data/speaking";
 import { testimonials } from "@/data/testimonials";
 import { VideoModal } from "@/components/ui/VideoModal";
+import PressSection from "@/components/sections/PressSection";
+import NewsHeroGrid from "@/components/sections/NewsHeroGrid";
+import type { Publication } from "@/lib/supabase/types";
 
 const CATEGORIES = [
   "ALL",
@@ -69,30 +78,41 @@ const OFFERINGS = [
     description:
       "Hands-on executive sessions on AI ethics, digital transformation, and inclusive innovation.",
   },
+  {
+    icon: Trophy,
+    title: "Award Jury & Expert Evaluation",
+    description:
+      "Serving on international jury panels for AI innovation prizes, digital leadership awards, and tech policy competitions across Africa and the Arab world.",
+  },
 ];
 
 const TOPICS = [
   {
+    icon: ShieldCheck,
     title: "AI Governance & Digital Sovereignty",
     description:
       "Building policy frameworks that let nations and regions shape their own AI futures, data infrastructure, and technological autonomy.",
   },
   {
+    icon: Heart,
     title: "Responsible AI in Healthcare",
     description:
       "Culturally grounded, survivor-informed AI design, drawn from her practical work founding CHIFAA for North African healthcare access.",
   },
   {
+    icon: Scale,
     title: "AI Ethics & Gender Equity",
     description:
       "Examining how AI governance intersects with gender, inclusion, algorithmic bias, and public policy in developing ecosystems.",
   },
   {
+    icon: Building2,
     title: "Digital Transformation & Public Institutions",
     description:
       "Practical experience turning policy into implementation across African Union member states and international development agencies.",
   },
   {
+    icon: Lightbulb,
     title: "Culturally Grounded Innovation",
     description:
       "Bridging Arab and African intellectual traditions with modern AI ethics, drawn from her work with HIKMA AI.",
@@ -129,9 +149,17 @@ function getLinkLabel(cat: MediaCategory) {
   }
 }
 
-export default function SpeakingSection() {
+export default function SpeakingSection({
+  publications = [],
+  customSpeakingItems,
+}: {
+  publications?: Publication[];
+  customSpeakingItems?: MediaItem[];
+}) {
   const [selectedTab, setSelectedTab] = useState<FilterTab>("ALL");
   const [activeTestimonialIndex, setActiveTestimonialIndex] = useState(0);
+
+  const mediaSource = customSpeakingItems && customSpeakingItems.length > 0 ? customSpeakingItems : speakingData;
 
   // Video Modal State
   const [modalState, setModalState] = useState<{
@@ -146,20 +174,6 @@ export default function SpeakingSection() {
 
   const totalEngagements = speakingData.length;
 
-  // Filter video broadcasts for the interactive Watch & Listen grid
-  const videoGridItems = speakingData.filter((item) => Boolean(item.videoId));
-
-  const filteredItems = speakingData.filter((item: MediaItem) => {
-    if (selectedTab === "ALL") return true;
-    if (selectedTab === "KEYNOTES & TALKS")
-      return item.category === "Keynote & Talk";
-    if (selectedTab === "PRESS FEATURES")
-      return item.category === "Press Feature";
-    if (selectedTab === "PODCASTS & BROADCASTS")
-      return item.category === "Podcast & Broadcast";
-    if (selectedTab === "ARABIC MEDIA") return item.category === "Arabic Media";
-    return true;
-  });
 
   const handlePrevTestimonial = () => {
     setActiveTestimonialIndex((prev) =>
@@ -207,8 +221,7 @@ export default function SpeakingSection() {
               className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl text-white font-serif tracking-tight leading-[1.1] mb-6"
               style={{ textShadow: "0px 4px 24px rgba(0,0,0,0.85)" }}
             >
-              {totalEngagements}+ Speaking Engagements, Press Features &amp;
-              Broadcasts Across 3 Continents
+              50+ Speaking Engagements, Press Features and Broadcasts Across the Globe
             </motion.h1>
 
             <motion.p
@@ -246,7 +259,7 @@ export default function SpeakingSection() {
       {/* ── 2. "BOOK MAHA FOR" — SPLIT LAYOUT ───────────────────────────────── */}
       <section className="py-16 md:py-24 bg-background border-b border-border/60">
         <div className="container mx-auto px-5 sm:px-8 md:px-12 max-w-8xl">
-          <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
+          <div className="text-center max-w-3xl mx-auto mb-6">
             <span className="text-xs uppercase tracking-widest text-brand-pink font-extrabold mb-3 block">
               SERVICES &amp; ENGAGEMENTS
             </span>
@@ -255,7 +268,7 @@ export default function SpeakingSection() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 md:gap-14 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-stretch">
             {/* Left Column: Clean Uncontained Portrait Image */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
@@ -264,10 +277,15 @@ export default function SpeakingSection() {
               transition={{ duration: 0.8 }}
               className="lg:col-span-5 flex flex-col items-center lg:items-start justify-end"
             >
+              {/* 💡 PORTRAIT POSITION & SIZE CONTROL:
+                  - translateY(-20px) : Moves image UP (-30px = higher, 0px = bottom, 20px = lower)
+                  - scale(1.02)       : Adjusts size (1.0 = normal, 1.05 = bigger, 0.95 = smaller)
+              */}
               <img
                 src="/images/transparentspeaking.png"
                 alt="Maha Jouini Keynote Speaker"
-                className="w-full h-auto max-h-[720px] lg:max-h-[780px] object-contain drop-shadow-lg hover:scale-102 transition-transform duration-500"
+                className="w-full h-full object-contain object-bottom drop-shadow-lg transition-all duration-500"
+                style={{ transform: "translateY(-60px) scale(0.91)" }}
               />
             </motion.div>
 
@@ -277,7 +295,7 @@ export default function SpeakingSection() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.1 }}
-              className="lg:col-span-7 flex flex-col justify-center space-y-6"
+              className="lg:col-span-7 flex flex-col justify-center space-y-3.5"
             >
               {OFFERINGS.map((offering, index) => {
                 const IconComponent = offering.icon;
@@ -288,13 +306,13 @@ export default function SpeakingSection() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: index * 0.08 }}
-                    className="group p-5 sm:p-6 bg-card border border-border/70 hover:border-brand-pink/40 rounded-2xl sm:rounded-3xl shadow-sm hover:shadow-lg transition-all duration-300 flex items-start gap-4 sm:gap-6"
+                    className="group p-4 sm:p-5 bg-card border border-border/70 hover:border-brand-pink/40 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 flex items-start gap-4"
                   >
-                    <div className="w-12 h-12 rounded-2xl bg-brand-soft-pink text-brand-pink flex items-center justify-center shrink-0 group-hover:bg-brand-pink group-hover:text-white transition-colors duration-300 shadow-sm">
+                    <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-brand-soft-pink text-brand-pink flex items-center justify-center shrink-0 group-hover:bg-brand-pink group-hover:text-white transition-colors duration-300 shadow-sm">
                       <IconComponent className="w-5 h-5" />
                     </div>
                     <div>
-                      <h3 className="text-lg sm:text-xl font-serif text-brand-navy mb-1.5 group-hover:text-brand-pink transition-colors font-medium">
+                      <h3 className="text-base sm:text-lg font-serif text-brand-navy mb-1 group-hover:text-brand-pink transition-colors font-medium">
                         {offering.title}
                       </h3>
                       <p className="text-foreground/70 font-sans text-xs sm:text-sm leading-relaxed">
@@ -329,7 +347,7 @@ export default function SpeakingSection() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {videoGridItems.map((item, idx) => {
+            {mediaSource.filter((item) => Boolean(item.videoId)).map((item, idx) => {
               const youtubeThumbnail = `https://img.youtube.com/vi/${item.videoId}/hqdefault.jpg`;
               return (
                 <motion.div
@@ -415,19 +433,31 @@ export default function SpeakingSection() {
               transition={{ duration: 0.8 }}
               className="lg:col-span-7 space-y-6"
             >
-              {TOPICS.map((topic, idx) => (
-                <div
-                  key={topic.title}
-                  className="pb-6 border-b border-white/15 last:border-b-0 last:pb-0"
-                >
-                  <h3 className="text-xl sm:text-2xl font-serif text-white mb-2 font-medium">
-                    {topic.title}
-                  </h3>
-                  <p className="text-white/75 font-sans text-sm sm:text-base leading-relaxed font-light">
-                    {topic.description}
-                  </p>
-                </div>
-              ))}
+              {TOPICS.map((topic, idx) => {
+                const TopicIcon = topic.icon;
+                return (
+                  <motion.div
+                    key={topic.title}
+                    initial={{ opacity: 0, y: 15 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: idx * 0.08 }}
+                    className="group pb-6 border-b border-white/15 last:border-b-0 last:pb-0 flex items-start gap-4 sm:gap-6"
+                  >
+                    <div className="w-12 h-12 rounded-2xl bg-brand-pink/20 text-brand-pink flex items-center justify-center shrink-0 group-hover:bg-brand-pink group-hover:text-white transition-colors duration-300 shadow-sm mt-0.5">
+                      <TopicIcon className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl sm:text-2xl font-serif text-white mb-2 font-medium group-hover:text-brand-pink transition-colors">
+                        {topic.title}
+                      </h3>
+                      <p className="text-white/75 font-sans text-sm sm:text-base leading-relaxed font-light">
+                        {topic.description}
+                      </p>
+                    </div>
+                  </motion.div>
+                );
+              })}
             </motion.div>
 
             {/* Right Column: Portrait Image */}
@@ -459,140 +489,16 @@ export default function SpeakingSection() {
         </div>
       </section>
 
-      {/* ── 5. "IN THE PRESS" — INTERACTIVE FILTERABLE GRID ─────────────────── */}
-      <section className="py-16 md:py-24 bg-background border-b border-border/60">
-        <div className="container mx-auto px-5 sm:px-8 md:px-12 max-w-8xl">
-          {/* Header & Filter Tabs */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 md:mb-16 gap-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              <span className="text-xs uppercase tracking-widest text-brand-pink font-extrabold mb-3 block">
-                PRESS &amp; MEDIA ARCHIVE
-              </span>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif text-brand-navy leading-tight">
-                In the Press &amp; Public Voice
-              </h2>
-            </motion.div>
+      {/* ── 4.5 NEWS HERO GRID — publications from Supabase ──────────────── */}
+      <NewsHeroGrid publications={publications} />
 
-            {/* Filter Tabs */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.1 }}
-              className="flex gap-2.5 overflow-x-auto pb-1.5 -mx-5 px-5 sm:mx-0 sm:px-0 sm:flex-wrap sm:pb-0"
-            >
-              {CATEGORIES.map((tab) => {
-                const isSelected = selectedTab === tab;
-                return (
-                  <motion.button
-                    key={tab}
-                    onClick={() => setSelectedTab(tab)}
-                    whileHover={{ scale: 1.04 }}
-                    whileTap={{ scale: 0.96 }}
-                    className={`px-4 sm:px-5 py-2 text-[11px] sm:text-xs uppercase tracking-wider rounded-full font-bold transition-all duration-300 whitespace-nowrap shrink-0 border ${
-                      isSelected
-                        ? "bg-brand-navy text-white border-brand-navy shadow-md ring-2 ring-brand-navy/20"
-                        : "bg-secondary/40 text-foreground/70 border-border/60 hover:bg-brand-pink/10 hover:text-brand-pink hover:border-brand-pink/30"
-                    }`}
-                  >
-                    {tab}
-                  </motion.button>
-                );
-              })}
-            </motion.div>
-          </div>
-
-          {/* Cards Grid */}
-          <motion.div
-            layout
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
-          >
-            <AnimatePresence mode="popLayout">
-              {filteredItems.map((item: MediaItem, idx: number) => {
-                return (
-                  <motion.div
-                    layout
-                    key={item.title + idx}
-                    initial={{ opacity: 0, scale: 0.93, y: 24 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.93, y: 15 }}
-                    transition={{
-                      duration: 0.45,
-                      delay: idx * 0.04,
-                      ease: [0.25, 0.1, 0.25, 1],
-                    }}
-                    whileHover={{ y: -6 }}
-                    className="group bg-card border border-border/80 hover:border-brand-pink/40 rounded-3xl shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden flex flex-col relative"
-                  >
-                    <a
-                      href={item.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex flex-col justify-between h-full p-6 sm:p-8 cursor-pointer"
-                    >
-                      <div>
-                        {/* Meta Bar */}
-                        <div className="flex items-center justify-between mb-4 text-xs uppercase tracking-widest font-semibold">
-                          <span className="bg-brand-soft-pink text-brand-pink px-3 py-1 font-bold text-[10px] sm:text-xs rounded-full border border-brand-pink/20 inline-flex items-center gap-1.5">
-                            {getCategoryIcon(item.category)}
-                            {item.category}
-                          </span>
-                          {item.year && (
-                            <span className="text-foreground/50 text-xs font-mono">
-                              {item.year}
-                            </span>
-                          )}
-                        </div>
-
-                        {/* Outlet Name */}
-                        <p className="text-xs font-bold text-brand-pink uppercase tracking-widest mb-2">
-                          {item.outlet}
-                        </p>
-
-                        {/* Title */}
-                        <h3 className="text-lg sm:text-xl font-serif text-brand-navy mb-3 leading-snug group-hover:text-brand-pink transition-colors duration-300 font-medium">
-                          {item.title}
-                        </h3>
-
-                        {/* Description */}
-                        {item.description && (
-                          <p
-                            dir={item.isRTL ? "rtl" : "ltr"}
-                            className={`text-foreground/75 font-sans text-xs sm:text-sm leading-relaxed mb-6 font-normal ${
-                              item.isRTL ? "text-right font-serif" : "text-left"
-                            }`}
-                          >
-                            {item.description}
-                          </p>
-                        )}
-                      </div>
-
-                      {/* Action Indicator */}
-                      <div className="inline-flex items-center justify-between w-full text-xs font-bold uppercase tracking-wider text-brand-navy group-hover:text-brand-pink transition-colors pt-4 border-t border-border/50 mt-auto">
-                        <span>{getLinkLabel(item.category)}</span>
-                        <div className="w-8 h-8 rounded-full bg-brand-navy/5 group-hover:bg-brand-pink/15 flex items-center justify-center transition-colors">
-                          <ArrowUpRight className="w-4 h-4 text-brand-navy group-hover:text-brand-pink transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                        </div>
-                      </div>
-                    </a>
-                  </motion.div>
-                );
-              })}
-            </AnimatePresence>
-          </motion.div>
-
-          {filteredItems.length === 0 && (
-            <p className="text-center text-foreground/50 py-16 font-serif text-lg">
-              No media items found in this category.
-            </p>
-          )}
-        </div>
-      </section>
+      {/* ── 5. "IN THE PRESS" — FEATURED + HORIZONTAL SCROLL ROWS ──────────────── */}
+      <PressSection
+        selectedTab={selectedTab}
+        setSelectedTab={setSelectedTab}
+        setModalState={setModalState}
+        customItems={customSpeakingItems}
+      />
 
       {/* ── 6. TESTIMONIALS CAROUSEL ────────────────────────────────────────── */}
       <section className="py-16 md:py-24 bg-background border-b border-border/60">
