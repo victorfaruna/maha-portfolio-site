@@ -2,28 +2,24 @@ import Image from "next/image";
 import { Navbar } from "@/components/sections/Navbar";
 import { Footer } from "@/components/sections/Footer";
 import { createAnonServerClient } from "@/lib/supabase/server";
-import type { Publication, Book } from "@/lib/supabase/types";
+import type { Publication } from "@/lib/supabase/types";
+import NewsHeroGrid from "@/components/sections/NewsHeroGrid";
 import PublicationsSection from "./PublicationsSection";
-import BooksSection from "./BooksSection";
 
 export const dynamic = "force-dynamic";
 
 async function getData() {
   const supabase = createAnonServerClient();
 
-  const [pubRes, bookRes] = await Promise.all([
-    supabase.from("publications").select("*").order("year", { ascending: false }),
-    supabase.from("books").select("*").order("published_year", { ascending: false }),
-  ]);
+  const pubRes = await supabase.from("publications").select("*").order("year", { ascending: false });
 
   return {
     publications: (pubRes.data ?? []) as Publication[],
-    books: (bookRes.data ?? []) as Book[],
   };
 }
 
 export default async function ResearchPage() {
-  const { publications, books } = await getData();
+  const { publications } = await getData();
 
   return (
     <main className="min-h-screen bg-background text-foreground overflow-hidden">
@@ -58,7 +54,10 @@ export default async function ResearchPage() {
         </div>
       </section>
 
-      {/* ── 2. PUBLICATIONS & ARTICLES GRID ──────────────────────────────── */}
+      {/* ── 2. EDITORIAL NEWS HERO GRID (Placed before Featured Publications) ─ */}
+      <NewsHeroGrid publications={publications} />
+
+      {/* ── 3. FEATURED PUBLICATIONS & OPINIONS ───────────────────────────── */}
       <PublicationsSection publications={publications} />
 
       {/* Footer */}

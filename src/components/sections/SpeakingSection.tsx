@@ -34,8 +34,6 @@ import {
 import { testimonials } from "@/data/testimonials";
 import { VideoModal } from "@/components/ui/VideoModal";
 import PressSection from "@/components/sections/PressSection";
-import NewsHeroGrid from "@/components/sections/NewsHeroGrid";
-import type { Publication } from "@/lib/supabase/types";
 
 const CATEGORIES = [
   "ALL",
@@ -515,9 +513,6 @@ export default function SpeakingSection({
           </div>
         </div>
       </section>
-
-      {/* ── 4.5 NEWS HERO GRID — publications from Supabase ──────────────── */}
-      <NewsHeroGrid publications={publications} />
 
       {/* ── 5. "IN THE PRESS" — FEATURED + HORIZONTAL SCROLL ROWS ──────────────── */}
       <PressSection

@@ -2,7 +2,7 @@ import { Navbar } from "@/components/sections/Navbar";
 import { Footer } from "@/components/sections/Footer";
 import SpeakingSection from "@/components/sections/SpeakingSection";
 import { createAnonServerClient } from "@/lib/supabase/server";
-import type { Publication, SpeakingItem } from "@/lib/supabase/types";
+import type { SpeakingItem } from "@/lib/supabase/types";
 import type { MediaItem } from "@/data/speaking";
 
 export const metadata = {
@@ -11,28 +11,7 @@ export const metadata = {
     "Keynote addresses, panel moderation, media features, and public voice on AI governance, digital sovereignty, and Africa's technological future.",
 };
 
-// Revalidate the page at most every 60 seconds so new publications and speaking items appear promptly
 export const revalidate = 60;
-
-async function getPublications(): Promise<Publication[]> {
-  try {
-    const supabase = createAnonServerClient();
-    const { data, error } = await supabase
-      .from("publications")
-      .select("*")
-      .order("created_at", { ascending: false });
-
-    if (error) {
-      console.error("[speaking/page] Supabase publications error:", error.message);
-      return [];
-    }
-
-    return (data ?? []) as Publication[];
-  } catch (err) {
-    console.error("[speaking/page] Failed to fetch publications:", err);
-    return [];
-  }
-}
 
 async function getSpeakingItems(): Promise<MediaItem[]> {
   try {
@@ -65,10 +44,7 @@ async function getSpeakingItems(): Promise<MediaItem[]> {
 }
 
 export default async function SpeakingPage() {
-  const [publications, customSpeakingItems] = await Promise.all([
-    getPublications(),
-    getSpeakingItems(),
-  ]);
+  const customSpeakingItems = await getSpeakingItems();
 
   return (
     <main className="min-h-screen bg-background text-foreground overflow-hidden flex flex-col">
@@ -76,7 +52,6 @@ export default async function SpeakingPage() {
 
       {/* Main Interactive Speaking & Media Content */}
       <SpeakingSection
-        publications={publications}
         customSpeakingItems={customSpeakingItems.length > 0 ? customSpeakingItems : undefined}
       />
 
