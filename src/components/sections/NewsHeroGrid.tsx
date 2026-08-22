@@ -333,15 +333,34 @@ export default function NewsHeroGrid({
           </div>
         </div>
 
-        {/* Mobile: single full-width featured card */}
-        <div className="md:hidden" style={{ height: "420px" }}>
+        {/* Mobile: all 3 slots stacked vertically */}
+        <div className="md:hidden flex flex-col gap-3">
+          {/* Slot 0 — Featured top card */}
           <AnimatedSlot
             publications={publications}
             config={SLOT_CONFIGS[0]}
             currentIndex={activeIndices[0]}
             onRotate={handleRotate}
             isFeatured={true}
-            className="h-full"
+            className="h-[360px]"
+          />
+          {/* Slot 1 — Second card */}
+          <AnimatedSlot
+            publications={publications}
+            config={SLOT_CONFIGS[1]}
+            currentIndex={activeIndices[1]}
+            onRotate={handleRotate}
+            isFeatured={false}
+            className="h-[210px]"
+          />
+          {/* Slot 2 — Third card */}
+          <AnimatedSlot
+            publications={publications}
+            config={SLOT_CONFIGS[2]}
+            currentIndex={activeIndices[2]}
+            onRotate={handleRotate}
+            isFeatured={false}
+            className="h-[210px]"
           />
         </div>
       </div>

@@ -175,10 +175,8 @@ function CountUpNumber({ target = 50, duration = 1.8 }: { target?: number; durat
 }
 
 export default function SpeakingSection({
-  publications = [],
   customSpeakingItems,
 }: {
-  publications?: Publication[];
   customSpeakingItems?: MediaItem[];
 }) {
   const [selectedTab, setSelectedTab] = useState<FilterTab>("ALL");
