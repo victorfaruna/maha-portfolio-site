@@ -1,34 +1,17 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { useInView, motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import { Navbar } from "@/components/sections/Navbar";
 import { Footer } from "@/components/sections/Footer";
 
-const taglines = [
-  "I turn lived experience into policy.",
-  "I build AI with wisdom, not just data.",
-  "Every system carries a worldview.\nI make sure it sees everyone.",
-];
-
 export default function AboutPage() {
-  const [taglineIndex, setTaglineIndex] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(
-      () => setTaglineIndex((prev) => (prev + 1) % taglines.length),
-      3600,
-    );
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <main className="min-h-screen bg-background text-foreground overflow-hidden">
       <Navbar />
 
       {/* ── A: Hero ─────────────────────────────────────────────────────── */}
-      <section className="relative w-full h-[60vh] md:h-[75vh] min-h-[420px] flex items-end pb-10 md:pb-16 overflow-hidden">
+      <section className="relative w-full h-[60vh] md:h-[75vh] min-h-[420px] overflow-hidden">
         <Image
           src="/images/abouthero.JPG"
           alt="Maha Jouini – AI Governance Expert"
@@ -37,24 +20,7 @@ export default function AboutPage() {
           style={{ objectPosition: "center 30%" }}
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/30" />
-
-        <div className="container mx-auto px-5 sm:px-8 md:px-12 lg:px-20 relative z-10">
-          <div className="max-w-4xl">
-            <span className="text-[10px] sm:text-xs uppercase tracking-widest text-brand-pink font-semibold mb-3 block">
-              ABOUT MAHA JOUINI
-            </span>
-            <h1
-              className="text-2xl sm:text-4xl md:text-6xl lg:text-7xl text-white font-serif tracking-tight leading-[1.1] mb-4 md:mb-6"
-              style={{ textShadow: "0px 4px 16px rgba(0,0,0,0.5)" }}
-            >
-              I build AI with wisdom, not just data.
-            </h1>
-            <p className="text-sm sm:text-base md:text-xl text-white/90 font-sans max-w-2xl font-light leading-relaxed">
-              Advancing ethical AI governance, digital sovereignty, survivor-led healthcare innovation, and Pan-African technological futures across the Global South.
-            </p>
-          </div>
-        </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
       </section>
 
       {/* ── Bio & Philosophy ─────────────────────────────────────────── */}
