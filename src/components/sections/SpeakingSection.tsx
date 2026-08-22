@@ -39,7 +39,6 @@ const CATEGORIES = [
   "ALL",
   "KEYNOTES & TALKS",
   "PRESS FEATURES",
-  "PODCASTS & BROADCASTS",
   "ARABIC MEDIA",
 ] as const;
 

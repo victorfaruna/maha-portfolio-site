@@ -24,7 +24,6 @@ type FilterTab =
   | "ALL"
   | "KEYNOTES & TALKS"
   | "PRESS FEATURES"
-  | "PODCASTS & BROADCASTS"
   | "ARABIC MEDIA";
 
 interface PressSectionProps {
@@ -38,7 +37,6 @@ const CATEGORIES: FilterTab[] = [
   "ALL",
   "KEYNOTES & TALKS",
   "PRESS FEATURES",
-  "PODCASTS & BROADCASTS",
   "ARABIC MEDIA",
 ];
 
@@ -51,8 +49,7 @@ const CATEGORY_ROWS: {
 }[] = [
   { label: "PRESS FEATURES",       tab: "PRESS FEATURES",       category: "Press Feature",       startDelayMs: 0,    intervalMs: 4000 },
   { label: "KEYNOTES & TALKS",      tab: "KEYNOTES & TALKS",      category: "Keynote & Talk",      startDelayMs: 1400, intervalMs: 4400 },
-  { label: "PODCASTS & BROADCASTS", tab: "PODCASTS & BROADCASTS", category: "Podcast & Broadcast", startDelayMs: 2800, intervalMs: 3800 },
-  { label: "ARABIC MEDIA",          tab: "ARABIC MEDIA",          category: "Arabic Media",        startDelayMs: 4200, intervalMs: 4600 },
+  { label: "ARABIC MEDIA",          tab: "ARABIC MEDIA",          category: "Arabic Media",        startDelayMs: 2800, intervalMs: 4600 },
 ];
 
 // ─── Slide variants — all slots animate in the same direction simultaneously ──
