@@ -290,7 +290,7 @@ export default function NewsHeroGrid({
 
   return (
     <section className="py-12 md:py-16 bg-background">
-      <div className="container mx-auto px-5 sm:px-8 md:px-12 max-w-8xl">
+      <div className="container mx-auto px-3 sm:px-5 md:px-12 max-w-8xl">
 
         {/* Desktop: 65/35 grid */}
         <div
@@ -333,35 +333,43 @@ export default function NewsHeroGrid({
           </div>
         </div>
 
-        {/* Mobile: all 3 slots stacked vertically */}
-        <div className="md:hidden flex flex-col gap-3">
-          {/* Slot 0 — Featured top card */}
+        {/* Mobile: same 65/35 grid as desktop */}
+        <div
+          className="md:hidden grid gap-3"
+          style={{
+            gridTemplateColumns: "65fr 35fr",
+            gridTemplateRows: "300px",
+          }}
+        >
+          {/* Left — big featured card */}
           <AnimatedSlot
             publications={publications}
             config={SLOT_CONFIGS[0]}
             currentIndex={activeIndices[0]}
             onRotate={handleRotate}
             isFeatured={true}
-            className="h-[360px]"
+            className="row-span-1"
           />
-          {/* Slot 1 — Second card */}
-          <AnimatedSlot
-            publications={publications}
-            config={SLOT_CONFIGS[1]}
-            currentIndex={activeIndices[1]}
-            onRotate={handleRotate}
-            isFeatured={false}
-            className="h-[210px]"
-          />
-          {/* Slot 2 — Third card */}
-          <AnimatedSlot
-            publications={publications}
-            config={SLOT_CONFIGS[2]}
-            currentIndex={activeIndices[2]}
-            onRotate={handleRotate}
-            isFeatured={false}
-            className="h-[210px]"
-          />
+
+          {/* Right column — two stacked cards */}
+          <div className="flex flex-col gap-3">
+            <AnimatedSlot
+              publications={publications}
+              config={SLOT_CONFIGS[1]}
+              currentIndex={activeIndices[1]}
+              onRotate={handleRotate}
+              isFeatured={false}
+              className="flex-1"
+            />
+            <AnimatedSlot
+              publications={publications}
+              config={SLOT_CONFIGS[2]}
+              currentIndex={activeIndices[2]}
+              onRotate={handleRotate}
+              isFeatured={false}
+              className="flex-1"
+            />
+          </div>
         </div>
       </div>
     </section>
