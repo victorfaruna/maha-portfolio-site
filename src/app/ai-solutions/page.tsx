@@ -152,7 +152,7 @@ export default function AiSolutionsPage() {
       <Navbar solid noBorder />
 
       {/* SECTION 1 — HERO */}
-      <section className="pt-44 sm:pt-48 pb-6 px-10 sm:px-16 md:px-20 lg:px-28 max-w-[1500px] mx-auto w-full">
+      <section className="pt-24 sm:pt-36 md:pt-44 lg:pt-48 pb-6 px-6 sm:px-16 md:px-20 lg:px-28 max-w-[1500px] mx-auto w-full">
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-8">
           <div className="flex-1">
             <motion.p {...fadeUp(0)} className="text-[13px] sm:text-[14px] font-bold uppercase tracking-[0.22em] mb-4 font-sans" style={{ color: NAVY }}>
