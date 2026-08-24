@@ -23,7 +23,12 @@ const navLinks: NavLink[] = [
   { name: "Work With Me", href: "/work" },
 ];
 
-export function Navbar() {
+interface NavbarProps {
+  solid?: boolean;
+  noBorder?: boolean;
+}
+
+export function Navbar({ solid = false, noBorder = false }: NavbarProps = {}) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -35,12 +40,14 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const isSolid = solid || scrolled;
+
   return (
     <header
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        scrolled
-          ? "bg-background border-b border-border shadow-sm py-2"
+        isSolid
+          ? `bg-background ${(!noBorder || scrolled) ? "border-b border-border shadow-sm" : ""} py-2`
           : "bg-gradient-to-b from-black/80 via-black/40 to-transparent py-2"
       )}
     >
@@ -66,9 +73,9 @@ export function Navbar() {
                 href={link.href}
                 className={cn(
                   "text-sm font-semibold tracking-wide transition-colors flex items-center gap-1",
-                  scrolled ? "text-foreground hover:text-accent" : "text-white hover:text-white/80"
+                  isSolid ? "text-foreground hover:text-accent" : "text-white hover:text-white/80"
                 )}
-                style={{ textShadow: scrolled ? "none" : "0px 1px 3px rgba(0,0,0,0.6)" }}
+                style={{ textShadow: isSolid ? "none" : "0px 1px 3px rgba(0,0,0,0.6)" }}
               >
                 {link.name}
                 {link.hasDropdown && <ChevronDown className="w-3 h-3" />}
@@ -80,11 +87,11 @@ export function Navbar() {
         {/* Mobile Toggle */}
         <div className="flex lg:hidden justify-end items-center mr-2 -mt-10 sm:-mt-8">
           <button
-            className={cn("p-2 transition-colors", scrolled ? "text-foreground" : "text-white")}
+            className={cn("p-2 transition-colors", isSolid ? "text-foreground" : "text-white")}
             onClick={() => setMobileMenuOpen(true)}
             aria-label="Open menu"
           >
-            <Menu className="w-6 h-6 sm:w-7 sm:h-7" style={{ filter: scrolled ? "none" : "drop-shadow(0px 2px 4px rgba(0,0,0,0.5))" }} />
+            <Menu className="w-6 h-6 sm:w-7 sm:h-7" style={{ filter: isSolid ? "none" : "drop-shadow(0px 2px 4px rgba(0,0,0,0.5))" }} />
           </button>
         </div>
       </div>
