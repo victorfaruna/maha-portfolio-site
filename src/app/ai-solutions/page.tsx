@@ -167,8 +167,8 @@ export default function AiSolutionsPage() {
               I design, advise and build AI solutions that are ethical, human-centred and context-aware, with a strong focus on Africa and the Global South.
             </motion.p>
           </div>
-          <div className="flex-1 flex flex-row items-center justify-between gap-6 sm:gap-10 w-full">
-            <motion.div {...fadeUp(0.1)} className="w-1/2 sm:w-[60%] max-w-[500px] flex-shrink-0">
+          <div className="flex-1 flex flex-col sm:flex-row items-center justify-between gap-8 sm:gap-10 w-full mt-4 sm:mt-0">
+            <motion.div {...fadeUp(0.1)} className="w-full sm:w-[55%] max-w-[340px] sm:max-w-[500px] flex-shrink-0 flex justify-center">
               <Image
                 src="/images/aiimage.png"
                 alt="AI Solutions"
@@ -178,7 +178,7 @@ export default function AiSolutionsPage() {
                 priority
               />
             </motion.div>
-            <motion.div {...fadeUp(0.25)} className="flex-1 flex flex-col gap-6 min-w-0 pl-2 sm:pl-4">
+            <motion.div {...fadeUp(0.25)} className="w-full sm:flex-1 flex flex-col gap-4 sm:gap-6 min-w-0 sm:pl-4">
               {[
                 { Icon: User,   label: "Human dignity at the centre" },
                 { Icon: Shield, label: "Ethics, transparency and accountability" },
@@ -188,7 +188,7 @@ export default function AiSolutionsPage() {
                   <div className="w-11 h-11 rounded-full bg-brand-soft-pink flex items-center justify-center flex-shrink-0">
                     <Icon size={18} style={{ color: NAVY }} strokeWidth={1.8} />
                   </div>
-                  <span className="text-[14px] sm:text-[15.5px] font-sans font-medium leading-snug" style={{ color: NAVY }}>{label}</span>
+                  <span className="text-[14.5px] sm:text-[15.5px] font-sans font-medium leading-snug" style={{ color: NAVY }}>{label}</span>
                 </div>
               ))}
             </motion.div>
