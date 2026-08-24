@@ -168,13 +168,13 @@ export default function AiSolutionsPage() {
             </motion.p>
           </div>
           <div className="flex-1 flex flex-col sm:flex-row items-center justify-between gap-8 sm:gap-10 w-full mt-4 sm:mt-0">
-            <motion.div {...fadeUp(0.1)} className="w-full sm:w-[55%] max-w-[340px] sm:max-w-[500px] flex-shrink-0 flex justify-center">
+            <motion.div {...fadeUp(0.1)} className="w-full sm:w-[55%] max-w-[340px] sm:max-w-[500px] flex-shrink-0 flex justify-center -mt-4 sm:-mt-6 md:-mt-8">
               <Image
                 src="/images/aiimage.png"
                 alt="AI Solutions"
                 width={500}
                 height={550}
-                className="w-full h-auto object-contain [mask-image:linear-gradient(to_bottom,transparent_0%,black_8%,black_100%)] [-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,black_8%,black_100%)]"
+                className="w-full h-auto object-contain [mask-image:linear-gradient(to_bottom,transparent_0%,black_3%,black_100%)] [-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,black_3%,black_100%)]"
                 priority
               />
             </motion.div>
