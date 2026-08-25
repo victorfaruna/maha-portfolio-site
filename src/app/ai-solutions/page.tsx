@@ -41,7 +41,7 @@ function ServiceCard({ Icon, title, description, bullets, delay = 0 }: {
   Icon: React.ElementType; title: string; description: string; bullets: string[]; delay?: number;
 }) {
   return (
-    <motion.div {...fadeUp(delay)} className="group rounded-2xl p-8 flex flex-col gap-5 border border-white/5 hover:border-brand-pink/30 transition-all duration-300" style={{ backgroundColor: DARK }}>
+    <motion.div {...fadeUp(delay)} className="group rounded-2xl p-8 flex flex-col gap-5 border border-white/5 hover:border-brand-pink/30 transition-all duration-300" style={{ backgroundColor: NAVY }}>
       <div className="w-12 h-12 rounded-2xl bg-brand-pink/20 text-brand-pink flex items-center justify-center flex-shrink-0 group-hover:bg-brand-pink group-hover:text-white transition-colors duration-300 shadow-sm">
         <Icon size={22} className="stroke-current" strokeWidth={1.8} />
       </div>

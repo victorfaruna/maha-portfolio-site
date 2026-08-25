@@ -111,16 +111,16 @@ function ArticleCard({
         }}
       />
 
-      {/* Category pill — top left: PINK ON WHITE */}
-      <div className="absolute top-3 left-3 z-10">
+      {/* Category pill — top left: PINK ON WHITE (desktop only) */}
+      <div className="hidden md:block absolute top-3 left-3 z-10">
         <span className="bg-white/95 text-brand-pink font-extrabold text-[10px] uppercase tracking-wider px-3 py-1 rounded-full shadow-md border border-white/20">
           {publication.category}
         </span>
       </div>
 
-      {/* Year badge — top right */}
+      {/* Year badge — top right (desktop only) */}
       {publication.year && (
-        <div className="absolute top-3 right-3 z-10">
+        <div className="hidden md:block absolute top-3 right-3 z-10">
           <span className="bg-black/50 backdrop-blur-sm text-white/90 text-[9px] font-mono px-2 py-0.5 rounded-full">
             {publication.year}
           </span>
@@ -128,28 +128,28 @@ function ArticleCard({
       )}
 
       {/* Text content — bottom */}
-      <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-5 z-10">
-        {/* Source label */}
+      <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-5 z-10">
+        {/* Source label (desktop only) */}
         {publication.source_label && (
-          <p className="text-brand-pink text-[9px] font-bold uppercase tracking-widest mb-1.5">
+          <p className="hidden md:block text-brand-pink text-[9px] font-bold uppercase tracking-widest mb-1.5">
             {publication.source_label}
           </p>
         )}
 
-        {/* Title */}
+        {/* Title — displayed on all screens */}
         <h3
           className={`font-serif text-white leading-snug font-medium group-hover:text-white/90 transition-colors ${
             isFeatured
-              ? "text-[20px] sm:text-[22px] line-clamp-3 mb-2"
-              : "text-[14px] sm:text-[15px] line-clamp-2"
+              ? "text-[13px] sm:text-[18px] md:text-[22px] line-clamp-3 mb-1 sm:mb-2"
+              : "text-[11px] sm:text-[13px] md:text-[15px] line-clamp-3 md:line-clamp-2"
           }`}
         >
           {publication.title}
         </h3>
 
-        {/* Excerpt — featured card only */}
+        {/* Excerpt — featured card only (desktop only) */}
         {isFeatured && publication.excerpt && (
-          <p className="text-white/75 text-[13px] leading-relaxed line-clamp-2 mt-2 font-sans font-light">
+          <p className="hidden md:block text-white/75 text-[13px] leading-relaxed line-clamp-2 mt-2 font-sans font-light">
             {publication.excerpt}
           </p>
         )}

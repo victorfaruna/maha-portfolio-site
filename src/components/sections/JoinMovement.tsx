@@ -66,7 +66,7 @@ export function JoinMovement() {
                     className={`transition-transform duration-700 group-hover:scale-105 ${card.contain ? "object-contain bg-white/5" : "object-cover"}`}
                   />
                   {/* Soft bottom dark gradient for text readability without covering the image */}
-                  <div className="absolute bottom-0 inset-x-0 h-1/2 bg-gradient-to-t from-black/60 via-black/20 to-transparent pointer-events-none" />
+                  <div className="absolute bottom-0 inset-x-0 h-1/2 bg-gradient-to-t from-black/35 via-black/10 to-transparent pointer-events-none" />
 
                   <h3 className="absolute bottom-4 left-4 right-4 text-white text-xl sm:text-2xl md:text-3xl font-bold font-sans drop-shadow-md">
                     {card.title}

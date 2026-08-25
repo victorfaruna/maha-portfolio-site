@@ -156,9 +156,14 @@ function CountUpNumber({ target = 50, duration = 1.8 }: { target?: number; durat
     const step = (timestamp: number) => {
       if (!startTimestamp) startTimestamp = timestamp;
       const progress = Math.min((timestamp - startTimestamp) / (duration * 1000), 1);
-      
       const easeOutCubic = 1 - Math.pow(1 - progress, 3);
-      setCount(Math.floor(easeOutCubic * target));
+
+      // Snap to exact target at the very end to avoid a final-frame flicker
+      if (progress >= 1) {
+        setCount(target);
+      } else {
+        setCount(Math.round(easeOutCubic * target));
+      }
 
       if (progress < 1) {
         animationFrameId = requestAnimationFrame(step);
@@ -166,7 +171,6 @@ function CountUpNumber({ target = 50, duration = 1.8 }: { target?: number; durat
     };
 
     animationFrameId = requestAnimationFrame(step);
-
     return () => cancelAnimationFrame(animationFrameId);
   }, [target, duration]);
 
@@ -227,9 +231,9 @@ export default function SpeakingSection({
             <motion.span
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               className="text-xs uppercase tracking-widest text-brand-pink font-extrabold mb-3 flex items-center gap-2"
-              style={{ textShadow: "0px 2px 10px rgba(0,0,0,0.8)" }}
+              style={{ textShadow: "0px 2px 10px rgba(0,0,0,0.8)", willChange: "transform, opacity", transform: "translateZ(0)" }}
             >
               <Sparkles className="w-4 h-4" />
               GLOBAL KEYNOTES &amp; BROADCAST commentary
@@ -239,9 +243,9 @@ export default function SpeakingSection({
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.1 }}
+              transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
               className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl text-white font-serif tracking-tight leading-[1.1] mb-6"
-              style={{ textShadow: "0px 4px 24px rgba(0,0,0,0.85)" }}
+              style={{ textShadow: "0px 4px 24px rgba(0,0,0,0.85)", willChange: "transform, opacity", transform: "translateZ(0)" }}
             >
               <CountUpNumber target={50} duration={1.8} />+ Speaking Engagements, Press Features and Broadcasts Across the Globe
             </motion.h1>
@@ -249,9 +253,9 @@ export default function SpeakingSection({
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
               className="text-base sm:text-lg md:text-xl text-white/95 font-sans max-w-2xl font-normal leading-relaxed mb-8"
-              style={{ textShadow: "0px 2px 14px rgba(0,0,0,0.85)" }}
+              style={{ textShadow: "0px 2px 14px rgba(0,0,0,0.85)", willChange: "transform, opacity", transform: "translateZ(0)" }}
             >
               Keynote addresses, policy moderation, and expert commentary for
               global forums hosted by UNESCO, the African Union, GITEX Africa,
@@ -261,11 +265,12 @@ export default function SpeakingSection({
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
+              transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
               className="flex items-center gap-4 flex-wrap"
+              style={{ willChange: "transform, opacity", transform: "translateZ(0)" }}
             >
               <Link
-                href="/contact"
+                href="/work"
                 className="inline-flex items-center gap-2.5 px-8 py-4 bg-brand-pink text-white text-xs sm:text-sm font-extrabold uppercase tracking-wider rounded-full hover:bg-white hover:text-brand-navy transition-all duration-300 shadow-xl group"
               >
                 Book Maha to Speak

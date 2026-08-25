@@ -110,7 +110,7 @@ export function Footer({ showGradient = false }: { showGradient?: boolean }) {
                       key={label}
                       href={href}
                       aria-label={label}
-                      className="w-11 h-11 flex items-center justify-center border border-brand-navy/30 text-brand-navy hover:bg-brand-navy hover:text-white hover:border-brand-navy transition-all duration-300"
+                      className="w-11 h-11 flex items-center justify-center border border-brand-navy/30 text-brand-navy hover:bg-brand-navy hover:text-white hover:border-brand-navy transition-all duration-300 rounded-xl"
                     >
                       {svg}
                     </a>
@@ -126,7 +126,7 @@ export function Footer({ showGradient = false }: { showGradient?: boolean }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="bg-background p-8 md:p-12 border border-border shadow-sm"
+            className="bg-background p-8 md:p-12 border border-border shadow-sm rounded-2xl"
           >
             <form className="space-y-8" onSubmit={(e) => e.preventDefault()}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -176,7 +176,7 @@ export function Footer({ showGradient = false }: { showGradient?: boolean }) {
 
               <button
                 type="submit"
-                className="w-full sm:w-fit text-sm px-10 py-4 mt-8 bg-brand-navy text-white font-semibold uppercase tracking-widest hover:bg-brand-navy/90 transition-all duration-300 flex items-center justify-center gap-3 group"
+                className="w-full sm:w-fit text-sm px-10 py-4 mt-8 bg-brand-navy text-white font-semibold uppercase tracking-widest hover:bg-brand-navy/90 transition-all duration-300 flex items-center justify-center gap-3 group rounded-xl"
               >
                 Send Message
                 <Send className="w-4 h-4 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
