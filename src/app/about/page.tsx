@@ -249,7 +249,7 @@ export default function AboutPage() {
                     {item.content}
                   </div>
                   {item.images && item.images.length > 0 && (
-                    <div className="mt-4 grid grid-cols-2 gap-3 max-w-2xl mx-auto">
+                    <div className="mt-4 grid grid-cols-2 gap-3 max-w-2xl">
                       {item.images.map((img: string | { src: string; position?: string }, i: number) => {
                         const src = typeof img === "string" ? img : img.src;
                         const position = typeof img === "string" ? "center" : (img.position || "center");
@@ -420,7 +420,7 @@ export default function AboutPage() {
                     {item.content}
                   </div>
                   {item.images && item.images.length > 0 && (
-                    <div className="mt-4 grid grid-cols-2 gap-3 max-w-2xl mx-auto">
+                    <div className="mt-4 grid grid-cols-2 gap-3 max-w-2xl">
                       {item.images.map((img: string | { src: string; position?: string }, i: number) => {
                         const src = typeof img === "string" ? img : img.src;
                         const position = typeof img === "string" ? "center" : (img.position || "center");

@@ -1,35 +1,16 @@
-import { Navbar } from "@/components/sections/Navbar";
-import { Hero } from "@/components/sections/Hero";
-import { IntroText } from "@/components/sections/IntroText";
+import { HoldingPage } from "@/components/HoldingPage";
+import OriginalHome from "./page.original";
 
-import { Purpose } from "@/components/sections/Purpose";
-import { VisionApproach } from "@/components/sections/VisionApproach";
-import { JoinMovement } from "@/components/sections/JoinMovement";
-import { MoonshotMission } from "@/components/sections/MoonshotMission";
-
-import { FeaturedIn } from "@/components/sections/FeaturedIn";
-import { RecognitionStrip } from "@/components/sections/RecognitionStrip";
-import { Initiatives } from "@/components/sections/Initiatives";
-import { Experience } from "@/components/sections/Experience";
-import { Footer } from "@/components/sections/Footer";
+/**
+ * Temporary holding page mode.
+ * Set SHOW_HOLDING_PAGE to false once payment is settled to instantly restore the full site.
+ */
+const SHOW_HOLDING_PAGE = true;
 
 export default function Home() {
-  return (
-    <main className="min-h-screen bg-background text-foreground overflow-x-hidden">
-      <Navbar />
-      <Hero />
-      <IntroText />
+  if (SHOW_HOLDING_PAGE) {
+    return <HoldingPage />;
+  }
 
-      <Purpose />
-      <VisionApproach />
-      <MoonshotMission />
-      <JoinMovement />
-
-      <FeaturedIn />
-      <RecognitionStrip />
-      <Footer showGradient />
-      {/* <Initiatives />
-      <Experience /> */}
-    </main>
-  );
+  return <OriginalHome />;
 }

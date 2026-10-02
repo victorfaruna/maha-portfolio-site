@@ -223,8 +223,8 @@ export default function SpeakingSection({
           alt="Maha Jouini Speaking"
           className="absolute inset-0 w-full h-full object-cover object-[50%_25%]"
         />
-        {/* Lighter Gradient Overlay for bright image visibility */}
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/75 via-black/20 to-black/10" />
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10" />
 
         <div className="container mx-auto px-5 sm:px-8 md:px-12 lg:px-20 relative z-10">
           <div className="max-w-4xl">

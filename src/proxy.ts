@@ -3,16 +3,13 @@ import type { NextRequest } from 'next/server';
 import { jwtVerify } from 'jose';
 
 /**
- * Route guard for /dashboard routes.
+ * Route guard and holding mode controller.
  *
- * Next.js 16: middleware is renamed to "proxy".
- * Auth strategy: verify a signed HS256 JWT stored in an HTTP-only cookie.
- * The JWT is issued by loginAction() in src/app/actions/auth.ts.
+ * Next.js 16: middleware is named to "proxy".
  *
- * Public routes within /dashboard that skip the guard:
- * - /dashboard/login
+ * HOLDING_MODE: Set to false once payment is settled to re-enable direct access to all public sub-pages.
  */
-
+const HOLDING_MODE = true;
 const COOKIE_NAME = 'admin_session';
 
 function getJwtSecret(): Uint8Array {
@@ -25,6 +22,16 @@ function getJwtSecret(): Uint8Array {
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  // If holding mode is active, direct all non-dashboard public requests to the holding page at '/'
+  if (
+    HOLDING_MODE &&
+    pathname !== '/' &&
+    !pathname.startsWith('/dashboard') &&
+    !pathname.startsWith('/api')
+  ) {
+    return NextResponse.redirect(new URL('/', request.url));
+  }
 
   // Only guard /dashboard routes
   if (!pathname.startsWith('/dashboard')) {
@@ -72,5 +79,15 @@ function redirectToLogin(request: NextRequest, pathname: string) {
 }
 
 export const config = {
-  matcher: ['/dashboard', '/dashboard/:path*'],
+  matcher: [
+    /*
+     * Match all request paths except:
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     * - images (public images directory)
+     * - static file extensions (svg, png, jpg, etc.)
+     */
+    '/((?!_next/static|_next/image|images|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|pdf|docx)$).*)',
+  ],
 };

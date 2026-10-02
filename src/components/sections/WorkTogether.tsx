@@ -85,10 +85,10 @@ export function WorkTogether() {
                       fill
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
-                    {/* Soft bottom dark gradient for text readability without covering the image */}
-                    <div className="absolute bottom-0 inset-x-0 h-1/2 bg-gradient-to-t from-black/60 via-black/20 to-transparent pointer-events-none" />
+                    {/* Subtle bottom dark gradient for text readability without covering the image */}
+                    <div className="absolute bottom-0 inset-x-0 h-24 sm:h-28 bg-gradient-to-t from-black/35 via-black/10 to-transparent pointer-events-none" />
 
-                    <h3 className="absolute bottom-4 left-4 right-4 text-white text-xl sm:text-2xl md:text-3xl font-bold font-sans drop-shadow-md">
+                    <h3 className="absolute bottom-4 left-4 right-4 text-white text-xl sm:text-2xl md:text-3xl font-bold font-sans drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
                       {service.title}
                     </h3>
                   </div>
