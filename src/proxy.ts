@@ -3,13 +3,10 @@ import type { NextRequest } from 'next/server';
 import { jwtVerify } from 'jose';
 
 /**
- * Route guard and holding mode controller.
+ * Dashboard route guard.
  *
  * Next.js 16: middleware is named to "proxy".
- *
- * HOLDING_MODE: Set to false once payment is settled to re-enable direct access to all public sub-pages.
  */
-const HOLDING_MODE = true;
 const COOKIE_NAME = 'admin_session';
 
 function getJwtSecret(): Uint8Array {
@@ -22,16 +19,6 @@ function getJwtSecret(): Uint8Array {
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
-
-  // If holding mode is active, direct all non-dashboard public requests to the holding page at '/'
-  if (
-    HOLDING_MODE &&
-    pathname !== '/' &&
-    !pathname.startsWith('/dashboard') &&
-    !pathname.startsWith('/api')
-  ) {
-    return NextResponse.redirect(new URL('/', request.url));
-  }
 
   // Only guard /dashboard routes
   if (!pathname.startsWith('/dashboard')) {

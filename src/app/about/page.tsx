@@ -120,7 +120,7 @@ export default function AboutPage() {
           </div>
         </motion.div>
 
-        <div className="relative mt-16">
+        <div className="relative mt-16 max-w-5xl mx-auto">
           {/* Vertical rule — visible sm+ */}
           <div className="absolute left-[120px] top-2 bottom-2 w-px bg-border hidden sm:block" />
 
@@ -271,7 +271,7 @@ export default function AboutPage() {
             ))}
           </div>
 
-          <div className="relative">
+          <div className="relative max-w-5xl mx-auto">
             <div className="absolute left-[120px] top-2 bottom-2 w-px bg-border hidden sm:block" />
             <div className="space-y-12">
             {[

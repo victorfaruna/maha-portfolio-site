@@ -2,13 +2,14 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 
 export function JoinMovement() {
   const cards = [
     {
       title: "Discover CHIFAA",
       image: "/images/chifaa.jpeg",
-      link: "#chifaa",
+      link: "https://chifaa.org",
       contain: true,
     },
     {
@@ -20,12 +21,12 @@ export function JoinMovement() {
     {
       title: "Read My Research",
       image: "/images/research.jpg",
-      link: "#research",
+      link: "/research",
     },
     {
       title: "Book Me to Speak",
       image: "/images/event.webp",
-      link: "#speak",
+      link: "/speaking",
     },
   ];
 
@@ -58,33 +59,40 @@ export function JoinMovement() {
                 transition={{ duration: 0.8, delay: idx * 0.1 }}
                 className="flex flex-col gap-6"
               >
-                <div className="relative aspect-[18/10] rounded-tr-[5rem] overflow-hidden group">
+                <Link
+                  href={card.link}
+                  target={card.link.startsWith("http") ? "_blank" : undefined}
+                  rel={card.link.startsWith("http") ? "noopener noreferrer" : undefined}
+                  className="relative block aspect-[18/10] rounded-tr-[5rem] overflow-hidden group"
+                >
                   <Image
                     src={card.image}
                     alt={card.title}
                     fill
                     className={`transition-transform duration-700 group-hover:scale-105 ${card.contain ? "object-contain bg-white/5" : "object-cover"}`}
                   />
-                  {/* Subtle bottom dark gradient for text readability without encroaching on the artwork */}
+                  {/* Minimal edge shading keeps the label readable without washing out the artwork. */}
                   <div
                     className={`absolute bottom-0 inset-x-0 pointer-events-none transition-opacity duration-300 ${
                       card.contain
-                        ? "h-20 sm:h-24 bg-gradient-to-t from-black/20 via-black/5 to-transparent"
-                        : "h-24 sm:h-28 bg-gradient-to-t from-black/35 via-black/10 to-transparent"
+                        ? "h-10 bg-gradient-to-t from-black/10 to-transparent"
+                        : "h-14 bg-gradient-to-t from-black/20 to-transparent"
                     }`}
                   />
 
                   <h3 className="absolute bottom-4 left-4 right-4 text-white text-xl sm:text-2xl md:text-3xl font-bold font-sans drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
                     {card.title}
                   </h3>
-                </div>
+                </Link>
 
-                <a
+                <Link
                   href={card.link}
+                  target={card.link.startsWith("http") ? "_blank" : undefined}
+                  rel={card.link.startsWith("http") ? "noopener noreferrer" : undefined}
                   className="bg-brand-navy hover:bg-brand-navy/90 text-white font-semibold uppercase tracking-wider text-sm py-3.5 px-8 w-max transition-colors inline-block"
                 >
                   Learn more
-                </a>
+                </Link>
               </motion.div>
             ))}
           </div>

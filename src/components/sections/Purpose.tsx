@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 export function Purpose() {
   return (
@@ -51,15 +52,13 @@ export function Purpose() {
               <p>
                 I believe that the next generation of AI will not be defined solely by larger models or greater computational power, but by our ability to embed wisdom, empathy, cultural diversity, and human dignity into the systems we create.
               </p> */}
-              <div className="pt-6">
+              <div className="pt-2">
                 <Link
                   href="/about"
-                  className="group inline-flex items-center gap-2 px-6 py-3 border-2 border-brand-navy text-brand-navy font-semibold text-base uppercase tracking-widest hover:bg-brand-navy hover:text-white transition-all duration-300"
+                  className="group inline-flex items-center gap-3 bg-brand-navy px-5 py-3 text-sm font-semibold text-white transition-colors duration-300 hover:bg-brand-navy/90"
                 >
-                  Read the Full Story
-                  <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">
-                    →
-                  </span>
+                  Explore My Journey
+                  <ArrowRight className="size-4 text-brand-pink transition-transform duration-300 group-hover:translate-x-1" />
                 </Link>
               </div>
             </div>

@@ -1,398 +1,252 @@
-"use client";
-
-import { motion } from "framer-motion";
 import Image from "next/image";
 import {
-  Lightbulb,
-  FileText,
-  GraduationCap,
-  Mic2,
-  Users,
-  Briefcase,
   BookOpen,
+  BriefcaseBusiness,
+  FileCheck2,
+  GraduationCap,
+  Lightbulb,
+  Mail,
+  MapPin,
+  MessageCircleMore,
+  Mic2,
+  Search,
+  Target,
+  UserRoundSearch,
+  UsersRound,
 } from "lucide-react";
 import { Navbar } from "@/components/sections/Navbar";
-import { Footer } from "@/components/sections/Footer";
 
-// ─── Page-scoped accent tokens ─────────────────────────────────────────────────
-const PURPLE_MEDIUM = "#9333EA";
-const PURPLE_DARK = "#7E22CE";
-const PINK_ACCENT = "#EC4899";
-const SOFT_PINK = "#FCE7F3";
-const CHARCOAL = "#12151C";
-const NAVY = "#0B1F4D";
-const GRADIENT = "linear-gradient(90deg, #A855F7, #EC4899)";
+const BRAND_PURPLE = "#6B168E";
+const NAVY = "#091225";
 
-// ─── Animation helpers ─────────────────────────────────────────────────────────
-const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 24 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-50px" },
-  transition: { duration: 0.55, delay, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
-});
-
-// ─── Service card data ─────────────────────────────────────────────────────────
-const topCards = [
+const services = [
   {
     Icon: Lightbulb,
     title: "Responsible AI Advisory",
-    body: "Strategic guidance for organizations seeking to adopt AI in a way that is ethical, inclusive, and aligned with their mission.",
+    description:
+      "Strategic guidance for organizations navigating AI adoption, ethics and governance.",
     items: [
-      "AI strategy and adoption",
+      "AI strategy",
       "Responsible AI frameworks",
-      "AI governance and ethics",
-      "Risk and impact assessment",
-      "Organizational AI readiness",
+      "AI governance",
+      "Risk & impact assessment",
+      "Safeguards",
     ],
   },
   {
-    Icon: FileText,
+    Icon: FileCheck2,
     title: "AI Policy & Governance",
-    body: "Supporting institutions in translating AI ethics into practical policies, governance models, and accountability mechanisms.",
+    description:
+      "Support in translating ethical principles into practical policies, institutional frameworks and accountability mechanisms.",
     items: [
-      "AI policy development",
+      "AI policies",
       "Governance frameworks",
-      "Ethical AI guidelines",
-      "Digital rights and inclusion",
-      "Public sector AI governance",
+      "Ethics guidelines",
+      "Inclusion",
+      "Human-centred AI",
     ],
   },
   {
     Icon: GraduationCap,
     title: "Training & Capacity Building",
-    body: "Interactive workshops and executive training designed to build AI literacy and responsible AI capabilities across organizations.",
+    description:
+      "Tailored workshops and learning programmes that help teams understand AI and develop the capacity to use it responsibly.",
     items: [
-      "AI literacy for leaders",
-      "Responsible AI and ethics",
-      "Generative AI in practice",
-      "AI for social impact",
-      "AI and vulnerable communities",
+      "AI literacy",
+      "AI ethics",
+      "Responsible AI",
+      "AI policy",
+      "AI & vulnerable communities",
     ],
-    listLabel: "Topics include:",
   },
-];
-
-const bottomCards = [
   {
     Icon: Mic2,
     title: "Speaking & Thought Leadership",
-    body: "Available for international conferences, high-level forums, panels, podcasts, and institutional events on AI, ethics, and digital transformation.",
+    description:
+      "Available for conferences, panels, keynotes, expert dialogues, podcasts and institutional events exploring the societal implications of AI.",
     items: [
       "Responsible AI",
-      "AI governance and public policy",
-      "AI in Africa and the Global South",
-      "Women in technology",
-      "Digital inclusion and innovation",
+      "AI governance",
+      "Africa & AI",
+      "Women & technology",
+      "Digital inclusion",
+      "AI for social impact",
     ],
-    listLabel: "Speaking areas:",
   },
   {
-    Icon: Users,
+    Icon: UsersRound,
     title: "Mentorship",
-    body: "Mentoring women entrepreneurs, researchers, policymakers, and emerging technology leaders building impactful AI and innovation initiatives.",
+    description:
+      "Mentorship for women, emerging leaders, entrepreneurs and innovators working across AI, technology and social impact.",
     items: [
-      "Leadership and career development",
-      "AI entrepreneurship",
+      "Leadership",
       "Responsible innovation",
-      "Research and public policy",
+      "AI entrepreneurship",
+      "Career development",
       "Social-impact technology",
     ],
-    listLabel: "Focus areas:",
   },
 ];
 
-const serviceChips = [
-  { label: "Advisory",   Icon: Lightbulb },
-  { label: "Consulting", Icon: Briefcase },
-  { label: "Training",   Icon: GraduationCap },
-  { label: "Speaking",   Icon: Mic2 },
-  { label: "Research",   Icon: BookOpen },
-  { label: "Mentorship", Icon: Users },
+const capabilities = [
+  { Icon: MessageCircleMore, label: "Advisory" },
+  { Icon: Target, label: "Consulting" },
+  { Icon: BookOpen, label: "Training" },
+  { Icon: Mic2, label: "Speaking" },
+  { Icon: Search, label: "Research" },
+  { Icon: UserRoundSearch, label: "Mentorship" },
 ];
 
-// ─── Service Card Component ────────────────────────────────────────────────────
 function ServiceCard({
-  Icon,
-  title,
-  body,
-  items,
-  listLabel,
-  index,
+  service,
+  wide = false,
 }: {
-  Icon: React.ElementType;
-  title: string;
-  body: string;
-  items: string[];
-  listLabel?: string;
-  index: number;
+  service: (typeof services)[number];
+  wide?: boolean;
 }) {
+  const { Icon, title, description, items } = service;
+
   return (
-    <motion.div
-      {...fadeUp(index * 0.08)}
-      whileHover={{ y: -6, scale: 1.015 }}
-      whileTap={{ scale: 0.985 }}
-      transition={{ duration: 0.3, ease: "easeOut" }}
-      className="group relative rounded-2xl p-7 bg-white border border-[rgba(168,85,247,0.15)] shadow-xs hover:shadow-xl hover:border-[rgba(236,72,153,0.35)] transition-all duration-300 flex flex-col cursor-pointer"
+    <article
+      className={`rounded-xl border border-[#e4d5eb] bg-white/55 p-4 shadow-[0_2px_10px_rgba(56,19,73,0.04)] ${
+        wide ? "lg:col-span-3" : "lg:col-span-2"
+      }`}
     >
-      {/* Hover overlay ring */}
-      <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-300 shadow-[0_12px_30px_rgba(0,0,0,0.1)] -m-[1px] border border-foreground/10" />
-
-      {/* Icon Badge */}
-      <div
-        className="w-12 h-12 rounded-full flex items-center justify-center mb-5 shrink-0 transition-all duration-300 group-hover:scale-110 bg-white border border-border shadow-xs"
-      >
-        <Icon size={20} style={{ color: NAVY }} strokeWidth={1.9} />
+      <div className="mb-3 flex items-center gap-3">
+        <div className="flex size-11 shrink-0 items-center justify-center rounded-full border border-[#6B168E] text-[#6B168E]">
+          <Icon size={23} strokeWidth={1.4} />
+        </div>
+        <div>
+          <h2 className="font-serif text-lg font-bold uppercase leading-tight text-[#182033]">
+            {title}
+          </h2>
+          <span className="mt-1 block h-px w-8 bg-[#6B168E]" />
+        </div>
       </div>
-
-      {/* Title */}
-      <h3
-        className="font-serif font-bold text-[18px] leading-snug mb-2 transition-colors duration-300 text-brand-pink group-hover:text-brand-navy"
-      >
-        {title}
-      </h3>
-
-      {/* Body */}
-      <p className="font-sans text-[14px] text-foreground/75 leading-relaxed mb-4">
-        {body}
-      </p>
-
-      {/* Bullet list */}
-      <div className="mt-auto">
-        {listLabel && (
-          <p
-            className="text-[11px] font-bold uppercase tracking-[0.15em] mb-2"
-            style={{ color: PURPLE_DARK }}
-          >
-            {listLabel}
-          </p>
-        )}
-        {!listLabel && (
-          <p
-            className="text-[11px] font-bold uppercase tracking-[0.15em] mb-2"
-            style={{ color: PURPLE_DARK }}
-          >
-            Services:
-          </p>
-        )}
-        <ul className="space-y-1.5">
-          {items.map((item, i) => (
-            <li key={i} className="flex items-start gap-2.5 text-[13px] text-foreground/70">
-              <span
-                className="mt-[5px] w-1.5 h-1.5 rounded-full shrink-0"
-                style={{ backgroundColor: PINK_ACCENT }}
-              />
-              {item}
-            </li>
-          ))}
-        </ul>
-      </div>
-    </motion.div>
+      <p className="mb-3 text-sm leading-relaxed text-[#303541]">{description}</p>
+      <ul className={`grid gap-x-5 text-[13px] leading-relaxed text-[#303541] ${wide ? "sm:grid-cols-2" : ""}`}>
+        {items.map((item) => (
+          <li key={item} className="before:mr-2 before:text-[#6B168E] before:content-['•']">
+            {item}
+          </li>
+        ))}
+      </ul>
+    </article>
   );
 }
 
-// ─── Main Page ─────────────────────────────────────────────────────────────────
 export default function WorkWithMePage() {
   return (
-    <main
-      className="min-h-screen overflow-x-hidden"
-      style={{ backgroundColor: "#FAF7F2", color: CHARCOAL }}
-    >
+    <main className="min-h-screen overflow-x-hidden bg-white text-[#101827]">
       <Navbar solid />
 
-      {/* ── SECTION 1: HERO / INTRO ─────────────────────────────────────────── */}
-      <section className="pt-36 sm:pt-64 md:pt-72 pb-12 px-6 sm:px-10">
-        <div className="max-w-5xl mx-auto">
-          {/* Eyebrow */}
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-[12px] font-bold font-sans uppercase tracking-[0.22em] mb-4"
-            style={{ color: PURPLE_MEDIUM }}
-          >
-            Work With Me
-          </motion.p>
-
-          {/* Heading */}
-          <motion.h1
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.1 }}
-            className="font-serif text-[30px] sm:text-[38px] md:text-[44px] leading-[1.15] font-semibold mb-5 max-w-3xl"
-            style={{ color: CHARCOAL }}
-          >
-            Turning Responsible AI into Strategy, Governance and Impact
-          </motion.h1>
-
-          {/* Animated gradient underline */}
-          <motion.div
-            initial={{ width: 0 }}
-            animate={{ width: 60 }}
-            transition={{ duration: 0.85, ease: "easeOut", delay: 0.2 }}
-            className="h-[3px] rounded-full mb-7"
-            style={{ background: GRADIENT }}
+      <div className="w-full pt-24 sm:pt-[120px] md:pt-36 lg:pt-44">
+        <section className="relative overflow-hidden bg-white">
+          <Image
+            src="/images/work-with-me-hero.png"
+            alt=""
+            fill
+            priority
+            sizes="(min-width: 1024px) 1500px, 100vw"
+            className="hidden object-cover object-[center_42%] lg:block"
           />
 
-          {/* Intro body */}
-          <motion.p
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.3 }}
-            className="font-sans text-[16px] sm:text-[17px] text-foreground/75 leading-relaxed max-w-[640px]"
-          >
-            I collaborate with governments, international organizations, NGOs, startups, research institutions, and businesses to design, adopt, and govern AI responsibly. My work combines ethical innovation, public policy, and practical implementation, with a strong focus on Africa, the MENA region, and the Global South.
-          </motion.p>
-        </div>
-      </section>
-
-      {/* ── SECTION 2: PORTRAIT + QUOTE ─────────────────────────────────────── */}
-      <section className="py-14 px-6 sm:px-10">
-        <div className="max-w-5xl mx-auto">
-          <div className="flex flex-col md:flex-row gap-10 md:gap-14 items-center">
-            {/* Portrait */}
-            <motion.div
-              {...fadeUp(0)}
-              className="w-full md:w-[45%] shrink-0"
-            >
-              <div className="relative w-full rounded-2xl overflow-hidden shadow-xl bg-[#111]">
-                <Image
-                  src="/images/hero.webp"
-                  alt="Maha Jouini — Work With Me"
-                  width={600}
-                  height={800}
-                  className="w-full h-auto object-contain"
-                  priority
-                />
-              </div>
-            </motion.div>
-
-            {/* Pull Quote */}
-            <motion.div
-              {...fadeUp(0.12)}
-              className="w-full md:w-[55%] flex flex-col justify-center"
-            >
-              {/* Giant quote glyph */}
-              <div
-                className="font-serif text-[80px] leading-none mb-2 select-none"
-                style={{ color: "#A855F7", opacity: 0.35 }}
-                aria-hidden
-              >
-                &ldquo;
+          <div className="relative z-10 w-full bg-white px-6 pb-9 pt-8 sm:px-10 lg:w-[60%] lg:bg-transparent lg:px-12 lg:pb-10 lg:pr-8 xl:px-14">
+            <div className="grid gap-7 lg:grid-cols-[minmax(0,1fr)_180px]">
+              <div>
+                <h1 className="whitespace-nowrap font-serif text-4xl leading-none tracking-tight text-[#0a1122] sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl">
+                  WORK WITH ME
+                </h1>
+                <div className="my-3 flex items-center">
+                  <span className="h-0.5 w-16 bg-[#6B168E]" />
+                  <span className="size-1.5 rounded-full bg-[#6B168E]" />
+                </div>
+                <h2 className="max-w-2xl text-lg font-bold uppercase leading-tight tracking-wide text-[#141a25] sm:text-xl lg:text-2xl">
+                  Turning responsible AI into strategy, governance and impact
+                </h2>
+                <p className="mt-4 max-w-2xl text-base leading-relaxed text-[#303746] sm:text-lg">
+                  I partner with organizations, governments, NGOs, companies, startups and research institutions to adopt and govern AI responsibly, with a focus on Africa, the MENA region and the Global South.
+                </p>
               </div>
 
-              <blockquote
-                className="font-serif text-[22px] sm:text-[25px] italic leading-[1.45] mb-6"
-                style={{ color: NAVY }}
-              >
-                Technology should empower people, protect rights and advance inclusion.{" "}
-                <strong className="not-italic font-bold">
+              <blockquote className="pt-1 text-[#182033]">
+                <span className="block font-serif text-6xl leading-[0.65] text-[#6B168E]">“</span>
+                <p className="mt-4 text-sm leading-relaxed sm:text-base">
+                  Technology should empower people, protect rights and advance inclusion.
+                </p>
+                <p className="mt-2 text-sm font-bold leading-snug sm:text-base">
                   That is the future I work towards.
-                </strong>
+                </p>
+                <span className="mt-4 block h-px w-11 bg-[#6B168E]" />
               </blockquote>
+            </div>
 
-              {/* Small gradient rule */}
-              <motion.div
-                initial={{ width: 0 }}
-                whileInView={{ width: 50 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.75, ease: "easeOut" }}
-                className="h-[3px] rounded-full"
-                style={{ background: GRADIENT }}
-              />
-            </motion.div>
+            <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-6">
+              {services.slice(0, 3).map((service) => (
+                <ServiceCard key={service.title} service={service} />
+              ))}
+              {services.slice(3).map((service) => (
+                <ServiceCard key={service.title} service={service} wide />
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
 
-      {/* ── SECTION 3: THREE SERVICE CARDS (top row) ───────────────────────── */}
-      <section className="py-12 px-6 sm:px-10">
-        <div className="max-w-5xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {topCards.map((card, idx) => (
-              <ServiceCard
-                key={idx}
-                Icon={card.Icon}
-                title={card.title}
-                body={card.body}
-                items={card.items}
-                listLabel={card.listLabel}
-                index={idx}
+          <div className="bg-gradient-to-b from-white to-[#f7f2fa] px-5 py-8 sm:px-10 lg:hidden">
+            <div className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-[2rem] border border-purple-200 bg-black shadow-[0_20px_55px_rgba(38,17,58,0.2)] ring-1 ring-purple-900/10">
+              <Image
+                src="/images/hero.webp"
+                alt="Maha Jouini"
+                fill
+                priority
+                sizes="(max-width: 640px) calc(100vw - 40px), 448px"
+                className="object-cover object-[center_22%]"
               />
-            ))}
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/25 to-transparent" />
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* ── SECTION 4: TWO CARDS (second row) ──────────────────────────────── */}
-      <section className="py-6 pb-16 px-6 sm:px-10">
-        <div className="max-w-5xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-            {bottomCards.map((card, idx) => (
-              <ServiceCard
-                key={idx}
-                Icon={card.Icon}
-                title={card.title}
-                body={card.body}
-                items={card.items}
-                listLabel={card.listLabel}
-                index={idx}
-              />
-            ))}
+        <section className="border-y border-[#e4d5eb] bg-white px-6 py-5 sm:px-10 lg:px-12">
+          <div className="grid items-center gap-7 lg:grid-cols-[1.1fr_2fr_1.05fr]">
+            <div className="flex items-start gap-4">
+              <div className="flex size-14 shrink-0 items-center justify-center rounded-full bg-[#6B168E] text-white">
+                <BriefcaseBusiness size={28} strokeWidth={1.4} />
+              </div>
+              <div>
+                <h2 className="font-serif text-lg font-bold uppercase text-[#182033]">Let&apos;s work together</h2>
+                <p className="mt-2 text-[13px] leading-relaxed text-[#343946]">
+                  If you are building, adopting or governing AI and want to ensure that people, ethics and context remain at the centre, I would be glad to explore how we can work together.
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-3 divide-x divide-[#c8c1b6] sm:grid-cols-6">
+              {capabilities.map(({ Icon, label }) => (
+                <div key={label} className="flex min-h-16 flex-col items-center justify-center gap-1.5 px-2 text-center">
+                  <Icon size={26} strokeWidth={1.35} className="text-[#131d32]" />
+                  <span className="text-[10px] font-semibold uppercase tracking-wide text-[#151b27]">{label}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="space-y-2 lg:border-l lg:border-[#c8c1b6] lg:pl-7">
+              <a
+                href="mailto:hello@mahajouini.net"
+                className="flex items-center justify-center gap-3 rounded-lg bg-[#6B168E] px-5 py-3 text-sm font-bold uppercase tracking-wide text-white transition-colors hover:bg-[#4A0E66]"
+              >
+                <Mail size={18} />
+                Get in touch
+              </a>
+              <a href="mailto:hello@mahajouini.net" className="flex items-center gap-2 text-sm font-medium text-[#343946] hover:text-[#6B168E]">
+                <Mail size={16} /> hello@mahajouini.net
+              </a>
+              <p className="flex items-center gap-2 text-sm font-medium text-[#343946]">
+                <MapPin size={16} fill={NAVY} /> Africa <span style={{ color: BRAND_PURPLE }}>•</span> MENA <span style={{ color: BRAND_PURPLE }}>•</span> Global
+              </p>
+            </div>
           </div>
-        </div>
-      </section>
-
-      {/* ── SECTION 5: LET'S WORK TOGETHER (closing band) ──────────────────── */}
-      <section
-        className="py-20 px-6 sm:px-10"
-        style={{
-          background:
-            "linear-gradient(135deg, rgba(168,85,247,0.06) 0%, rgba(236,72,153,0.06) 100%), #FAF7F2",
-        }}
-      >
-        <div className="max-w-[700px] mx-auto text-center flex flex-col items-center">
-          {/* Eyebrow */}
-          <motion.p
-            {...fadeUp(0)}
-            className="text-[11px] font-bold uppercase tracking-[0.22em] mb-5"
-            style={{ color: PURPLE_MEDIUM }}
-          >
-            Let&apos;s Work Together
-          </motion.p>
-
-          {/* Heading */}
-          <motion.h2
-            {...fadeUp(0.08)}
-            className="font-serif text-[22px] sm:text-[26px] font-semibold leading-[1.4] mb-10"
-            style={{ color: CHARCOAL }}
-          >
-            Whether you are developing an AI strategy, designing ethical governance, training your team, or exploring responsible innovation, I would be delighted to collaborate with you.
-          </motion.h2>
-
-          {/* Service chips */}
-          <motion.div
-            {...fadeUp(0.16)}
-            className="flex flex-wrap items-center justify-center gap-3"
-          >
-            {serviceChips.map(({ label, Icon }, idx) => (
-              <span key={idx} className="flex items-center gap-2.5">
-                <span
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[rgba(168,85,247,0.18)] bg-white/70 text-[11px] font-bold uppercase tracking-[0.16em] transition-all duration-300 hover:bg-white hover:shadow-md hover:border-brand-pink/30 cursor-default"
-                  style={{ color: PURPLE_DARK }}
-                >
-                  <Icon size={13} strokeWidth={2} style={{ color: PINK_ACCENT }} />
-                  {label}
-                </span>
-                {idx < serviceChips.length - 1 && (
-                  <span className="text-foreground/20 text-[12px] font-light hidden sm:inline">·</span>
-                )}
-              </span>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      <Footer showGradient />
+        </section>
+      </div>
     </main>
   );
 }

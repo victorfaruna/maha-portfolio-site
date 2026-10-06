@@ -7,45 +7,45 @@ export function Footer({ showGradient = false }: { showGradient?: boolean }) {
   return (
     <footer
       id="contact"
-      className="pt-24 pb-12 bg-secondary/40 text-foreground relative overflow-hidden mt-12 border-t border-border"
+      className="pt-14 pb-8 bg-secondary/40 text-foreground relative overflow-hidden mt-8 border-t border-border"
     >
       {/* Decorative blurred blob */}
       {showGradient && (
         <div className="absolute top-0 right-0 size-125 bg-brand-cyan/5 blur-[150px] rounded-full translate-x-1/2 -translate-y-1/2 pointer-events-none" />
       )}
 
-      <div className="container mx-auto px-6 md:px-12 max-w-8xl relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 mb-24">
+      <div className="container mx-auto px-6 md:px-10 max-w-6xl relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-10 lg:gap-14 mb-12">
           {/* Left Column: Heading and Info */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="space-y-8 flex flex-col justify-between"
+            className="space-y-6 flex flex-col justify-between"
           >
             <div>
               <span className="text-sm uppercase tracking-widest text-foreground/50 font-semibold mb-6 block">
-                Let's Collaborate
+                Let&apos;s Collaborate
               </span>
-              <h2 className="text-2xl sm:text-3xl md:text-5xl font-serif text-brand-navy leading-tight">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif text-brand-navy leading-tight">
                 Ready to make an{" "}
                 <span className="italic text-brand-pink">impact?</span>
               </h2>
-              <p className="text-foreground/70 text-lg max-w-md mt-6">
+              <p className="text-foreground/70 text-base max-w-md mt-4 leading-relaxed">
                 Reach out for speaking engagements, advisory roles, AI
                 consulting, or simply to connect and share ideas.
               </p>
             </div>
 
-            <div className="pt-12 space-y-8">
+            <div className="pt-5 space-y-5">
               <div>
                 <p className="text-sm text-foreground/50 uppercase tracking-widest mb-2">
                   Direct Inquiry
                 </p>
                 <a
                   href="mailto:hello@mahajouini.net"
-                  className="text-lg sm:text-2xl md:text-3xl text-brand-navy hover:text-brand-pink transition-colors duration-300 break-all"
+                  className="text-lg sm:text-xl md:text-2xl text-brand-navy hover:text-brand-pink transition-colors duration-300 break-all"
                 >
                   hello@mahajouini.net
                 </a>
@@ -55,7 +55,7 @@ export function Footer({ showGradient = false }: { showGradient?: boolean }) {
                 <p className="text-sm text-foreground/50 uppercase tracking-widest mb-4">
                   Connect
                 </p>
-                <div className="flex gap-3">
+                <div className="flex gap-2.5">
                   {[
                     {
                       label: "LinkedIn",
@@ -110,7 +110,7 @@ export function Footer({ showGradient = false }: { showGradient?: boolean }) {
                       key={label}
                       href={href}
                       aria-label={label}
-                      className="w-11 h-11 flex items-center justify-center border border-brand-navy/30 text-brand-navy hover:bg-brand-navy hover:text-white hover:border-brand-navy transition-all duration-300 rounded-xl"
+                      className="w-10 h-10 flex items-center justify-center border border-brand-navy/30 text-brand-navy hover:bg-brand-navy hover:text-white hover:border-brand-navy transition-all duration-300 rounded-lg"
                     >
                       {svg}
                     </a>
@@ -126,10 +126,10 @@ export function Footer({ showGradient = false }: { showGradient?: boolean }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="bg-background p-8 md:p-12 border border-border shadow-sm rounded-2xl"
+            className="bg-background p-6 md:p-8 border border-border shadow-sm rounded-xl self-start"
           >
-            <form className="space-y-8" onSubmit={(e) => e.preventDefault()}>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div className="space-y-2 group">
                   <label className="text-xs uppercase tracking-widest text-foreground/50 group-focus-within:text-brand-navy transition-colors">
                     First Name
@@ -137,7 +137,7 @@ export function Footer({ showGradient = false }: { showGradient?: boolean }) {
                   <input
                     type="text"
                     placeholder="Jane"
-                    className="w-full bg-transparent border-b border-border pt-3 pb-3 text-lg placeholder:text-foreground/30 focus:outline-none focus:border-brand-navy transition-colors text-foreground"
+                    className="w-full bg-transparent border-b border-border pt-2 pb-2 text-base placeholder:text-foreground/30 focus:outline-none focus:border-brand-navy transition-colors text-foreground"
                   />
                 </div>
                 <div className="space-y-2 group">
@@ -147,7 +147,7 @@ export function Footer({ showGradient = false }: { showGradient?: boolean }) {
                   <input
                     type="text"
                     placeholder="Doe"
-                    className="w-full bg-transparent border-b border-border pt-3 pb-3 text-lg placeholder:text-foreground/30 focus:outline-none focus:border-brand-navy transition-colors text-foreground"
+                    className="w-full bg-transparent border-b border-border pt-2 pb-2 text-base placeholder:text-foreground/30 focus:outline-none focus:border-brand-navy transition-colors text-foreground"
                   />
                 </div>
               </div>
@@ -159,7 +159,7 @@ export function Footer({ showGradient = false }: { showGradient?: boolean }) {
                 <input
                   type="email"
                   placeholder="jane@example.com"
-                  className="w-full bg-transparent border-b border-border pt-3 pb-3 text-lg placeholder:text-foreground/30 focus:outline-none focus:border-brand-navy transition-colors text-foreground"
+                  className="w-full bg-transparent border-b border-border pt-2 pb-2 text-base placeholder:text-foreground/30 focus:outline-none focus:border-brand-navy transition-colors text-foreground"
                 />
               </div>
 
@@ -168,15 +168,15 @@ export function Footer({ showGradient = false }: { showGradient?: boolean }) {
                   Message
                 </label>
                 <textarea
-                  rows={4}
+                  rows={3}
                   placeholder="How can we collaborate?"
-                  className="w-full bg-transparent border-b border-border pt-3 pb-3 text-lg placeholder:text-foreground/30 focus:outline-none focus:border-brand-navy transition-colors resize-none text-foreground"
+                  className="w-full bg-transparent border-b border-border pt-2 pb-2 text-base placeholder:text-foreground/30 focus:outline-none focus:border-brand-navy transition-colors resize-none text-foreground"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full sm:w-fit text-sm px-10 py-4 mt-8 bg-brand-navy text-white font-semibold uppercase tracking-widest hover:bg-brand-navy/90 transition-all duration-300 flex items-center justify-center gap-3 group rounded-xl"
+                className="w-full sm:w-fit text-xs px-7 py-3 mt-2 bg-brand-navy text-white font-semibold uppercase tracking-widest hover:bg-brand-navy/90 transition-all duration-300 flex items-center justify-center gap-3 group rounded-lg"
               >
                 Send Message
                 <Send className="w-4 h-4 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
@@ -186,7 +186,7 @@ export function Footer({ showGradient = false }: { showGradient?: boolean }) {
         </div>
 
         {/* Footer Bottom Line */}
-        <div className="pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-6 text-foreground/50 text-sm">
+        <div className="pt-6 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4 text-foreground/50 text-xs">
           <div className="space-y-1 text-center md:text-left">
             <p>© {new Date().getFullYear()} Maha Jouini. All rights reserved.</p>
             <p className="text-foreground/50 font-normal flex items-center justify-center md:justify-start gap-1.5 flex-wrap">

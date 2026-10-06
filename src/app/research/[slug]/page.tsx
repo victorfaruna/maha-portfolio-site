@@ -69,10 +69,10 @@ export default async function PublicationArticlePage({
 
   return (
     <main className="min-h-screen bg-background text-foreground flex flex-col">
-      <Navbar />
+      <Navbar solid />
 
       {/* Article Header Container */}
-      <article className="flex-1 pt-28 sm:pt-36 md:pt-44 pb-14 md:pb-24">
+      <article className="flex-1 pt-28 sm:pt-36 md:pt-44 lg:pt-52 pb-14 md:pb-24">
         <div className="container mx-auto px-5 sm:px-8 md:px-12 max-w-4xl">
           {/* Back link */}
           <Link

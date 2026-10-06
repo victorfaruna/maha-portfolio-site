@@ -1,36 +1,25 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Award, GraduationCap, Sparkles, ArrowUpRight } from "lucide-react";
+import { Award, GraduationCap, Sparkles } from "lucide-react";
 import { Navbar } from "@/components/sections/Navbar";
 import { Footer } from "@/components/sections/Footer";
 
-// ─── Color tokens ─────────────────────────────────────────────────────────────
-const IVORY_BG = "#FAF7F2";
-const CHARCOAL_TEXT = "#12151C";
-const NAVY = "#0B1F4D";
-const PINK_ACCENT = "#EC4899";
-const SOFT_PINK = "#FCE7F3";
-
-// ─── Data ─────────────────────────────────────────────────────────────────────
-interface AwardItem {
+type Recognition = {
   title: string;
   meta: string;
   year: string;
   description: string;
-  flagship?: boolean;
-}
-
-const flagshipAward: AwardItem = {
-  title: "She Shapes AI Global Awards — Winner",
-  meta: "AI Thought Leadership · London School of Economics",
-  year: "2026",
-  description:
-    "Recognized for leadership and impact in responsible and ethical AI on a global stage.",
-  flagship: true,
 };
 
-const otherAwards: AwardItem[] = [
+const awards: Recognition[] = [
+  {
+    title: "She Shapes AI Global Awards — Winner",
+    meta: "AI Thought Leadership · London School of Economics",
+    year: "2026",
+    description:
+      "Recognized for leadership and impact in responsible and ethical AI on a global stage.",
+  },
   {
     title: "UNESCO MENA Top 20 Women Change Makers",
     meta: "MENA Region Impact",
@@ -43,11 +32,11 @@ const otherAwards: AwardItem[] = [
     meta: "Global Community",
     year: "Since 2022",
     description:
-      "Part of Google's global Women Techmakers community, supporting the visibility and advancement of women in technology.",
+      "Part of Google’s global Women Techmakers community, supporting the visibility and advancement of women in technology.",
   },
 ];
 
-const fellowships: AwardItem[] = [
+const fellowships: Recognition[] = [
   {
     title: "Microsoft Elevate Changemaker Fellowship",
     meta: "Global Impact & Leadership",
@@ -67,7 +56,7 @@ const fellowships: AwardItem[] = [
     meta: "Women in Focus Initiative",
     year: "Research Fellow",
     description:
-      "Contributing research and perspectives on responsible AI and AI governance through the Women in Focus initiative, with particular attention to women's leadership, inclusion, and AI governance in Africa.",
+      "Contributing research and perspectives on responsible AI and AI governance, with particular attention to women’s leadership and inclusion in Africa.",
   },
   {
     title: "TechForward Policy Fellowship",
@@ -81,260 +70,222 @@ const fellowships: AwardItem[] = [
     meta: "Innovation & Entrepreneurship",
     year: "Mentor · 2023",
     description:
-      "Mentored women entrepreneurs and emerging innovators across the Arab States, providing guidance on business development, innovation, and entrepreneurship.",
+      "Mentored women entrepreneurs and emerging innovators across the Arab States in business development, innovation and entrepreneurship.",
   },
   {
     title: "ARIN Publishing Academy — First Cohort",
     meta: "Academic Publishing & Research",
     year: "Fellow · 2026",
     description:
-      "Selected for the inaugural cohort of the ARIN Publishing Academy, strengthening research, academic writing, and publishing capacity for African scholars and practitioners.",
+      "Selected for the inaugural cohort, strengthening research, academic writing and publishing capacity for African scholars and practitioners.",
   },
   {
-    title:
-      "UNFPA Tunisia — Pool of Experts in AI & TFGBV",
+    title: "UNFPA Tunisia — Pool of Experts in AI & TFGBV",
     meta: "Digital Safety & Gender Ethics",
     year: "Expert · 2026",
     description:
-      "Selected to contribute expertise on AI, digital safety, and technology-facilitated gender-based violence, supporting gender-responsive and responsible approaches to emerging technologies in Tunisia.",
+      "Selected to contribute expertise on AI, digital safety and technology-facilitated gender-based violence in Tunisia.",
   },
 ];
 
-// ─── Section Heading Component ────────────────────────────────────────────────
-function SectionHeading({ children }: { children: React.ReactNode }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-40px" }}
-      transition={{ duration: 0.6 }}
-      className="mb-8"
-    >
-      <h2
-        className="font-serif text-[26px] sm:text-[30px] font-semibold mb-3 tracking-tight"
-        style={{ color: CHARCOAL_TEXT }}
-      >
-        {children}
-      </h2>
-      <div
-        className="h-[3px] w-[50px] rounded-full"
-        style={{ backgroundColor: PINK_ACCENT }}
-      />
-    </motion.div>
-  );
-}
+const reveal = {
+  initial: { opacity: 0, y: 18 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-60px" },
+  transition: { duration: 0.55 },
+};
 
-// ─── Flagship Card Component ──────────────────────────────────────────────────
-function FlagshipCard({ item }: { item: AwardItem }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      whileHover={{ y: -6, scale: 1.01 }}
-      whileTap={{ scale: 0.985 }}
-      transition={{ duration: 0.3, ease: "easeOut" }}
-      className="col-span-1 md:col-span-2 group relative rounded-2xl p-7 sm:p-8 bg-white transition-all duration-300 cursor-pointer overflow-hidden border border-border shadow-sm hover:shadow-xl hover:border-brand-pink/40 hover:bg-gradient-to-br hover:from-white hover:to-brand-soft-pink/30"
-    >
-      <div className="relative z-10 flex flex-col sm:flex-row items-start justify-between gap-5 mb-5">
-        {/* Flagship Icon Badge */}
-        <div
-          className="w-14 h-14 rounded-full flex items-center justify-center shrink-0 text-white shadow-md transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
-          style={{ backgroundColor: PINK_ACCENT }}
-        >
-          <Award size={26} strokeWidth={2} />
-        </div>
-
-        {/* Top-Right Status Pills & Interactive Arrow */}
-        <div className="flex flex-wrap items-center gap-2">
-          <span
-            className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-[11px] font-bold tracking-wider uppercase text-white shadow-xs"
-            style={{ backgroundColor: PINK_ACCENT }}
-          >
-            <Sparkles size={12} />
-            Flagship Recognition
-          </span>
-          <span
-            className="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-bold tracking-wider uppercase border border-brand-pink/20"
-            style={{ backgroundColor: SOFT_PINK, color: PINK_ACCENT }}
-          >
-            {item.year}
-          </span>
-          <div className="w-8 h-8 rounded-full bg-brand-soft-pink/60 flex items-center justify-center text-brand-pink group-hover:bg-brand-pink group-hover:text-white transition-colors duration-300 ml-1">
-            <ArrowUpRight size={16} className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </div>
-        </div>
-      </div>
-
-      {/* Content */}
-      <div className="relative z-10">
-        <h3
-          className="font-serif font-bold text-[20px] sm:text-[23px] leading-snug mb-2 transition-colors duration-300 text-brand-pink group-hover:text-brand-navy"
-        >
-          {item.title}
-        </h3>
-
-        <p
-          className="text-[12px] font-sans font-bold uppercase tracking-[0.18em] mb-3 text-brand-navy/70"
-        >
-          {item.meta}
-        </p>
-
-        <p
-          className="font-sans text-[14px] sm:text-[15px] leading-relaxed max-w-3xl text-foreground/80"
-        >
-          {item.description}
-        </p>
-      </div>
-    </motion.div>
-  );
-}
-
-// ─── Standard Card Component ──────────────────────────────────────────────────
-function StandardCard({
-  item,
-  Icon,
-  index,
+function SectionTitle({
+  eyebrow,
+  title,
+  description,
 }: {
-  item: AwardItem;
-  Icon: React.ElementType;
-  index: number;
+  eyebrow: string;
+  title: string;
+  description: string;
 }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      whileHover={{ y: -6, scale: 1.015 }}
-      whileTap={{ scale: 0.985 }}
-      transition={{ duration: 0.3, ease: "easeOut", delay: index * 0.05 }}
-      className="group relative rounded-2xl p-7 bg-white transition-all duration-300 cursor-pointer flex flex-col justify-between border border-border shadow-xs hover:shadow-xl hover:border-brand-pink/40 hover:bg-gradient-to-br hover:from-white hover:to-brand-soft-pink/25"
-    >
+    <motion.header {...reveal} className="grid gap-5 border-t border-brand-navy/15 pt-7 md:grid-cols-[0.8fr_1.2fr] md:gap-12">
       <div>
-        {/* Card Header: Icon Badge + Year Pill + Interactive Arrow */}
-        <div className="flex items-start justify-between gap-4 mb-5">
-          <div
-            className="w-12 h-12 rounded-full flex items-center justify-center shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:bg-brand-pink group-hover:text-white bg-brand-soft-pink text-brand-pink border border-brand-pink/20 shadow-xs"
-          >
-            <Icon size={20} strokeWidth={1.9} />
-          </div>
-
-          <div className="flex items-center gap-2">
-            <span
-              className="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-bold tracking-wider uppercase shrink-0 bg-brand-soft-pink text-brand-pink border border-brand-pink/20"
-            >
-              {item.year}
-            </span>
-            <div className="w-7 h-7 rounded-full bg-brand-soft-pink/60 flex items-center justify-center text-brand-pink group-hover:bg-brand-pink group-hover:text-white transition-colors duration-300">
-              <ArrowUpRight size={14} className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </div>
-          </div>
-        </div>
-
-        {/* Title — Vibrant Pink */}
-        <h3
-          className="font-serif font-bold text-[18px] leading-snug mb-1.5 transition-colors duration-300 text-brand-pink group-hover:text-brand-navy"
-        >
-          {item.title}
-        </h3>
-
-        {/* Meta */}
-        <p
-          className="text-[12px] font-sans font-bold uppercase tracking-[0.16em] mb-3 text-brand-navy/70"
-        >
-          {item.meta}
+        <p className="mb-3 text-xs font-bold uppercase tracking-[0.22em] text-brand-pink">
+          {eyebrow}
         </p>
-
-        {/* Description */}
-        <p className="font-sans text-[14px] text-foreground/80 leading-relaxed">
-          {item.description}
-        </p>
+        <h2 className="font-serif text-4xl leading-tight text-brand-navy sm:text-5xl">
+          {title}
+        </h2>
       </div>
-    </motion.div>
+      <p className="max-w-xl self-end text-base leading-relaxed text-foreground/70 sm:text-lg">
+        {description}
+      </p>
+    </motion.header>
   );
 }
 
-// ─── Main Page Component ──────────────────────────────────────────────────────
+function FellowshipRow({ item, index }: { item: Recognition; index: number }) {
+  return (
+    <motion.article
+      {...reveal}
+      transition={{ duration: 0.5, delay: Math.min(index * 0.04, 0.2) }}
+      className="group grid gap-4 border-t border-brand-navy/15 py-7 sm:grid-cols-[44px_1fr_auto] sm:gap-5"
+    >
+      <span className="font-serif text-xl text-brand-pink">{String(index + 1).padStart(2, "0")}</span>
+      <div>
+        <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.16em] text-brand-pink">
+          {item.meta}
+        </p>
+        <h3 className="font-serif text-2xl leading-snug text-brand-navy transition-colors group-hover:text-brand-pink">
+          {item.title}
+        </h3>
+        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-foreground/70 sm:text-base">
+          {item.description}
+        </p>
+      </div>
+      <p className="whitespace-nowrap text-sm font-semibold text-brand-navy/60 sm:pt-7">
+        {item.year}
+      </p>
+    </motion.article>
+  );
+}
+
 export default function AwardsFellowshipsPage() {
   return (
-    <main
-      className="min-h-screen overflow-x-hidden"
-      style={{ backgroundColor: IVORY_BG, color: CHARCOAL_TEXT }}
-    >
+    <main className="min-h-screen overflow-x-hidden bg-white text-foreground">
       <Navbar solid />
 
-      {/* ── HERO ──────────────────────────────────────────────────────────── */}
-      <section className="pt-36 sm:pt-64 md:pt-72 pb-14 px-6 sm:px-10">
-        <div className="max-w-[760px] mx-auto text-center flex flex-col items-center">
-          {/* Eyebrow */}
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-[12px] font-bold font-sans uppercase tracking-[0.22em] mb-4 text-brand-pink"
-          >
-            Awards &amp; Fellowships
-          </motion.p>
-
-          {/* Heading */}
-          <motion.h1
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.15 }}
-            className="font-serif text-[30px] sm:text-[38px] md:text-[44px] leading-[1.18] font-semibold mb-7"
-            style={{ color: CHARCOAL_TEXT }}
-          >
-            Recognized for advancing responsible AI, ethical technology, digital
-            inclusion and women&apos;s leadership across Africa and globally.
-          </motion.h1>
-
-          {/* Pink Accent Rule */}
+      <section className="px-6 pb-16 pt-32 sm:px-10 sm:pt-40 md:pt-48 lg:px-16 lg:pb-24 lg:pt-52">
+        <div className="mx-auto max-w-7xl">
           <motion.div
-            initial={{ width: 0 }}
-            animate={{ width: 60 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="h-[3px] rounded-full bg-brand-pink"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.65 }}
+            className="grid items-end gap-10 lg:grid-cols-[1.35fr_0.65fr]"
+          >
+            <div>
+              <p className="mb-5 text-xs font-bold uppercase tracking-[0.24em] text-brand-pink">
+                Awards &amp; Fellowships
+              </p>
+              <h1 className="max-w-4xl font-serif text-5xl leading-[0.98] tracking-tight text-brand-navy sm:text-6xl md:text-7xl lg:text-8xl">
+                Recognition rooted in purpose.
+              </h1>
+            </div>
+
+            <div className="border-l-2 border-brand-pink pl-6">
+              <p className="text-base leading-relaxed text-foreground/70 sm:text-lg">
+                Honours and programmes recognizing a body of work spanning responsible AI,
+                public policy, digital inclusion and women&apos;s leadership.
+              </p>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="mt-12 h-px origin-left bg-brand-navy/20"
           />
-        </div>
-      </section>
 
-      {/* ── AWARDS & RECOGNITION ─────────────────────────────────────────── */}
-      <section className="pb-16 px-6 sm:px-10">
-        <div className="max-w-5xl mx-auto">
-          <SectionHeading>Awards &amp; Recognition</SectionHeading>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Flagship Recognition Card */}
-            <FlagshipCard item={flagshipAward} />
-
-            {/* Other Award Cards */}
-            {otherAwards.map((item, idx) => (
-              <StandardCard
-                key={idx}
-                item={item}
-                Icon={Award}
-                index={idx + 1}
-              />
+          <div className="mt-8 grid grid-cols-3 gap-4 sm:gap-8">
+            {[
+              ["10", "Recognitions & programmes"],
+              ["Global", "Reach and contribution"],
+              ["2011—Now", "A continuing journey"],
+            ].map(([value, label]) => (
+              <div key={label}>
+                <p className="font-serif text-2xl text-brand-pink sm:text-3xl">{value}</p>
+                <p className="mt-1 text-[10px] uppercase tracking-[0.12em] text-brand-navy/60 sm:text-xs">
+                  {label}
+                </p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── FELLOWSHIPS & LEADERSHIP PROGRAMMES ──────────────────────────── */}
-      <section className="pb-28 px-6 sm:px-10">
-        <div className="max-w-5xl mx-auto">
-          <SectionHeading>Fellowships &amp; Leadership Programmes</SectionHeading>
+      <section className="bg-brand-navy px-6 py-16 text-white sm:px-10 lg:px-16 lg:py-20">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid gap-12 lg:grid-cols-[0.75fr_1.25fr]">
+            <motion.div {...reveal}>
+              <span className="mb-7 flex size-14 items-center justify-center rounded-full border border-white/25 text-brand-pink">
+                <Award size={26} strokeWidth={1.6} />
+              </span>
+              <p className="text-xs font-bold uppercase tracking-[0.22em] text-brand-pink">
+                Flagship recognition · 2026
+              </p>
+              <h2 className="mt-4 font-serif text-4xl leading-tight text-white sm:text-5xl">
+                She Shapes AI Global Awards
+              </h2>
+              <p className="mt-3 font-serif text-2xl italic text-white/75">Winner</p>
+            </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {fellowships.map((item, idx) => (
-              <StandardCard
-                key={idx}
-                item={item}
-                Icon={GraduationCap}
-                index={idx}
-              />
+            <motion.div {...reveal} className="self-end border-t border-white/20 pt-7">
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-brand-pink">
+                AI Thought Leadership · London School of Economics
+              </p>
+              <p className="mt-5 max-w-2xl text-lg leading-relaxed text-white/80 sm:text-xl">
+                Recognized for leadership and impact in responsible and ethical AI on a global stage. This work is grounded in dignity, representation and meaningful change.
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      <section className="px-6 py-20 sm:px-10 lg:px-16 lg:py-28">
+        <div className="mx-auto max-w-7xl">
+          <SectionTitle
+            eyebrow="Awards & recognition"
+            title="Moments of recognition"
+            description="Selected honours celebrating advocacy, thought leadership and a sustained commitment to building more inclusive technology ecosystems."
+          />
+
+          <div className="mt-12 grid gap-px overflow-hidden border border-brand-navy/15 bg-brand-navy/15 md:grid-cols-2">
+            {awards.slice(1).map((item, index) => (
+              <motion.article
+                key={item.title}
+                {...reveal}
+                transition={{ duration: 0.5, delay: index * 0.08 }}
+                className="group bg-white p-7 sm:p-9"
+              >
+                <div className="mb-12 flex items-center justify-between gap-4">
+                  <Sparkles size={22} className="text-brand-pink" strokeWidth={1.6} />
+                  <span className="text-sm font-semibold text-brand-navy/55">{item.year}</span>
+                </div>
+                <p className="text-[11px] font-bold uppercase tracking-[0.17em] text-brand-pink">
+                  {item.meta}
+                </p>
+                <h3 className="mt-3 font-serif text-3xl leading-tight text-brand-navy transition-colors group-hover:text-brand-pink">
+                  {item.title}
+                </h3>
+                <p className="mt-4 text-base leading-relaxed text-foreground/70">
+                  {item.description}
+                </p>
+              </motion.article>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="bg-[#F8F9FC] px-6 py-20 sm:px-10 lg:px-16 lg:py-28">
+        <div className="mx-auto max-w-7xl">
+          <SectionTitle
+            eyebrow="Fellowships & programmes"
+            title="Learning, leading and giving back"
+            description="Programmes that deepen practice, connect ideas across regions and create space to mentor the next generation of responsible technology leaders."
+          />
+
+          <div className="mt-12 grid gap-x-12 lg:grid-cols-2">
+            {fellowships.map((item, index) => (
+              <FellowshipRow key={item.title} item={item} index={index} />
+            ))}
+          </div>
+
+          <motion.div {...reveal} className="mt-16 flex flex-col gap-5 border-l-2 border-brand-pink pl-6 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <GraduationCap className="mb-4 text-brand-pink" size={28} strokeWidth={1.5} />
+              <p className="font-serif text-2xl text-brand-navy sm:text-3xl">
+                Recognition is meaningful when it opens doors for others.
+              </p>
+            </div>
+          </motion.div>
         </div>
       </section>
 
