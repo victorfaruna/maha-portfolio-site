@@ -1,16 +1,27 @@
-import { HoldingPage } from "@/components/HoldingPage";
-import OriginalHome from "./page.original";
-
-/**
- * Temporary holding page mode.
- * Set SHOW_HOLDING_PAGE to false once payment is settled to instantly restore the full site.
- */
-const SHOW_HOLDING_PAGE = true;
+import { Navbar } from "@/components/sections/Navbar";
+import { Hero } from "@/components/sections/Hero";
+import { IntroText } from "@/components/sections/IntroText";
+import { Purpose } from "@/components/sections/Purpose";
+import { VisionApproach } from "@/components/sections/VisionApproach";
+import { JoinMovement } from "@/components/sections/JoinMovement";
+import { MoonshotMission } from "@/components/sections/MoonshotMission";
+import { FeaturedIn } from "@/components/sections/FeaturedIn";
+import { RecognitionStrip } from "@/components/sections/RecognitionStrip";
+import { Footer } from "@/components/sections/Footer";
 
 export default function Home() {
-  if (SHOW_HOLDING_PAGE) {
-    return <HoldingPage />;
-  }
-
-  return <OriginalHome />;
+  return (
+    <main className="min-h-screen bg-background text-foreground overflow-x-hidden">
+      <Navbar />
+      <Hero />
+      <IntroText />
+      <Purpose />
+      <VisionApproach />
+      <MoonshotMission />
+      <JoinMovement />
+      <FeaturedIn />
+      <RecognitionStrip />
+      <Footer showGradient />
+    </main>
+  );
 }
