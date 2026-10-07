@@ -184,15 +184,15 @@ export default function AwardsFellowshipsPage() {
             className="mt-12 h-px origin-left bg-brand-navy/20"
           />
 
-          <div className="mt-8 grid grid-cols-3 gap-4 sm:gap-8">
+          <div className="mt-8 grid grid-cols-3 gap-2 sm:gap-8">
             {[
               ["10", "Recognitions & programmes"],
               ["Global", "Reach and contribution"],
               ["2011—Now", "A continuing journey"],
             ].map(([value, label]) => (
               <div key={label}>
-                <p className="font-serif text-2xl text-brand-pink sm:text-3xl">{value}</p>
-                <p className="mt-1 text-[10px] uppercase tracking-[0.12em] text-brand-navy/60 sm:text-xs">
+                <p className="whitespace-nowrap font-serif text-lg text-brand-pink sm:text-3xl">{value}</p>
+                <p className="mt-1 text-[8px] uppercase tracking-[0.08em] text-brand-navy/60 sm:text-xs sm:tracking-[0.12em]">
                   {label}
                 </p>
               </div>
