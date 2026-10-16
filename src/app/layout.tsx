@@ -26,10 +26,6 @@ export default function RootLayout({
         className="min-h-full flex flex-col bg-background text-foreground selection:bg-accent/30 font-sans"
       >
         {children}
-        <div
-          className="fixed inset-0 z-[9999] bg-black"
-          aria-label="Site temporarily unavailable"
-        />
       </body>
     </html>
   );
