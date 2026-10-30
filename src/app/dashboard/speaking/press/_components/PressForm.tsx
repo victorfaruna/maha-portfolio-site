@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ArrowLeft, Newspaper, AlertCircle, Upload, Globe } from 'lucide-react';
 import { createSpeakingItem, updateSpeakingItem } from '@/app/actions/speaking';
 import type { SpeakingItem, SpeakingItemInsert } from '@/lib/supabase/types';
+import { getSpeakingThumbnail, getSpeakingVideoId } from '@/lib/youtube';
 
 const MAX_DESCRIPTION_LENGTH = 180;
 
@@ -34,11 +35,15 @@ export function PressForm({ item }: PressFormProps) {
   const [outlet, setOutlet] = useState(item?.outlet || '');
   const [description, setDescription] = useState(item?.description || '');
   const [link, setLink] = useState(item?.link || '');
+  const [videoInput, setVideoInput] = useState(item?.video_id || '');
   const [ogImage, setOgImage] = useState(item?.og_image || '');
   const [isRTL, setIsRTL] = useState(item?.is_rtl || false);
 
   const descCount = description.length;
   const isOverLimit = descCount > MAX_DESCRIPTION_LENGTH;
+  const source = { link, videoId: videoInput, ogImage };
+  const thumbnail = getSpeakingThumbnail(source);
+  const isYouTube = Boolean(getSpeakingVideoId(source));
 
   return (
     <div className="max-w-3xl mx-auto py-6 sm:py-8 px-4">
@@ -161,6 +166,9 @@ export function PressForm({ item }: PressFormProps) {
               required
               className="w-full px-3.5 py-2.5 text-sm border border-gray-300 focus:outline-none focus:border-[#0B1F4D]"
             />
+            <p className="text-[11px] text-gray-500 mt-1">
+              YouTube video links automatically use the video's thumbnail. No image upload is needed.
+            </p>
           </div>
 
           {/* 5. Media Image (File upload + direct URL) */}
@@ -193,10 +201,12 @@ export function PressForm({ item }: PressFormProps) {
             </div>
 
             {/* Image Preview */}
-            {ogImage && (
+            {thumbnail && (
               <div className="mt-2 p-2 bg-slate-50 border border-slate-200 rounded flex items-center gap-3">
-                <img src={ogImage} alt="Preview" className="w-16 h-10 object-cover rounded shrink-0" />
-                <span className="text-[11px] text-gray-500 truncate">Image preview linked</span>
+                <img src={thumbnail} alt="Feature thumbnail preview" className="w-16 h-10 object-cover rounded shrink-0" />
+                <span className="text-[11px] text-gray-500 truncate">
+                  {isYouTube ? 'YouTube video thumbnail (automatic)' : 'Image preview linked'}
+                </span>
               </div>
             )}
           </div>
@@ -209,7 +219,8 @@ export function PressForm({ item }: PressFormProps) {
             <input
               type="text"
               name="video_input"
-              defaultValue={item?.video_id ? `https://www.youtube.com/watch?v=${item.video_id}` : ''}
+              value={videoInput}
+              onChange={(e) => setVideoInput(e.target.value)}
               placeholder="e.g. https://www.youtube.com/watch?v=..."
               className="w-full px-3.5 py-2.5 text-sm border border-gray-300 focus:outline-none focus:border-[#0B1F4D]"
             />

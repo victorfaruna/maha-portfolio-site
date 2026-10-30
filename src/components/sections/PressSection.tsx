@@ -13,6 +13,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { speakingData, type MediaItem, type MediaCategory } from "@/data/speaking";
+import { getSpeakingThumbnail } from "@/lib/youtube";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
@@ -115,6 +116,7 @@ function CardContent({
   onVideoClick: (id: string, title: string) => void;
 }) {
   const isVideo = Boolean(item.videoId);
+  const thumbnail = getSpeakingThumbnail(item);
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -132,9 +134,9 @@ function CardContent({
     >
       {/* ── Thumbnail ── */}
       <div className="relative w-full h-[200px] flex-shrink-0 overflow-hidden bg-brand-navy/10">
-        {item.ogImage ? (
+        {thumbnail ? (
           <img
-            src={item.ogImage}
+            src={thumbnail}
             alt={item.title}
             className="w-full h-full object-cover"
             loading="lazy"

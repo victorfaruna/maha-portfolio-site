@@ -8,6 +8,13 @@ export function isVisibleImagePixel(r, g, b, a, ignoreWhite = false) {
     return a >= 20 && !(ignoreWhite && r >= 248 && g >= 248 && b >= 248)
 }
 
+// A fresh touch/hover gets an optional kick, even with no pointer movement.
+// Default zero preserves the original BCN behavior for other uses.
+export function getPointerImpulse(previous, point, wasActive, entryImpulse = 0) {
+    if (!wasActive || previous.x < -9999) return Math.max(0, entryImpulse)
+    return Math.hypot(point.x - previous.x, point.y - previous.y)
+}
+
 function containRect(iW, iH, cW, cH) {
     const a = iW / iH, b = cW / cH
     return a > b
@@ -91,7 +98,7 @@ function __OriginkitBase_ParticleImage(__props) {
     const { hoverType = "roam", transition, roamWidth = 0, roamHeight = 0,
         roamOpacity = 0.5, roamShape = "rectangle", hideType = "scatter" } = hoverConfig || {}
     const repulsion = repulsionEnabled
-    const { repulsionForce = 6, repulsionRadius = 80, repulsionMode = "outside" } = repulsionConfig || {}
+    const { repulsionForce = 6, repulsionRadius = 80, repulsionMode = "outside", entryImpulse = 0 } = repulsionConfig || {}
     const DEFAULT_IMAGE = "/images/aiimage.png"
     const { image: rawImage, mode = "fill", sizeUnit = "%", widthPx = 400, heightPx = 400,
         widthPct = 100, heightPct = 100, scale = 5 } = imageConfig || {}
@@ -107,7 +114,7 @@ function __OriginkitBase_ParticleImage(__props) {
     const smoothMouseRef = useRef({ x: -99999, y: -99999 })
     const physicsRef = useRef({})
     physicsRef.current = { hover, hoverType, transition, roamWidth, roamHeight, roamOpacity,
-        roamShape, hideType, repulsion, repulsionForce, repulsionRadius, repulsionMode,
+        roamShape, hideType, repulsion, repulsionForce, repulsionRadius, repulsionMode, entryImpulse,
         particleSize, particleShape, particleColor, singleColor, multiColors }
     const sceneRef = useRef({ particles: [] })
     const dimsRef = useRef({ W: 0, H: 0 })
@@ -414,46 +421,44 @@ function __OriginkitBase_ParticleImage(__props) {
         draw()
         return () => { if (animRef.current != null) cancelAnimationFrame(animRef.current) }
     }, [animate])
-    const onMouseMove = (e) => {
+    const updatePointer = (clientX, clientY) => {
         const canvas = canvasRef.current
         if (!canvas) return
         const rect = canvas.getBoundingClientRect()
         const { W, H } = dimsRef.current
         const scaleX = rect.width > 0 ? W / rect.width : 1
         const scaleY = rect.height > 0 ? H / rect.height : 1
-        const mx = (e.clientX - rect.left) * scaleX
-        const my = (e.clientY - rect.top) * scaleY
+        const mx = (clientX - rect.left) * scaleX
+        const my = (clientY - rect.top) * scaleY
         const prev = prevMouseRef.current
-        if (prev.x > -9999) { const ddx = mx - prev.x, ddy = my - prev.y; mouseSpeedRef.current = Math.sqrt(ddx * ddx + ddy * ddy) }
+        const wasActive = mouseRef.current.active
+        const impulse = getPointerImpulse(prev, { x: mx, y: my }, wasActive, physicsRef.current.entryImpulse)
+        // Mouse enter and move can arrive together. A stationary move must not
+        // cancel the entry burst before the next animation frame can render it.
+        if (!wasActive || impulse > 0) mouseSpeedRef.current = impulse
+        if (!wasActive) smoothMouseRef.current = { x: mx, y: my }
         prevMouseRef.current = { x: mx, y: my }
         mouseRef.current = { x: mx, y: my, active: true }
         if (physicsRef.current.hover) {
             const s = animStateRef.current
             if (s === "idle" || s === "scattering") startAnimRef.current("assembling")
         }
+    }
+    const onMouseMove = (e) => updatePointer(e.clientX, e.clientY)
+    const onMouseEnter = (e) => {
+        mouseRef.current.active = false
+        onMouseMove(e)
     }
     const handleTouch = (e) => {
         if (!e.touches || !e.touches[0]) return
         const touch = e.touches[0]
-        const canvas = canvasRef.current
-        if (!canvas) return
-        const rect = canvas.getBoundingClientRect()
-        const { W, H } = dimsRef.current
-        const scaleX = rect.width > 0 ? W / rect.width : 1
-        const scaleY = rect.height > 0 ? H / rect.height : 1
-        const mx = (touch.clientX - rect.left) * scaleX
-        const my = (touch.clientY - rect.top) * scaleY
-        const prev = prevMouseRef.current
-        if (prev.x > -9999) { const ddx = mx - prev.x, ddy = my - prev.y; mouseSpeedRef.current = Math.sqrt(ddx * ddx + ddy * ddy) }
-        prevMouseRef.current = { x: mx, y: my }
-        mouseRef.current = { x: mx, y: my, active: true }
-        if (physicsRef.current.hover) {
-            const s = animStateRef.current
-            if (s === "idle" || s === "scattering") startAnimRef.current("assembling")
-        }
+        updatePointer(touch.clientX, touch.clientY)
     }
 
     const onTouchStart = (e) => {
+        // Touch browsers can emit compatibility mouse events after a tap.
+        // Explicitly start a new interaction so every touch gets its own burst.
+        mouseRef.current.active = false
         handleTouch(e)
     }
 
@@ -483,6 +488,7 @@ function __OriginkitBase_ParticleImage(__props) {
                 ref={canvasRef}
                 aria-hidden="true"
                 style={{ display: "block", width: "100%", height: "100%", touchAction: "pan-y" }}
+                onMouseEnter={onMouseEnter}
                 onMouseMove={onMouseMove}
                 onMouseLeave={onMouseLeave}
                 onTouchStart={onTouchStart}

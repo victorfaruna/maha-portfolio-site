@@ -4,32 +4,13 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { createServerClient } from '@/lib/supabase/server';
 import type { SpeakingItemInsert } from '@/lib/supabase/types';
+import { extractYouTubeId as parseYouTubeId, getSpeakingVideoId, getYouTubeThumbnail } from '@/lib/youtube';
 
 type State = { error?: string } | undefined;
 
-/**
- * Extracts a 11-character YouTube video ID from various YouTube URL formats.
- * E.g. https://www.youtube.com/watch?v=PmxVEMKEm16vQY85 -> PmxVEMKEm16vQY85
- * E.g. https://youtu.be/PmxVEMKEm16vQY85 -> PmxVEMKEm16vQY85
- */
+/** Async wrapper retained for callers of this server action. */
 export async function extractYouTubeId(urlOrId: string): Promise<string | null> {
-  const trimmed = urlOrId.trim();
-  if (!trimmed) return null;
-
-  // Direct 11-char ID check
-  if (/^[a-zA-Z0-9_-]{11}$/.test(trimmed)) {
-    return trimmed;
-  }
-
-  // RegEx for youtube.com and youtu.be URLs
-  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-  const match = trimmed.match(regExp);
-
-  if (match && match[2].length === 11) {
-    return match[2];
-  }
-
-  return null;
+  return parseYouTubeId(urlOrId);
 }
 
 async function uploadSpeakingMedia(file: File): Promise<string | null> {
@@ -74,23 +55,20 @@ export async function createSpeakingItem(
   const year = (formData.get('year') as string || '').trim();
   const isRTL = formData.get('is_rtl') === 'on' || formData.get('is_rtl') === 'true';
 
-  let videoId: string | null = null;
   const videoInput = (formData.get('video_input') as string || '').trim();
-  if (videoInput) {
-    videoId = await extractYouTubeId(videoInput);
-  }
+  const videoId = getSpeakingVideoId({ link: linkInput, videoId: videoInput });
 
-  let ogImage: string | null = null;
+  let ogImage = getYouTubeThumbnail(videoId);
   const mediaFile = formData.get('media_file') as File | null;
   const directImage = (formData.get('og_image') as string || '').trim();
 
-  if (mediaFile && mediaFile.size > 0) {
+  if (!ogImage && mediaFile && mediaFile.size > 0) {
     try {
       ogImage = await uploadSpeakingMedia(mediaFile);
     } catch (e: unknown) {
       return { error: e instanceof Error ? e.message : 'File upload failed.' };
     }
-  } else if (directImage) {
+  } else if (!ogImage && directImage) {
     ogImage = directImage;
   }
 
@@ -145,29 +123,27 @@ export async function updateSpeakingItem(
   const year = (formData.get('year') as string || '').trim();
   const isRTL = formData.get('is_rtl') === 'on' || formData.get('is_rtl') === 'true';
 
-  let videoId: string | null = null;
   const videoInput = (formData.get('video_input') as string || '').trim();
   const existingVideoId = (formData.get('existing_video_id') as string || '').trim();
-  if (videoInput) {
-    videoId = await extractYouTubeId(videoInput);
-  } else {
-    videoId = existingVideoId || null;
-  }
+  const videoId = getSpeakingVideoId({
+    link: linkInput,
+    videoId: formData.has('video_input') ? videoInput : existingVideoId,
+  });
 
-  let ogImage: string | null = null;
+  let ogImage = getYouTubeThumbnail(videoId);
   const mediaFile = formData.get('media_file') as File | null;
   const directImage = (formData.get('og_image') as string || '').trim();
   const existingOgImage = (formData.get('existing_og_image') as string || '').trim();
 
-  if (mediaFile && mediaFile.size > 0) {
+  if (!ogImage && mediaFile && mediaFile.size > 0) {
     try {
       ogImage = await uploadSpeakingMedia(mediaFile);
     } catch (e: unknown) {
       return { error: e instanceof Error ? e.message : 'File upload failed.' };
     }
-  } else if (directImage) {
+  } else if (!ogImage && directImage) {
     ogImage = directImage;
-  } else {
+  } else if (!ogImage) {
     ogImage = existingOgImage || null;
   }
 

@@ -35,8 +35,19 @@
   touch-action: pan-y;
 }
 
+/* Let a long press reach the effect instead of selecting or lifting the image.
+   Keep native vertical scrolling; these rules apply only to the particle area. */
+.particleFrame,
+.particleFrame * {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
 .particleImage {
   pointer-events: none;
+  -webkit-user-drag: none;
   transition: opacity 500ms ease;
 }
 

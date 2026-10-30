@@ -333,8 +333,8 @@ export default function WorkWithMePage() {
           <figure className="mx-auto w-full max-w-md lg:max-w-none">
             <div className="relative aspect-[4/5] overflow-hidden rounded-2xl rounded-tr-[4.5rem] bg-black">
               <Image
-                src="/images/mahaholdingbook.jpeg"
-                alt="Maha Jouini reading a book, reflecting the connection between culture, knowledge and her work in AI"
+                src="/images/hero.webp"
+                alt="Maha Jouini smiling in a patterned blouse"
                 fill
                 sizes="(min-width: 1024px) 480px, (min-width: 640px) 448px, 100vw"
                 className="object-cover object-[50%_20%]"

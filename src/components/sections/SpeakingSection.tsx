@@ -29,6 +29,7 @@ import type { Testimonial } from "@/data/testimonials";
 import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
 import { VideoModal } from "@/components/ui/VideoModal";
 import PressSection from "@/components/sections/PressSection";
+import { getSpeakingThumbnail } from "@/lib/youtube";
 
 const CATEGORIES = [
   "ALL",
@@ -358,7 +359,7 @@ export default function SpeakingSection({
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {mediaSource.filter((item) => Boolean(item.videoId)).map((item, idx) => {
-              const youtubeThumbnail = `https://img.youtube.com/vi/${item.videoId}/hqdefault.jpg`;
+              const youtubeThumbnail = getSpeakingThumbnail(item)!;
               return (
                 <motion.div
                   key={item.title + idx}

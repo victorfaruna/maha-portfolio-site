@@ -6,6 +6,7 @@ import { DashboardTable, type ColumnDef, type RowDef } from '../../_components/D
 import { deleteSpeakingItem } from '@/app/actions/speaking';
 import { speakingData, type MediaCategory } from '@/data/speaking';
 import type { SpeakingItem } from '@/lib/supabase/types';
+import { getSpeakingThumbnail } from '@/lib/youtube';
 
 export const dynamic = 'force-dynamic';
 
@@ -102,35 +103,38 @@ async function PressArchiveContent({
     { header: 'Year' },
   ];
 
-  const rows: RowDef[] = items.map((p) => ({
-    id: p.id,
-    cells: [
-      <div key="img" className="relative w-14 h-10 rounded overflow-hidden bg-slate-900 border border-gray-200 shrink-0">
-        {p.og_image ? (
-          <img src={p.og_image} alt={p.title} className="w-full h-full object-cover" />
+  const rows: RowDef[] = items.map((p) => {
+    const thumbnail = getSpeakingThumbnail({ link: p.link, videoId: p.video_id, ogImage: p.og_image });
+    return {
+      id: p.id,
+      cells: [
+        <div key="img" className="relative w-14 h-10 rounded overflow-hidden bg-slate-900 border border-gray-200 shrink-0">
+          {thumbnail ? (
+            <img src={thumbnail} alt={p.title} className="w-full h-full object-cover" />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center bg-slate-800 text-white/50 text-[9px] font-mono text-center p-1 leading-tight">
+              {p.outlet}
+            </div>
+          )}
+        </div>,
+        <div key="title" className="flex flex-col">
+          <span className="font-medium line-clamp-1 text-gray-900" dir={p.is_rtl ? 'rtl' : 'ltr'}>
+            {p.title}
+          </span>
+          <span className="text-xs text-[#EC4899] font-semibold uppercase tracking-wider">{p.outlet}</span>
+        </div>,
+        getCategoryBadge(p.category),
+        p.is_rtl ? (
+          <span key="rtl" className="px-2 py-0.5 text-[10px] font-bold bg-amber-100 text-amber-800 rounded">
+            RTL (Arabic)
+          </span>
         ) : (
-          <div className="w-full h-full flex items-center justify-center bg-slate-800 text-white/50 text-[9px] font-mono text-center p-1 leading-tight">
-            {p.outlet}
-          </div>
-        )}
-      </div>,
-      <div key="title" className="flex flex-col">
-        <span className="font-medium line-clamp-1 text-gray-900" dir={p.is_rtl ? 'rtl' : 'ltr'}>
-          {p.title}
-        </span>
-        <span className="text-xs text-[#EC4899] font-semibold uppercase tracking-wider">{p.outlet}</span>
-      </div>,
-      getCategoryBadge(p.category),
-      p.is_rtl ? (
-        <span key="rtl" className="px-2 py-0.5 text-[10px] font-bold bg-amber-100 text-amber-800 rounded">
-          RTL (Arabic)
-        </span>
-      ) : (
-        <span key="rtl" className="text-xs text-gray-400">English</span>
-      ),
-      p.year || '—',
-    ],
-  }));
+          <span key="rtl" className="text-xs text-gray-400">English</span>
+        ),
+        p.year || '—',
+      ],
+    };
+  });
 
   return (
     <>

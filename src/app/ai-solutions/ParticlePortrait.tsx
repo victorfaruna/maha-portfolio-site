@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Image from "next/image";
 import ParticleImage from "@/components/ui/ParticleImage";
 import styles from "./ai-solutions.module.css";
@@ -16,9 +16,24 @@ const hoverConfig = {
   roamOpacity: 1,
   hideType: "scatter",
 };
-const repulsionConfig = { repulsionMode: "outside", repulsionForce: 10, repulsionRadius: 28 };
+const mobileRepulsionConfig = { repulsionMode: "outside", repulsionForce: 18, repulsionRadius: 44, entryImpulse: 60 };
+const desktopRepulsionConfig = { ...mobileRepulsionConfig, repulsionRadius: 56 };
+const desktopPointerQuery = "(min-width: 1024px) and (hover: hover) and (pointer: fine)";
+
+function subscribeToDesktopPointer(onChange: () => void) {
+  const query = window.matchMedia(desktopPointerQuery);
+  query.addEventListener("change", onChange);
+  return () => query.removeEventListener("change", onChange);
+}
+function getDesktopPointer() {
+  return window.matchMedia(desktopPointerQuery).matches;
+}
+function getServerDesktopPointer() {
+  return false;
+}
 
 export function ParticlePortrait({ reduceMotion }: { reduceMotion: boolean }) {
+  const isDesktopPointer = useSyncExternalStore(subscribeToDesktopPointer, getDesktopPointer, getServerDesktopPointer);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
   const [isDocumentVisible, setIsDocumentVisible] = useState(true);
@@ -61,6 +76,8 @@ export function ParticlePortrait({ reduceMotion }: { reduceMotion: boolean }) {
       data-particle-portrait
       data-particle-active={isActive}
       data-particle-ready={canAnimate && isReady}
+      onContextMenu={event => event.preventDefault()}
+      onDragStart={event => event.preventDefault()}
       onPointerEnter={event => {
         if (event.pointerType !== "touch") setIsHovered(true);
       }}
@@ -75,6 +92,7 @@ export function ParticlePortrait({ reduceMotion }: { reduceMotion: boolean }) {
         fill
         sizes="(min-width: 1440px) 560px, (min-width: 1024px) 42vw, 90vw"
         className={`${styles.particleImage} object-contain`}
+        draggable={false}
         preload
       />
       {canAnimate && (
@@ -85,7 +103,7 @@ export function ParticlePortrait({ reduceMotion }: { reduceMotion: boolean }) {
           particleCount={100}
           particleSize={8}
           hoverConfig={hoverConfig}
-          repulsionConfig={repulsionConfig}
+          repulsionConfig={isDesktopPointer ? desktopRepulsionConfig : mobileRepulsionConfig}
           ignoreWhite
           animate={isHovered}
           onReady={setIsReady}

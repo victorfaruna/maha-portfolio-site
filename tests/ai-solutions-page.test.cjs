@@ -156,7 +156,7 @@ test('the particle portrait progressively enhances the existing accessible image
   for (const feature of ['Originkit', 'BCN/components/ui/ParticleImage.tsx', 'randomInShape', 'getTransitionParams', 'mkParticle', 'mouseSpeedRef', 'repulsionMode', 'roamTargetX']) {
     assert.ok(particleSource.includes(feature), feature);
   }
-  assert.match(portraitSource, /repulsionForce: 10, repulsionRadius: 28/);
+  assert.match(portraitSource, /repulsionForce: 18, repulsionRadius: 44, entryImpulse: 60/);
   assert.match(portraitSource, /duration: 0\.8, ease: "easeInOut"/);
   assert.doesNotMatch(particleSource, /imagedelivery\.net|bcn-logo-transparent/);
 });
@@ -169,6 +169,76 @@ test('particle sampling ignores white background pixels but retains the original
   assert.equal(isVisibleImagePixel(244, 240, 252, 255, true), true);
   assert.equal(isVisibleImagePixel(80, 30, 180, 0, true), false);
   assert.equal(isVisibleImagePixel(255, 255, 255, 255), true, 'Keep the original BCN default for other images');
+});
+
+test('mobile has a larger touch radius and both pointer types get stronger dispersion on every entry', () => {
+  assert.match(portraitSource, /mobileRepulsionConfig = \{ repulsionMode: "outside", repulsionForce: 18, repulsionRadius: 44, entryImpulse: 60 \}/);
+  assert.match(portraitSource, /desktopRepulsionConfig = \{ \.\.\.mobileRepulsionConfig, repulsionRadius: 56 \}/);
+  assert.match(portraitSource, /\(min-width: 1024px\) and \(hover: hover\) and \(pointer: fine\)/);
+  assert.match(portraitSource, /useSyncExternalStore\(subscribeToDesktopPointer, getDesktopPointer, getServerDesktopPointer\)/);
+  assert.match(portraitSource, /query\.removeEventListener\("change", onChange\)/);
+  assert.match(portraitSource, /repulsionConfig=\{isDesktopPointer \? desktopRepulsionConfig : mobileRepulsionConfig\}/);
+});
+
+test('a new touch or hover gets the full burst every time, without a stale-position movement spike', () => {
+  const {getPointerImpulse} = load(particleFilename);
+  const point = {x: 100, y: 120};
+  assert.equal(getPointerImpulse({x: -99999, y: -99999}, point, false, 60), 60);
+  assert.equal(getPointerImpulse(point, point, false, 60), 60, 'Re-entering the same spot must burst again');
+  assert.equal(getPointerImpulse({x: 800, y: 700}, point, false, 60), 60, 'Old pointer distance must not exaggerate a new burst');
+  assert.equal(getPointerImpulse(point, point, true, 60), 0, 'Do not keep triggering the entry burst during a hold');
+  assert.equal(getPointerImpulse(point, {x: 103, y: 124}, true, 60), 5, 'Keep normal movement-based dispersion');
+  assert.equal(getPointerImpulse(point, point, false), 0, 'BCN default remains opt-in');
+  assert.match(particleSource, /if \(!wasActive \|\| impulse > 0\) mouseSpeedRef\.current = impulse/);
+  assert.match(particleSource, /if \(!wasActive\) smoothMouseRef\.current = \{ x: mx, y: my \}/);
+  assert.match(particleSource, /onMouseEnter=\{onMouseEnter\}/);
+  assert.match(particleSource, /const onMouseEnter = \(e\) => \{\s*mouseRef\.current\.active = false\s*onMouseMove\(e\)/);
+  assert.match(particleSource, /const onTouchStart = \(e\) => \{[^}]*mouseRef\.current\.active = false\s*handleTouch\(e\)/);
+  assert.match(particleSource, /updatePointer\(touch\.clientX, touch\.clientY\)/);
+});
+
+test('real mouse and touch handlers re-arm the burst, including compatibility mouse events after tapping', () => {
+  const refs = [];
+  const compiled = ts.transpileModule(particleSource, {
+    fileName: particleFilename,
+    compilerOptions: {jsx: ts.JsxEmit.ReactJSX, module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020},
+  });
+  const loaded = new Module(particleFilename, module);
+  loaded.paths = Module._nodeModulePaths(path.dirname(particleFilename));
+  const originalRequire = loaded.require.bind(loaded);
+  loaded.require = name => name === 'react' ? {
+    useRef(value) {const ref = {current: value}; refs.push(ref); return ref;},
+    useEffect() {},
+  } : originalRequire(name);
+  loaded._compile(compiled.outputText, particleFilename);
+  const engine = loaded.exports.default({hoverEnabled: false, repulsionConfig: {entryImpulse: 60}});
+  const canvas = engine.type(engine.props).props.children;
+  canvas.props.ref.current = {getBoundingClientRect: () => ({left: 0, top: 0, width: 400, height: 400})};
+  refs.find(ref => ref.current && 'W' in Object(ref.current)).current = {W: 400, H: 400};
+  const mouseIndex = refs.findIndex(ref => ref.current?.active === false);
+  const mouse = refs[mouseIndex], speed = refs[mouseIndex + 2];
+  const event = {clientX: 180, clientY: 200};
+  for (let visit = 0; visit < 3; visit++) {
+    canvas.props.onMouseEnter(event);
+    assert.equal(speed.current, 60);
+    canvas.props.onMouseMove(event);
+    assert.equal(speed.current, 60, 'Same-position mouse move must not cancel the entry burst');
+    canvas.props.onMouseLeave();
+    assert.equal(mouse.current.active, false);
+    speed.current = 0; // The previous burst has decayed completely.
+  }
+  for (let visit = 0; visit < 3; visit++) {
+    canvas.props.onMouseEnter(event); // Compatibility mouse event from the previous tap.
+    speed.current = 0;
+    canvas.props.onTouchStart({touches: [event]});
+    assert.equal(speed.current, 60, 'Every new touch must get a fresh burst');
+    canvas.props.onTouchMove({touches: [event]});
+    assert.equal(speed.current, 60);
+    canvas.props.onTouchEnd();
+    assert.equal(mouse.current.active, false);
+  }
+  canvas.props.onTouchCancel();
+  assert.equal(mouse.current.active, false);
 });
 
 test('particle animation is input-only, reduced-motion aware and cleaned up offscreen or on navigation', () => {
@@ -185,4 +255,17 @@ test('particle animation is input-only, reduced-motion aware and cleaned up offs
   assert.match(particleSource, /if \(!ctx\) return/);
   assert.match(css, /touch-action: pan-y/);
   assert.match(css, /\.particleCanvas \{ display: none; transition: none; \}/);
+});
+
+test('touch-and-hold controls the particles without image selection, dragging or a native callout', () => {
+  const image = [...html.matchAll(/<img\b[^>]+>/g)].map(match => match[0])
+    .find(tag => tag.includes(encodeURIComponent('/images/aiimage.png')));
+  assert.match(image, /draggable="false"/);
+  assert.match(portraitSource, /onContextMenu=\{event => event\.preventDefault\(\)\}/);
+  assert.match(portraitSource, /onDragStart=\{event => event\.preventDefault\(\)\}/);
+  assert.match(css, /\.particleFrame,\s*\.particleFrame \*\s*\{[^}]*-webkit-user-select: none;[^}]*user-select: none;[^}]*-webkit-touch-callout: none;[^}]*-webkit-tap-highlight-color: transparent;/);
+  assert.match(css, /-webkit-user-drag: none/);
+  assert.match(css, /touch-action: pan-y/);
+  assert.doesNotMatch(portraitSource, /onTouch(?:Start|Move)=\{[^}]*preventDefault/);
+  assert.doesNotMatch(particleSource, /preventDefault\(\)/, 'Do not cancel native swipe-to-scroll');
 });

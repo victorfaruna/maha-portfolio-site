@@ -5,6 +5,7 @@ import { DashboardTable, type ColumnDef, type RowDef } from '../../_components/D
 import { deleteSpeakingItem } from '@/app/actions/speaking';
 import { speakingData } from '@/data/speaking';
 import type { SpeakingItem } from '@/lib/supabase/types';
+import { getSpeakingThumbnail, getSpeakingVideoId } from '@/lib/youtube';
 
 export const dynamic = 'force-dynamic';
 
@@ -62,9 +63,9 @@ export default async function WatchAndListenDashboardPage({
   ];
 
   const rows: RowDef[] = items.map((v) => {
-    const thumbUrl = v.video_id
-      ? `https://img.youtube.com/vi/${v.video_id}/hqdefault.jpg`
-      : v.og_image;
+    const source = { link: v.link, videoId: v.video_id, ogImage: v.og_image };
+    const videoId = getSpeakingVideoId(source);
+    const thumbUrl = getSpeakingThumbnail(source);
 
     return {
       id: v.id,
@@ -82,15 +83,15 @@ export default async function WatchAndListenDashboardPage({
           <span className="font-medium line-clamp-1 text-gray-900">{v.title}</span>
           <span className="text-xs text-[#EC4899] font-semibold uppercase tracking-wider">{v.outlet}</span>
         </div>,
-        v.video_id ? (
+        videoId ? (
           <a
             key="yt"
-            href={`https://www.youtube.com/watch?v=${v.video_id}`}
+            href={`https://www.youtube.com/watch?v=${videoId}`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1 text-xs text-blue-600 hover:underline font-mono"
           >
-            {v.video_id}
+            {videoId}
             <ExternalLink className="w-3 h-3" />
           </a>
         ) : (

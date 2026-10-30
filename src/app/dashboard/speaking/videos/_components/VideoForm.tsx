@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ArrowLeft, Play, AlertCircle, Video } from 'lucide-react';
 import { createSpeakingItem, updateSpeakingItem } from '@/app/actions/speaking';
 import type { SpeakingItem } from '@/lib/supabase/types';
+import { extractYouTubeId, getSpeakingVideoId, getYouTubeThumbnail } from '@/lib/youtube';
 
 const MAX_DESCRIPTION_LENGTH = 120;
 
@@ -22,21 +23,12 @@ export function VideoForm({ item }: VideoFormProps) {
   const [state, formAction, pending] = useActionState(actionFn, undefined);
 
   // Form input states for live preview & character counter
-  const [videoInput, setVideoInput] = useState(item?.video_id ? `https://www.youtube.com/watch?v=${item.video_id}` : '');
+  const [videoInput, setVideoInput] = useState(getSpeakingVideoId({ link: item?.link, videoId: item?.video_id }) || '');
   const [description, setDescription] = useState(item?.description || '');
   const [title, setTitle] = useState(item?.title || '');
   const [outlet, setOutlet] = useState(item?.outlet || '');
 
-  // Extract video ID for live preview
-  function extractId(urlOrId: string): string | null {
-    const trimmed = urlOrId.trim();
-    if (!trimmed) return null;
-    if (/^[a-zA-Z0-9_-]{11}$/.test(trimmed)) return trimmed;
-    const match = trimmed.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/);
-    return match && match[2].length === 11 ? match[2] : null;
-  }
-
-  const extractedId = extractId(videoInput);
+  const extractedId = extractYouTubeId(videoInput);
   const descCount = description.length;
   const isOverLimit = descCount > MAX_DESCRIPTION_LENGTH;
 
@@ -103,7 +95,7 @@ export function VideoForm({ item }: VideoFormProps) {
               <div className="mt-3 p-3 bg-slate-50 border border-slate-200 rounded flex items-center gap-4">
                 <div className="relative w-24 h-14 bg-black rounded overflow-hidden shrink-0">
                   <img
-                    src={`https://img.youtube.com/vi/${extractedId}/hqdefault.jpg`}
+                    src={getYouTubeThumbnail(extractedId)!}
                     alt="Thumbnail preview"
                     className="w-full h-full object-cover"
                   />
