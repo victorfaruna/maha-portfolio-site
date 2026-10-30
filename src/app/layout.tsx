@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
+import { getPageMetadata, SITE_NAME, SITE_URL } from "@/lib/site-metadata";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Maha Jouini | AI Thought Leader & Pan-African Advocate",
-  description:
-    "Personal portfolio of Maha Jouini, an AI thought leader, researcher, and Pan-African advocate working at the intersection of artificial intelligence, ethics, public policy, and human development.",
+  ...getPageMetadata("/"),
+  metadataBase: new URL(SITE_URL),
+  authors: [{ name: SITE_NAME, url: SITE_URL }],
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
 };
 
 export default function RootLayout({

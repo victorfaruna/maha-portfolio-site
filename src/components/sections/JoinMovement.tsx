@@ -43,7 +43,7 @@ export function JoinMovement() {
             className="lg:col-span-4"
           >
             <div className="w-16 h-px bg-foreground/20 mb-8"></div>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl text-foreground font-serif leading-tight">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl text-foreground font-sans leading-tight">
               Join the movement
             </h2>
           </motion.div>

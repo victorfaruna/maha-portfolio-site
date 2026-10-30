@@ -14,11 +14,26 @@ export function IntroText() {
           className="text-foreground/80 text-xl md:text-2xl lg:text-3xl font-light leading-relaxed tracking-wide text-center font-sans"
         >
           I&apos;m{" "}
-          <span className="text-brand-navy font-semibold font-serif">Maha Jouini</span>{" "}
-          — an AI governance expert, AI solutions developer, speaker, podcaster,
+          <span className="text-brand-navy font-semibold font-sans">Maha Jouini</span>{" "}
+          an AI governance expert, AI solutions developer, speaker, podcaster,
           cancer survivor, and founder of{" "}
-          <span className="text-brand-pink font-medium">HIKMA AI</span> and{" "}
-          <span className="text-brand-cyan font-medium">CHIFAA</span>. I build
+          <a
+            href="https://hikmaai.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-medium text-purple-700 underline underline-offset-4 hover:text-purple-800 focus-visible:text-purple-800"
+          >
+            HIKMA AI
+          </a>{" "}
+          and{" "}
+          <a
+            href="https://www.chifaa.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-medium text-purple-700 underline underline-offset-4 hover:text-purple-800 focus-visible:text-purple-800"
+          >
+            CHIFAA
+          </a>. I build
           responsible, human-centered AI that bridges technology, health,
           ethics, and culture, amplifying the voices of Africa, the Arab world,
           and the Global South to shape a wiser and more inclusive future.

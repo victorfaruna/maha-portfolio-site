@@ -1,0 +1,76 @@
+.page {
+  --ai-header-offset: 96px;
+}
+
+/* The site's body overflow rule creates a non-scrolling sticky container.
+   Use clipping only while this page is present; other routes are unaffected. */
+:global(body):has(.page) {
+  overflow-x: clip;
+  overflow-y: visible;
+}
+
+.sectionTarget {
+  scroll-margin-top: calc(var(--ai-header-offset) + 24px);
+  outline: none;
+}
+
+.initiativeNav {
+  top: calc(var(--ai-header-offset) + 1px);
+}
+
+.initiativeTarget {
+  scroll-margin-top: calc(var(--ai-header-offset) + 88px);
+  outline: none;
+}
+
+.heroCopy {
+  animation: copy-entry 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.heroVisual {
+  animation: visual-entry 1000ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.page [data-reveal-state="pending"] {
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+.page [data-reveal-state="visible"] {
+  opacity: 1;
+  transform: none;
+  transition: opacity 650ms ease, transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes copy-entry {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes visual-entry {
+  from { opacity: 0; clip-path: inset(0 0 0 10%); }
+  to { opacity: 1; clip-path: inset(0); }
+}
+
+@media (min-width: 640px) {
+  .page { --ai-header-offset: 120px; }
+}
+
+@media (min-width: 768px) {
+  .page { --ai-header-offset: 144px; }
+}
+
+@media (min-width: 1024px) {
+  .page { --ai-header-offset: 176px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heroCopy,
+  .heroVisual { animation: none; }
+
+  .page [data-reveal-state] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

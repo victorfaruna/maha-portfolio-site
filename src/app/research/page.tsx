@@ -5,6 +5,9 @@ import { createAnonServerClient } from "@/lib/supabase/server";
 import type { Publication } from "@/lib/supabase/types";
 import NewsHeroGrid from "@/components/sections/NewsHeroGrid";
 import PublicationsSection from "./PublicationsSection";
+import { getPageMetadata } from "@/lib/site-metadata";
+
+export const metadata = getPageMetadata("/research");
 
 export const dynamic = "force-dynamic";
 
@@ -22,8 +25,8 @@ export default async function ResearchPage() {
   const { publications } = await getData();
 
   return (
-    <main className="min-h-screen bg-background text-foreground overflow-hidden">
-      <Navbar />
+    <main className="min-h-screen bg-background text-foreground font-sans overflow-hidden">
+      <Navbar mobileMenuFont="sans" />
 
       {/* ── 1. HERO SECTION ──────────────────────────────────────────────── */}
       <section className="relative w-full h-[60vh] md:h-[75vh] min-h-[420px] flex items-end pb-10 md:pb-16 overflow-hidden">
@@ -42,7 +45,7 @@ export default async function ResearchPage() {
               RESEARCH &amp; PUBLICATIONS
             </span>
             <h1
-              className="text-2xl sm:text-4xl md:text-6xl lg:text-7xl text-white font-serif tracking-tight leading-[1.1] mb-4 md:mb-6"
+              className="text-2xl sm:text-4xl md:text-6xl lg:text-7xl text-white font-sans tracking-tight leading-[1.1] mb-4 md:mb-6"
               style={{ textShadow: "0px 4px 16px rgba(0,0,0,0.5)" }}
             >
               Research at the Intersection of AI, Ethics, and Policy

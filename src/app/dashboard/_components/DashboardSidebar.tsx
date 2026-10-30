@@ -14,6 +14,7 @@ import {
   X,
   Play,
   Newspaper,
+  Quote,
   LogOut,
 } from 'lucide-react';
 import { logoutAction } from '@/app/actions/auth';
@@ -114,6 +115,18 @@ export function DashboardSidebar() {
               >
                 <Newspaper className="w-3.5 h-3.5 shrink-0" />
                 <span>Press &amp; Media Archive</span>
+              </Link>
+              <Link
+                href="/dashboard/speaking/testimonials"
+                onClick={closeMobile}
+                className={`flex items-center gap-2.5 px-3 py-2 text-xs font-medium transition-colors ${
+                  pathname.startsWith('/dashboard/speaking/testimonials')
+                    ? 'text-[#EC4899] font-semibold'
+                    : 'text-white/60 hover:text-white'
+                }`}
+              >
+                <Quote className="w-3.5 h-3.5 shrink-0" strokeWidth={1.75} />
+                <span>Testimonials</span>
               </Link>
             </div>
           )}

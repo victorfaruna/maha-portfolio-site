@@ -1,4 +1,5 @@
 import React from 'react';
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowLeft, ExternalLink, Calendar, Building2 } from 'lucide-react';
@@ -10,10 +11,11 @@ import { createAnonServerClient } from '@/lib/supabase/server';
 import { slugify } from '@/lib/slug';
 import { getPublicationCoverImage, calculateReadTimeAndViews } from '@/lib/publicationUtils';
 import type { Publication } from '@/lib/supabase/types';
+import { getArticleMetadata } from '@/lib/site-metadata';
 
 export const dynamic = 'force-dynamic';
 
-async function getPublicationBySlug(slug: string): Promise<Publication | null> {
+const getPublicationBySlug = React.cache(async (slug: string): Promise<Publication | null> => {
   const supabase = createAnonServerClient();
 
   // 1. Try exact slug match
@@ -33,24 +35,21 @@ async function getPublicationBySlug(slug: string): Promise<Publication | null> {
   }
 
   return null;
-}
+});
 
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slug: string }>;
-}) {
+}): Promise<Metadata> {
   const { slug } = await params;
   const pub = await getPublicationBySlug(slug);
 
   if (!pub) {
-    return { title: 'Article Not Found — Maha Jouini' };
+    notFound();
   }
 
-  return {
-    title: `${pub.title} — Maha Jouini`,
-    description: pub.excerpt,
-  };
+  return getArticleMetadata(pub, slug);
 }
 
 export default async function PublicationArticlePage({

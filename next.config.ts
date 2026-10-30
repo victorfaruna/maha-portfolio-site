@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Keep share metadata in <head> even for social apps using an unrecognized
+  // crawler or browser user agent; their preview fetchers may not run JavaScript.
+  htmlLimitedBots: /.*/,
   experimental: {
     serverActions: {
       bodySizeLimit: '20mb',

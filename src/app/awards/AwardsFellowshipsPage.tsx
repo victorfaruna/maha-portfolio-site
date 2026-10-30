@@ -1,291 +1,323 @@
-"use client";
-
-import { motion } from "framer-motion";
-import { Award, GraduationCap, Sparkles } from "lucide-react";
+import Image from "next/image";
+import type { ReactNode } from "react";
+import { ArrowUpRight } from "lucide-react";
 import { Navbar } from "@/components/sections/Navbar";
 import { Footer } from "@/components/sections/Footer";
 
 type Recognition = {
   title: string;
-  meta: string;
-  year: string;
+  role: string;
+  period?: string;
+  initiative?: string;
   description: string;
+  href?: string;
+  linkLabel?: string;
+};
+
+type FeaturedRecognition = Recognition & {
+  href: string;
+  linkLabel: string;
+  image: { src: string; alt: string; position: string };
 };
 
 const awards: Recognition[] = [
   {
-    title: "She Shapes AI Global Awards — Winner",
-    meta: "AI Thought Leadership · London School of Economics",
-    year: "2026",
-    description:
-      "Recognized for leadership and impact in responsible and ethical AI on a global stage.",
-  },
-  {
     title: "UNESCO MENA Top 20 Women Change Makers",
-    meta: "MENA Region Impact",
-    year: "2022",
+    role: "Recognition",
+    period: "2022",
     description:
       "Recognized among women driving change and impact across the MENA region.",
+    href: "https://asfariinstitute.org/2022/01/28/maha-jouini-artificial-intelligence-and-beyond/",
+    linkLabel: "Read the 2022 profile",
   },
   {
     title: "Google Women Techmakers Ambassador",
-    meta: "Global Community",
-    year: "Since 2022",
+    role: "Ambassador",
+    period: "Since 2022",
     description:
       "Part of Google’s global Women Techmakers community, supporting the visibility and advancement of women in technology.",
+    href: "https://www.linkedin.com/posts/maha-jouini_google-technology-team-activity-6998359240415264768-GpQj",
+    linkLabel: "View the ambassador announcement",
+  },
+];
+
+// Programme details supplied by Maha. Official profile links are included where
+// verified; the UNESCO 2026–2027 programme is separate from the 2022 recognition.
+const featuredProgrammes: FeaturedRecognition[] = [
+  {
+    title: "Microsoft Elevate Changemaker Fellowship",
+    role: "Fellow",
+    period: "2026",
+    description:
+      "Selected for a global changemaker programme supporting leaders using technology to drive meaningful social impact. Her fellowship work focuses on an open-source conversational tool for women with breast and cervical cancer across MENA, including regional dialects and data privacy.",
+    href: "https://ms-elevate.caribou.global/meet-the-fellows/",
+    linkLabel: "Meet the Microsoft Elevate fellows",
+    image: {
+      src: "/images/awards-fellowships/microsoft-elevate-maha-jouini.jpg",
+      alt: "Maha Jouini’s portrait from the Microsoft Elevate Changemaker Fellowship profile",
+      position: "50% 30%",
+    },
+  },
+  {
+    title: "UNESCO Intercultural Leadership Programme",
+    role: "Youth for Peace",
+    period: "2026–2027",
+    description:
+      "Featured in UNESCO’s Youth for Peace cohort, bringing perspectives on responsible AI, gender-responsive digital transformation and culturally grounded technology to intercultural dialogue.",
+    href: "https://www.unesco.org/en/interculturaldialogue/youthforpeace/maha-jouini",
+    linkLabel: "Read the UNESCO profile",
+    image: {
+      src: "/images/awards-fellowships/unesco-youth-for-peace-maha-jouini.webp",
+      alt: "Maha Jouini’s portrait from UNESCO’s Youth for Peace leadership programme profile",
+      position: "50% 25%",
+    },
   },
 ];
 
 const fellowships: Recognition[] = [
   {
-    title: "Microsoft Elevate Changemaker Fellowship",
-    meta: "Global Impact & Leadership",
-    year: "Fellow · 2026",
-    description:
-      "Selected for a global changemaker programme supporting leaders using technology to drive meaningful social impact.",
-  },
-  {
     title: "Stanford Ethics, Technology & Public Policy Practitioner Program",
-    meta: "Stanford University",
-    year: "Cohort Leader · 2026",
+    role: "Practitioner · 2025 / Cohort leader · 2026",
     description:
       "Selected for a practitioner programme exploring the intersection of emerging technologies, ethics and public policy.",
   },
   {
     title: "Global Center on AI Governance",
-    meta: "Women in Focus Initiative",
-    year: "Research Fellow",
+    role: "Research Fellow",
+    initiative: "Women in Focus",
     description:
-      "Contributing research and perspectives on responsible AI and AI governance, with particular attention to women’s leadership and inclusion in Africa.",
+      "Contributing research and perspectives on responsible AI and AI governance through the Women in Focus initiative, with particular attention to women’s leadership, inclusion and AI governance in Africa.",
   },
   {
     title: "TechForward Policy Fellowship",
-    meta: "AI & Public Policy",
-    year: "Mentor · 2026",
+    role: "Mentor",
+    period: "2026",
     description:
       "Supporting emerging professionals working at the intersection of AI and public policy.",
   },
   {
     title: "UNDP Arab States",
-    meta: "Innovation & Entrepreneurship",
-    year: "Mentor · 2023",
+    role: "Business Mentor",
+    period: "2023",
     description:
-      "Mentored women entrepreneurs and emerging innovators across the Arab States in business development, innovation and entrepreneurship.",
+      "Mentored women entrepreneurs and emerging innovators across the Arab States, providing guidance on business development, innovation and entrepreneurship.",
   },
   {
     title: "ARIN Publishing Academy — First Cohort",
-    meta: "Academic Publishing & Research",
-    year: "Fellow · 2026",
+    role: "Fellow",
+    period: "2026",
     description:
-      "Selected for the inaugural cohort, strengthening research, academic writing and publishing capacity for African scholars and practitioners.",
+      "Selected for the inaugural cohort of the ARIN Publishing Academy, strengthening research, academic writing and publishing capacity for African scholars and practitioners.",
   },
   {
-    title: "UNFPA Tunisia — Pool of Experts in AI & TFGBV",
-    meta: "Digital Safety & Gender Ethics",
-    year: "Expert · 2026",
+    title: "UNFPA Tunisia — Pool of Experts in AI & Technology-Facilitated Gender-Based Violence (TFGBV)",
+    role: "Expert",
+    period: "2026",
     description:
-      "Selected to contribute expertise on AI, digital safety and technology-facilitated gender-based violence in Tunisia.",
+      "Selected to contribute expertise on AI, digital safety and technology-facilitated gender-based violence, supporting gender-responsive and responsible approaches to emerging technologies in Tunisia.",
   },
 ];
 
-const reveal = {
-  initial: { opacity: 0, y: 18 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-60px" },
-  transition: { duration: 0.55 },
-};
-
-function SectionTitle({
-  eyebrow,
-  title,
-  description,
+function SourceLink({
+  href,
+  children,
+  inverse = false,
 }: {
-  eyebrow: string;
-  title: string;
-  description: string;
+  href: string;
+  children: ReactNode;
+  inverse?: boolean;
 }) {
   return (
-    <motion.header {...reveal} className="grid gap-5 border-t border-brand-navy/15 pt-7 md:grid-cols-[0.8fr_1.2fr] md:gap-12">
-      <div>
-        <p className="mb-3 text-xs font-bold uppercase tracking-[0.22em] text-brand-pink">
-          {eyebrow}
-        </p>
-        <h2 className="font-serif text-4xl leading-tight text-brand-navy sm:text-5xl">
-          {title}
-        </h2>
-      </div>
-      <p className="max-w-xl self-end text-base leading-relaxed text-foreground/70 sm:text-lg">
-        {description}
-      </p>
-    </motion.header>
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`inline-flex min-h-11 items-center gap-2 text-sm font-semibold underline decoration-1 underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4 ${inverse ? "text-white decoration-white/50 hover:decoration-white" : "text-brand-navy decoration-brand-navy/40 hover:decoration-brand-navy"}`}
+    >
+      {children}
+      <ArrowUpRight size={16} strokeWidth={1.75} className="shrink-0" aria-hidden="true" />
+      <span className="sr-only"> (opens in a new tab)</span>
+    </a>
   );
 }
 
-function FellowshipRow({ item, index }: { item: Recognition; index: number }) {
+function FeaturedProgramme({ item }: { item: FeaturedRecognition }) {
   return (
-    <motion.article
-      {...reveal}
-      transition={{ duration: 0.5, delay: Math.min(index * 0.04, 0.2) }}
-      className="group grid gap-4 border-t border-brand-navy/15 py-7 sm:grid-cols-[44px_1fr_auto] sm:gap-5"
-    >
-      <span className="font-serif text-xl text-brand-pink">{String(index + 1).padStart(2, "0")}</span>
-      <div>
-        <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.16em] text-brand-pink">
-          {item.meta}
+    <article className="flex h-full min-w-0 flex-col border border-brand-navy/15 bg-brand-soft-blue/40" data-featured-programme>
+      <a
+        href={item.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`${item.title}: view the programme profile (opens in a new tab)`}
+        className="relative block aspect-[3/2] w-full overflow-hidden bg-brand-navy focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-navy"
+      >
+        <Image
+          src={item.image.src}
+          alt={item.image.alt}
+          fill
+          sizes="(min-width: 1440px) 624px, (min-width: 768px) 44vw, (min-width: 640px) calc(100vw - 80px), calc(100vw - 48px)"
+          className="object-cover"
+          style={{ objectPosition: item.image.position }}
+        />
+      </a>
+      <div className="flex flex-1 flex-col p-6 sm:p-8">
+        <p className="mb-3 text-xs font-semibold leading-relaxed tracking-wide text-brand-navy/70">
+          {item.role}{item.period && <> · {item.period}</>}
         </p>
-        <h3 className="font-serif text-2xl leading-snug text-brand-navy transition-colors group-hover:text-brand-pink">
+        <h3 className="font-sans text-2xl font-semibold leading-snug tracking-tight text-brand-navy sm:text-[1.75rem]">
           {item.title}
         </h3>
-        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-foreground/70 sm:text-base">
-          {item.description}
-        </p>
+        <p className="mt-4 text-base leading-7 text-foreground/85">{item.description}</p>
+        <div className="mt-auto pt-6">
+          <SourceLink href={item.href}>{item.linkLabel}</SourceLink>
+        </div>
       </div>
-      <p className="whitespace-nowrap text-sm font-semibold text-brand-navy/60 sm:pt-7">
-        {item.year}
+    </article>
+  );
+}
+
+function Programme({ item }: { item: Recognition }) {
+  return (
+    <article className="min-w-0 border-t border-brand-navy/20 py-7 sm:py-8">
+      <p className="mb-3 text-xs font-semibold leading-relaxed tracking-wide text-brand-navy/70">
+        {item.role}
+        {item.period && <> · {item.period}</>}
+        {item.initiative && <> · {item.initiative}</>}
       </p>
-    </motion.article>
+      <h3 className="font-sans text-xl font-semibold leading-snug tracking-tight text-brand-navy sm:text-2xl">
+        {item.title}
+      </h3>
+      <p className="mt-4 max-w-2xl text-base leading-7 text-foreground/85">
+        {item.description}
+      </p>
+      {item.href && item.linkLabel && (
+        <div className="mt-4">
+          <SourceLink href={item.href}>{item.linkLabel}</SourceLink>
+        </div>
+      )}
+    </article>
   );
 }
 
 export default function AwardsFellowshipsPage() {
   return (
-    <main className="min-h-screen overflow-x-hidden bg-white text-foreground">
-      <Navbar solid />
+    <main className="min-h-screen bg-white font-sans text-foreground">
+      <Navbar solid mobileMenuFont="sans" />
 
-      <section className="px-6 pb-16 pt-32 sm:px-10 sm:pt-40 md:pt-48 lg:px-16 lg:pb-24 lg:pt-52">
-        <div className="mx-auto max-w-7xl">
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.65 }}
-            className="grid items-end gap-10 lg:grid-cols-[1.35fr_0.65fr]"
-          >
-            <div>
-              <p className="mb-5 text-xs font-bold uppercase tracking-[0.24em] text-brand-pink">
-                Awards &amp; Fellowships
-              </p>
-              <h1 className="max-w-4xl font-serif text-5xl leading-[0.98] tracking-tight text-brand-navy sm:text-6xl md:text-7xl lg:text-8xl">
-                Recognition rooted in purpose.
-              </h1>
-            </div>
-
-            <div className="border-l-2 border-brand-pink pl-6">
-              <p className="text-base leading-relaxed text-foreground/70 sm:text-lg">
-                Honours and programmes recognizing a body of work spanning responsible AI,
-                public policy, digital inclusion and women&apos;s leadership.
-              </p>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="mt-12 h-px origin-left bg-brand-navy/20"
-          />
-
-          <div className="mt-8 grid grid-cols-3 gap-2 sm:gap-8">
-            {[
-              ["10", "Recognitions & programmes"],
-              ["Global", "Reach and contribution"],
-              ["2011—Now", "A continuing journey"],
-            ].map(([value, label]) => (
-              <div key={label}>
-                <p className="whitespace-nowrap font-serif text-lg text-brand-pink sm:text-3xl">{value}</p>
-                <p className="mt-1 text-[8px] uppercase tracking-[0.08em] text-brand-navy/60 sm:text-xs sm:tracking-[0.12em]">
-                  {label}
-                </p>
-              </div>
-            ))}
+      <section aria-labelledby="awards-heading" className="px-6 pb-16 pt-36 sm:px-10 sm:pt-44 lg:px-16 lg:pb-24 lg:pt-56">
+        <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
+          <div className="min-w-0 py-4 lg:py-10">
+            <p className="mb-6 text-xs font-bold uppercase tracking-[0.2em] text-brand-navy/65">
+              Responsible AI. Public impact.
+            </p>
+            <h1 id="awards-heading" className="font-sans text-5xl font-semibold leading-[1.04] tracking-[-0.045em] text-brand-navy sm:text-6xl xl:text-7xl">
+              Awards &amp;<br />Fellowships
+            </h1>
+            <p className="mt-7 max-w-xl text-lg leading-8 text-foreground/85 sm:text-xl sm:leading-9">
+              Recognized for advancing responsible AI, ethical technology, digital inclusion and women’s leadership across Africa and globally.
+            </p>
+            <nav aria-label="On this page" className="mt-9 flex flex-col items-start gap-x-7 gap-y-2 border-t border-brand-navy/20 pt-5 sm:flex-row sm:flex-wrap">
+              <a href="#recognition" className="inline-flex min-h-11 items-center text-sm font-semibold text-brand-navy underline decoration-brand-navy/35 underline-offset-4 hover:decoration-brand-navy focus-visible:outline-2 focus-visible:outline-offset-4">
+                Awards &amp; recognition
+              </a>
+              <a href="#fellowships" className="inline-flex min-h-11 items-center text-sm font-semibold text-brand-navy underline decoration-brand-navy/35 underline-offset-4 hover:decoration-brand-navy focus-visible:outline-2 focus-visible:outline-offset-4">
+                Fellowships &amp; leadership
+              </a>
+            </nav>
           </div>
+          <figure className="min-w-0">
+            <div className="relative aspect-[4/5] overflow-hidden bg-brand-soft-blue lg:aspect-[5/6]">
+              <Image
+                src="/images/awards-fellowships/maha-jouini-portrait.jpg"
+                alt="Maha Jouini standing outdoors, holding a tablet"
+                fill
+                priority
+                sizes="(min-width: 1440px) 530px, (min-width: 1024px) 43vw, (min-width: 640px) calc(100vw - 80px), calc(100vw - 48px)"
+                className="object-cover object-[50%_20%]"
+              />
+            </div>
+            <figcaption className="mt-3 text-xs leading-relaxed text-brand-navy/65">
+              Maha Jouini · AI governance, policy and advocacy
+            </figcaption>
+          </figure>
         </div>
       </section>
 
-      <section className="bg-brand-navy px-6 py-16 text-white sm:px-10 lg:px-16 lg:py-20">
+      <section id="recognition" aria-labelledby="recognition-heading" className="scroll-mt-32 bg-brand-soft-blue px-6 py-16 sm:px-10 lg:scroll-mt-52 lg:px-16 lg:py-24">
         <div className="mx-auto max-w-7xl">
-          <div className="grid gap-12 lg:grid-cols-[0.75fr_1.25fr]">
-            <motion.div {...reveal}>
-              <span className="mb-7 flex size-14 items-center justify-center rounded-full border border-white/25 text-brand-pink">
-                <Award size={26} strokeWidth={1.6} />
-              </span>
-              <p className="text-xs font-bold uppercase tracking-[0.22em] text-brand-pink">
-                Flagship recognition · 2026
-              </p>
-              <h2 className="mt-4 font-serif text-4xl leading-tight text-white sm:text-5xl">
-                She Shapes AI Global Awards
-              </h2>
-              <p className="mt-3 font-serif text-2xl italic text-white/75">Winner</p>
-            </motion.div>
+          <h2 id="recognition-heading" className="mb-9 font-sans text-3xl font-semibold tracking-tight text-brand-navy sm:text-4xl">
+            Awards &amp; recognition
+          </h2>
 
-            <motion.div {...reveal} className="self-end border-t border-white/20 pt-7">
-              <p className="text-xs font-bold uppercase tracking-[0.18em] text-brand-pink">
-                AI Thought Leadership · London School of Economics
+          <article className="grid items-center gap-9 bg-brand-navy p-6 text-white sm:p-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14 lg:p-14">
+            <div className="min-w-0">
+              <p className="text-xs font-bold uppercase leading-6 tracking-[0.14em] text-brand-pink">
+                AI Thought Leadership · Winner · 2026
               </p>
-              <p className="mt-5 max-w-2xl text-lg leading-relaxed text-white/80 sm:text-xl">
-                Recognized for leadership and impact in responsible and ethical AI on a global stage. This work is grounded in dignity, representation and meaningful change.
+              <h3 className="mt-5 max-w-lg font-sans text-3xl font-semibold leading-tight tracking-tight text-white sm:text-4xl lg:text-[2.75rem]">
+                She Shapes AI<br className="hidden sm:block" /> Global Awards
+              </h3>
+              <p className="mt-6 max-w-xl text-lg leading-8 text-white/90">
+                Recognized for leadership and impact in responsible and ethical AI.
               </p>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      <section className="px-6 py-20 sm:px-10 lg:px-16 lg:py-28">
-        <div className="mx-auto max-w-7xl">
-          <SectionTitle
-            eyebrow="Awards & recognition"
-            title="Moments of recognition"
-            description="Selected honours celebrating advocacy, thought leadership and a sustained commitment to building more inclusive technology ecosystems."
-          />
-
-          <div className="mt-12 grid gap-px overflow-hidden border border-brand-navy/15 bg-brand-navy/15 md:grid-cols-2">
-            {awards.slice(1).map((item, index) => (
-              <motion.article
-                key={item.title}
-                {...reveal}
-                transition={{ duration: 0.5, delay: index * 0.08 }}
-                className="group bg-white p-7 sm:p-9"
-              >
-                <div className="mb-12 flex items-center justify-between gap-4">
-                  <Sparkles size={22} className="text-brand-pink" strokeWidth={1.6} />
-                  <span className="text-sm font-semibold text-brand-navy/55">{item.year}</span>
+              <p className="mt-4 max-w-xl text-base leading-7 text-white/75">
+                Her work brings Arab, Muslim and African women’s perspectives into global AI governance, connecting public policy with the communities technology should serve.
+              </p>
+              <dl className="mt-7 grid gap-x-7 gap-y-5 border-t border-white/20 pt-6 sm:grid-cols-2">
+                <div>
+                  <dt className="text-xs text-white/65">Awards ceremony</dt>
+                  <dd className="mt-1 text-sm font-semibold">16 April 2026</dd>
                 </div>
-                <p className="text-[11px] font-bold uppercase tracking-[0.17em] text-brand-pink">
-                  {item.meta}
-                </p>
-                <h3 className="mt-3 font-serif text-3xl leading-tight text-brand-navy transition-colors group-hover:text-brand-pink">
-                  {item.title}
-                </h3>
-                <p className="mt-4 text-base leading-relaxed text-foreground/70">
-                  {item.description}
-                </p>
-              </motion.article>
-            ))}
+                <div>
+                  <dt className="text-xs text-white/65">Location</dt>
+                  <dd className="mt-1 text-sm font-semibold leading-6">London School of Economics</dd>
+                </div>
+              </dl>
+              <div className="mt-6">
+                <SourceLink href="https://www.sheshapes.ai/202526-awards/thought-leadership-in-ai-winner" inverse>
+                  View the award &amp; winner profile
+                </SourceLink>
+              </div>
+            </div>
+            <figure className="mx-auto w-full max-w-md lg:max-w-none">
+              <Image
+                src="/images/awards-fellowships/she-shapes-ai-winner.png"
+                alt="Official She Shapes AI 2025/26 Global Awards graphic naming Maha Jouini the Thought Leadership in AI winner"
+                width={1080}
+                height={1080}
+                sizes="(min-width: 1440px) 460px, (min-width: 1024px) 38vw, (min-width: 640px) 448px, calc(100vw - 96px)"
+                className="h-auto w-full"
+              />
+              <figcaption className="mt-3 text-xs leading-relaxed text-white/65">
+                Winner announcement · She Shapes AI
+              </figcaption>
+            </figure>
+          </article>
+
+          <div className="mt-6 grid gap-x-12 md:grid-cols-2 lg:gap-x-20">
+            {awards.map((item) => <Programme key={item.title} item={item} />)}
           </div>
         </div>
       </section>
 
-      <section className="bg-[#F8F9FC] px-6 py-20 sm:px-10 lg:px-16 lg:py-28">
+      <section id="fellowships" aria-labelledby="fellowships-heading" className="scroll-mt-32 px-6 py-16 sm:px-10 lg:scroll-mt-52 lg:px-16 lg:py-24">
         <div className="mx-auto max-w-7xl">
-          <SectionTitle
-            eyebrow="Fellowships & programmes"
-            title="Learning, leading and giving back"
-            description="Programmes that deepen practice, connect ideas across regions and create space to mentor the next generation of responsible technology leaders."
-          />
+          <header className="grid gap-5 border-b border-brand-navy/20 pb-9 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
+            <h2 id="fellowships-heading" className="max-w-xl font-sans text-3xl font-semibold leading-tight tracking-tight text-brand-navy sm:text-4xl">
+              Fellowships &amp;<br className="hidden sm:block" /> leadership programmes
+            </h2>
+            <p className="max-w-xl self-end text-base leading-7 text-foreground/85 sm:text-lg sm:leading-8">
+              Research, public policy and mentorship: working with institutions and communities to put responsible technology into practice.
+            </p>
+          </header>
 
-          <div className="mt-12 grid gap-x-12 lg:grid-cols-2">
-            {fellowships.map((item, index) => (
-              <FellowshipRow key={item.title} item={item} index={index} />
-            ))}
+          <div className="mt-10 grid items-stretch gap-8 md:grid-cols-2 lg:gap-10">
+            {featuredProgrammes.map((item) => <FeaturedProgramme key={item.title} item={item} />)}
           </div>
 
-          <motion.div {...reveal} className="mt-16 flex flex-col gap-5 border-l-2 border-brand-pink pl-6 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <GraduationCap className="mb-4 text-brand-pink" size={28} strokeWidth={1.5} />
-              <p className="font-serif text-2xl text-brand-navy sm:text-3xl">
-                Recognition is meaningful when it opens doors for others.
-              </p>
-            </div>
-          </motion.div>
+          <div className="mt-10 grid gap-x-12 md:grid-cols-2 lg:mt-14 lg:gap-x-20">
+            {fellowships.map((item) => <Programme key={item.title} item={item} />)}
+          </div>
         </div>
       </section>
 

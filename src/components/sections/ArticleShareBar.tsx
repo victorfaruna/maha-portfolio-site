@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Eye, Clock, Check, Link as LinkIcon, Send } from "lucide-react";
+import { createArticleShareLinks } from "@/lib/article-sharing";
 
 type Props = {
   articleId?: string;
@@ -45,7 +46,9 @@ export function ArticleShareBar({
   }, [articleId, viewsCount]);
 
   const getShareUrl = () => {
-    if (typeof window !== "undefined") return window.location.href;
+    if (typeof window !== "undefined") {
+      return document.querySelector<HTMLLinkElement>('link[rel="canonical"]')?.href || window.location.href;
+    }
     return "";
   };
 
@@ -62,25 +65,19 @@ export function ArticleShareBar({
   };
 
   const shareOnLinkedIn = () => {
-    const url = encodeURIComponent(getShareUrl());
-    window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, "_blank");
+    window.open(createArticleShareLinks(getShareUrl(), title).linkedin, "_blank", "noopener,noreferrer");
   };
 
   const shareOnTwitter = () => {
-    const url = encodeURIComponent(getShareUrl());
-    const text = encodeURIComponent(`Read "${title}" by Maha Jouini`);
-    window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, "_blank");
+    window.open(createArticleShareLinks(getShareUrl(), title).x, "_blank", "noopener,noreferrer");
   };
 
   const shareOnFacebook = () => {
-    const url = encodeURIComponent(getShareUrl());
-    window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, "_blank");
+    window.open(createArticleShareLinks(getShareUrl(), title).facebook, "_blank", "noopener,noreferrer");
   };
 
   const shareOnWhatsApp = () => {
-    const url = encodeURIComponent(getShareUrl());
-    const text = encodeURIComponent(`Read "${title}" by Maha Jouini: ${url}`);
-    window.open(`https://api.whatsapp.com/send?text=${text}`, "_blank");
+    window.open(createArticleShareLinks(getShareUrl(), title).whatsapp, "_blank", "noopener,noreferrer");
   };
 
   if (shareOnly) {

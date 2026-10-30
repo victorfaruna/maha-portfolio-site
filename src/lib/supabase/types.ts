@@ -55,6 +55,20 @@ export type SpeakingItem = {
   updated_at: string;
 };
 
+export type TestimonialRecord = {
+  id: string;
+  quote: string;
+  name: string;
+  role: string | null;
+  organization: string | null;
+  photo_url: string | null;
+  photo_path: string | null;
+  sort_order: number;
+  is_published: boolean;
+  created_at: string;
+  updated_at: string;
+};
+
 // Insert types (omit auto-generated fields)
 export type PublicationInsert = Omit<Publication, 'id' | 'created_at' | 'updated_at'>;
 export type BookInsert = Omit<Book, 'id' | 'created_at' | 'updated_at'>;

@@ -2,36 +2,31 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import {
-  Mic,
+  Mic2,
   Users,
-  MessageSquare,
-  Briefcase,
-  Presentation,
+  GraduationCap,
   Play,
   ArrowUpRight,
   ArrowRight,
-  ChevronLeft,
-  ChevronRight,
   Newspaper,
   Radio,
   Globe,
-  Sparkles,
-  Quote,
   ShieldCheck,
   Heart,
   Scale,
   Building2,
   Lightbulb,
-  Trophy,
+  Gavel,
 } from "lucide-react";
 import {
   speakingData,
   type MediaItem,
   type MediaCategory,
 } from "@/data/speaking";
-import { testimonials } from "@/data/testimonials";
+import type { Testimonial } from "@/data/testimonials";
+import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
 import { VideoModal } from "@/components/ui/VideoModal";
 import PressSection from "@/components/sections/PressSection";
 
@@ -46,7 +41,7 @@ type FilterTab = (typeof CATEGORIES)[number];
 
 const OFFERINGS = [
   {
-    icon: Mic,
+    icon: Mic2,
     title: "Keynote Speaking",
     description:
       "AI governance, digital sovereignty, and responsible innovation across Africa and the Global South.",
@@ -58,25 +53,25 @@ const OFFERINGS = [
       "Bringing multi-stakeholder perspectives together on emerging tech policy and digital rights.",
   },
   {
-    icon: MessageSquare,
+    icon: Radio,
     title: "Media Commentary",
     description:
       "Expert analysis for press, broadcast, and podcast features on AI ethics, safety, and governance.",
   },
   {
-    icon: Briefcase,
+    icon: Lightbulb,
     title: "Advisory & Consulting",
     description:
       "Government and institutional advisory on responsible AI strategy and sovereign data policies.",
   },
   {
-    icon: Presentation,
+    icon: GraduationCap,
     title: "Workshops & Training",
     description:
       "Hands-on executive sessions on AI ethics, digital transformation, and inclusive innovation.",
   },
   {
-    icon: Trophy,
+    icon: Gavel,
     title: "Award Jury & Expert Evaluation",
     description:
       "Serving on international jury panels for AI innovation prizes, digital leadership awards, and tech policy competitions across Africa and the Arab world.",
@@ -119,13 +114,13 @@ const TOPICS = [
 function getCategoryIcon(cat: MediaCategory) {
   switch (cat) {
     case "Keynote & Talk":
-      return <Mic className="w-3.5 h-3.5" />;
+      return <Mic2 className="w-3.5 h-3.5" strokeWidth={1.75} />;
     case "Press Feature":
-      return <Newspaper className="w-3.5 h-3.5" />;
+      return <Newspaper className="w-3.5 h-3.5" strokeWidth={1.75} />;
     case "Podcast & Broadcast":
-      return <Radio className="w-3.5 h-3.5" />;
+      return <Radio className="w-3.5 h-3.5" strokeWidth={1.75} />;
     case "Arabic Media":
-      return <Globe className="w-3.5 h-3.5" />;
+      return <Globe className="w-3.5 h-3.5" strokeWidth={1.75} />;
     default:
       return null;
   }
@@ -179,11 +174,12 @@ function CountUpNumber({ target = 50, duration = 1.8 }: { target?: number; durat
 
 export default function SpeakingSection({
   customSpeakingItems,
+  customTestimonials,
 }: {
   customSpeakingItems?: MediaItem[];
+  customTestimonials?: Testimonial[];
 }) {
   const [selectedTab, setSelectedTab] = useState<FilterTab>("ALL");
-  const [activeTestimonialIndex, setActiveTestimonialIndex] = useState(0);
 
   const mediaSource = customSpeakingItems && customSpeakingItems.length > 0 ? customSpeakingItems : speakingData;
 
@@ -201,25 +197,13 @@ export default function SpeakingSection({
   const totalEngagements = speakingData.length;
 
 
-  const handlePrevTestimonial = () => {
-    setActiveTestimonialIndex((prev) =>
-      prev === 0 ? testimonials.length - 1 : prev - 1,
-    );
-  };
-
-  const handleNextTestimonial = () => {
-    setActiveTestimonialIndex((prev) =>
-      prev === testimonials.length - 1 ? 0 : prev + 1,
-    );
-  };
-
   return (
     <div className="w-full overflow-hidden bg-background">
       {/* ── 1. STAT-DRIVEN HERO SECTION ────────────────────────────────────────── */}
       <section className="relative w-full min-h-screen flex items-end pb-16 md:pb-24 overflow-hidden">
         {/* Background Image */}
         <img
-          src="/images/pictures for research and publicaton/speaking4.jpeg"
+          src="/images/speakingandmediahero-landscape.png"
           alt="Maha Jouini Speaking"
           className="absolute inset-0 w-full h-full object-cover object-[50%_25%]"
         />
@@ -235,7 +219,6 @@ export default function SpeakingSection({
               className="text-xs uppercase tracking-widest text-brand-pink font-extrabold mb-3 flex items-center gap-2"
               style={{ textShadow: "0px 2px 10px rgba(0,0,0,0.8)", willChange: "transform, opacity", transform: "translateZ(0)" }}
             >
-              <Sparkles className="w-4 h-4" />
               GLOBAL KEYNOTES &amp; BROADCAST commentary
             </motion.span>
 
@@ -244,10 +227,10 @@ export default function SpeakingSection({
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl text-white font-serif tracking-tight leading-[1.1] mb-6"
+              className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl text-white font-sans tracking-tight leading-[1.1] mb-6"
               style={{ textShadow: "0px 4px 24px rgba(0,0,0,0.85)", willChange: "transform, opacity", transform: "translateZ(0)" }}
             >
-              <CountUpNumber target={50} duration={1.8} />+ Speaking Engagements, Press Features and Broadcasts Across the Globe
+              <CountUpNumber target={300} duration={1.8} />+ Speaking Engagements, Press Features and Broadcasts Across the Globe
             </motion.h1>
 
             <motion.p
@@ -290,7 +273,7 @@ export default function SpeakingSection({
             <span className="text-xs uppercase tracking-widest text-brand-pink font-extrabold mb-3 block">
               SERVICES &amp; ENGAGEMENTS
             </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif text-brand-navy leading-tight">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-sans text-brand-navy leading-tight">
               Book Maha For
             </h2>
           </div>
@@ -333,13 +316,13 @@ export default function SpeakingSection({
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: index * 0.08 }}
-                    className="group p-4 sm:p-5 bg-card border border-border/70 hover:border-brand-pink/40 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 flex items-start gap-4"
+                    className="p-4 sm:p-5 bg-card border border-border/70 rounded-2xl shadow-sm flex items-start gap-4"
                   >
-                    <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-brand-soft-pink text-brand-pink flex items-center justify-center shrink-0 group-hover:bg-brand-pink group-hover:text-white transition-colors duration-300 shadow-sm">
-                      <IconComponent className="w-5 h-5" />
+                    <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-brand-soft-pink text-brand-pink flex items-center justify-center shrink-0 shadow-sm">
+                      <IconComponent className="w-5 h-5" strokeWidth={1.75} />
                     </div>
                     <div>
-                      <h3 className="text-base sm:text-lg font-serif text-brand-navy mb-1 group-hover:text-brand-pink transition-colors font-medium">
+                      <h3 className="text-base sm:text-lg font-sans text-brand-navy mb-1 font-medium">
                         {offering.title}
                       </h3>
                       <p className="text-foreground/70 font-sans text-xs sm:text-sm leading-relaxed">
@@ -367,7 +350,7 @@ export default function SpeakingSection({
               <span className="text-xs uppercase tracking-widest text-brand-pink font-extrabold mb-3 block">
                 MEDIA &amp; BROADCAST HIGHLIGHTS
               </span>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif text-brand-navy leading-tight">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-sans text-brand-navy leading-tight">
                 Watch &amp; Listen
               </h2>
             </motion.div>
@@ -383,7 +366,6 @@ export default function SpeakingSection({
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: idx * 0.08 }}
-                  whileHover={{ y: -6 }}
                   className="group bg-card border border-border/80 hover:border-brand-pink/40 rounded-3xl shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden flex flex-col cursor-pointer"
                   onClick={() =>
                     setModalState({
@@ -402,11 +384,11 @@ export default function SpeakingSection({
                     />
                     <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors flex items-center justify-center">
                       <div className="w-14 h-14 rounded-full bg-brand-pink text-white flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform duration-300">
-                        <Play className="w-6 h-6 fill-current translate-x-0.5" />
+                        <Play className="w-6 h-6 translate-x-0.5" strokeWidth={1.75} />
                       </div>
                     </div>
                     <div className="absolute top-3 left-3 z-10">
-                      <span className="bg-black/70 backdrop-blur-md text-white border border-white/20 px-3 py-1 rounded-full text-[10px] font-mono tracking-wider">
+                      <span className="bg-black/70 backdrop-blur-md text-white border border-white/20 px-3 py-1 rounded-full text-[10px] font-sans tracking-wider">
                         {item.outlet}
                       </span>
                     </div>
@@ -415,7 +397,7 @@ export default function SpeakingSection({
                   {/* Card Body */}
                   <div className="p-6 sm:p-8 flex flex-col justify-between flex-1">
                     <div>
-                      <h3 className="text-lg sm:text-xl font-serif text-brand-navy mb-3 leading-snug group-hover:text-brand-pink transition-colors font-medium">
+                      <h3 className="text-lg sm:text-xl font-sans text-brand-navy mb-3 leading-snug group-hover:text-brand-pink transition-colors font-medium">
                         {item.title}
                       </h3>
                       {item.description && (
@@ -428,7 +410,7 @@ export default function SpeakingSection({
                     <div className="inline-flex items-center justify-between w-full text-xs font-bold uppercase tracking-wider text-brand-navy group-hover:text-brand-pink transition-colors pt-4 border-t border-border/50 mt-auto">
                       <span>Watch Broadcast</span>
                       <div className="w-7 h-7 rounded-full bg-brand-navy/5 group-hover:bg-brand-pink/15 flex items-center justify-center transition-colors">
-                        <Play className="w-3.5 h-3.5 fill-current text-brand-navy group-hover:text-brand-pink" />
+                        <Play className="w-3.5 h-3.5 text-brand-navy group-hover:text-brand-pink" strokeWidth={1.75} />
                       </div>
                     </div>
                   </div>
@@ -446,7 +428,7 @@ export default function SpeakingSection({
             <span className="text-xs uppercase tracking-widest text-brand-pink font-extrabold mb-3 block">
               KEYNOTE &amp; PANEL THEMES
             </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif text-white leading-tight">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-sans text-white leading-tight">
               Core Keynote Topics
             </h2>
           </div>
@@ -469,13 +451,13 @@ export default function SpeakingSection({
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: idx * 0.08 }}
-                    className="group pb-6 border-b border-white/15 last:border-b-0 last:pb-0 flex items-start gap-4 sm:gap-6"
+                    className="pb-6 border-b border-white/15 last:border-b-0 last:pb-0 flex items-start gap-4 sm:gap-6"
                   >
-                    <div className="w-12 h-12 rounded-2xl bg-brand-pink/20 text-brand-pink flex items-center justify-center shrink-0 group-hover:bg-brand-pink group-hover:text-white transition-colors duration-300 shadow-sm mt-0.5">
-                      <TopicIcon className="w-5 h-5" />
+                    <div className="w-12 h-12 rounded-2xl bg-brand-pink/20 text-brand-pink flex items-center justify-center shrink-0 shadow-sm mt-0.5">
+                      <TopicIcon className="w-5 h-5" strokeWidth={1.75} />
                     </div>
                     <div>
-                      <h3 className="text-xl sm:text-2xl font-serif text-white mb-2 font-medium group-hover:text-brand-pink transition-colors">
+                      <h3 className="text-xl sm:text-2xl font-sans text-white mb-2 font-medium">
                         {topic.title}
                       </h3>
                       <p className="text-white/75 font-sans text-sm sm:text-base leading-relaxed font-light">
@@ -503,10 +485,10 @@ export default function SpeakingSection({
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/90 via-transparent to-transparent opacity-80" />
                 <div className="absolute bottom-6 left-6 right-6 text-white">
-                  <span className="text-[10px] font-mono tracking-widest uppercase text-brand-pink bg-white/10 backdrop-blur-md px-3 py-1 rounded-full border border-white/20 inline-block mb-2">
+                  <span className="text-[10px] font-sans tracking-widest uppercase text-brand-pink bg-white/10 backdrop-blur-md px-3 py-1 rounded-full border border-white/20 inline-block mb-2">
                     Keynote Address
                   </span>
-                  <h4 className="text-xl font-serif text-white font-medium">
+                  <h4 className="text-xl font-sans text-white font-medium">
                     Bridging Policy &amp; Ethics
                   </h4>
                 </div>
@@ -525,66 +507,7 @@ export default function SpeakingSection({
       />
 
       {/* ── 6. TESTIMONIALS CAROUSEL ────────────────────────────────────────── */}
-      <section className="py-16 md:py-24 bg-background border-b border-border/60">
-        <div className="container mx-auto px-5 sm:px-8 md:px-12 max-w-4xl">
-          <div className="text-center mb-10 md:mb-14">
-            <span className="text-xs uppercase tracking-widest text-brand-pink font-extrabold mb-3 block">
-              SOCIAL PROOF &amp; FEEDBACK
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-serif text-brand-navy leading-tight">
-              Testimonials &amp; Endorsements
-            </h2>
-          </div>
-
-          {/* Testimonial Carousel Card */}
-          <div className="relative bg-card border border-border/80 rounded-3xl p-8 sm:p-12 shadow-sm text-center">
-            <Quote className="w-12 h-12 text-brand-pink/20 mx-auto mb-6" />
-
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeTestimonialIndex}
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -15 }}
-                transition={{ duration: 0.4 }}
-              >
-                <p className="text-lg sm:text-xl md:text-2xl font-serif text-brand-navy leading-relaxed italic mb-8">
-                  "{testimonials[activeTestimonialIndex].quote}"
-                </p>
-                <div>
-                  <h4 className="text-base font-bold text-brand-navy tracking-tight">
-                    {testimonials[activeTestimonialIndex].name}
-                  </h4>
-                  <p className="text-xs text-foreground/60 font-sans mt-0.5">
-                    {testimonials[activeTestimonialIndex].title}
-                  </p>
-                </div>
-              </motion.div>
-            </AnimatePresence>
-
-            {/* Navigation Controls */}
-            <div className="flex items-center justify-center gap-4 mt-8 pt-6 border-t border-border/40">
-              <button
-                onClick={handlePrevTestimonial}
-                className="w-10 h-10 rounded-full bg-secondary/60 hover:bg-brand-pink hover:text-white text-brand-navy flex items-center justify-center transition-colors"
-                aria-label="Previous Testimonial"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-              <span className="text-xs font-mono text-foreground/50">
-                {activeTestimonialIndex + 1} / {testimonials.length}
-              </span>
-              <button
-                onClick={handleNextTestimonial}
-                className="w-10 h-10 rounded-full bg-secondary/60 hover:bg-brand-pink hover:text-white text-brand-navy flex items-center justify-center transition-colors"
-                aria-label="Next Testimonial"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
+      <TestimonialsSection items={customTestimonials} />
 
       {/* Video Modal Instance */}
       <VideoModal

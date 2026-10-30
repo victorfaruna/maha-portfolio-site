@@ -6,13 +6,12 @@ import { VisionApproach } from "@/components/sections/VisionApproach";
 import { JoinMovement } from "@/components/sections/JoinMovement";
 import { MoonshotMission } from "@/components/sections/MoonshotMission";
 import { FeaturedIn } from "@/components/sections/FeaturedIn";
-import { RecognitionStrip } from "@/components/sections/RecognitionStrip";
 import { Footer } from "@/components/sections/Footer";
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-background text-foreground overflow-x-hidden">
-      <Navbar />
+      <Navbar mobileMenuFont="sans" />
       <Hero />
       <IntroText />
       <Purpose />
@@ -20,7 +19,6 @@ export default function Home() {
       <MoonshotMission />
       <JoinMovement />
       <FeaturedIn />
-      <RecognitionStrip />
       <Footer showGradient />
     </main>
   );

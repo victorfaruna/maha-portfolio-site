@@ -51,7 +51,7 @@ export function VideoModal({ isOpen, onClose, videoId, title }: VideoModalProps)
           >
             {/* Header */}
             <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-black/30">
-              <h3 className="text-sm sm:text-base font-serif text-white truncate max-w-xl pr-4">
+              <h3 className="text-sm sm:text-base font-sans text-white truncate max-w-xl pr-4">
                 {title}
               </h3>
               <button

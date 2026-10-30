@@ -61,7 +61,7 @@ function FallbackThumb({ title }: { title: string }) {
             d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10l6 6v8a2 2 0 01-2 2z" />
         </svg>
       </div>
-      <p className="text-white/60 text-sm font-serif text-center leading-snug line-clamp-3 max-w-[200px]">
+      <p className="text-white/60 text-sm font-sans text-center leading-snug line-clamp-3 max-w-[200px]">
         {title}
       </p>
     </div>
@@ -121,7 +121,7 @@ function ArticleCard({
       {/* Year badge — top right (desktop only) */}
       {publication.year && (
         <div className="hidden md:block absolute top-3 right-3 z-10">
-          <span className="bg-black/50 backdrop-blur-sm text-white/90 text-[9px] font-mono px-2 py-0.5 rounded-full">
+          <span className="bg-black/50 backdrop-blur-sm text-white/90 text-[9px] font-sans px-2 py-0.5 rounded-full">
             {publication.year}
           </span>
         </div>
@@ -138,7 +138,7 @@ function ArticleCard({
 
         {/* Title — displayed on all screens */}
         <h3
-          className={`font-serif text-white leading-snug font-medium group-hover:text-white/90 transition-colors ${
+          className={`font-sans text-white leading-snug font-medium group-hover:text-white/90 transition-colors ${
             isFeatured
               ? "text-[13px] sm:text-[18px] md:text-[22px] line-clamp-3 mb-1 sm:mb-2"
               : "text-[11px] sm:text-[13px] md:text-[15px] line-clamp-3 md:line-clamp-2"

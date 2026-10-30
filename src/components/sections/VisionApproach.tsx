@@ -16,8 +16,8 @@ export function VisionApproach() {
             className="space-y-6"
           >
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-1.5 h-8 bg-brand-cyan rounded-full" />
-              <h2 className="text-3xl md:text-4xl lg:text-5xl text-brand-navy font-serif font-semibold">
+              <div aria-hidden="true" className="h-8 w-1.5 shrink-0 bg-brand-navy md:h-10 lg:h-12" />
+              <h2 className="text-3xl md:text-4xl lg:text-5xl text-brand-navy font-sans font-semibold">
                 What is my approach?
               </h2>
             </div>
@@ -34,7 +34,7 @@ export function VisionApproach() {
               <p className="italic pt-2 text-foreground/75">
                 As Rūmī wrote:
               </p>
-              <blockquote className="border-l-3 border-brand-navy pl-5 italic text-lg text-brand-navy font-serif py-1 my-2">
+              <blockquote className="border-l-3 border-brand-navy pl-5 italic text-lg text-brand-navy font-sans py-1 my-2">
                 &quot;Yesterday I was clever, so I wanted to change the world. Today I am wise, so I am changing myself.&quot;
               </blockquote>
               <p>

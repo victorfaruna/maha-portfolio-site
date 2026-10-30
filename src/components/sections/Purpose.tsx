@@ -19,8 +19,8 @@ export function Purpose() {
             className="space-y-6 order-2 md:order-1"
           >
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-1.5 h-8 bg-brand-cyan rounded-full" />
-              <h2 className="text-3xl md:text-4xl lg:text-5xl text-brand-navy font-serif font-semibold">
+              <div aria-hidden="true" className="h-8 w-1.5 shrink-0 bg-brand-navy md:h-10 lg:h-12" />
+              <h2 className="text-3xl md:text-4xl lg:text-5xl text-brand-navy font-sans font-semibold">
                 What is my vision?
               </h2>
             </div>
@@ -92,8 +92,8 @@ export function Purpose() {
             className="space-y-6 order-2 md:order-1"
           >
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-1.5 h-8 bg-brand-pink rounded-full" />
-              <h2 className="text-3xl md:text-4xl lg:text-5xl text-brand-navy font-serif font-semibold">
+              <div aria-hidden="true" className="h-8 w-1.5 shrink-0 bg-brand-navy md:h-10 lg:h-12" />
+              <h2 className="text-3xl md:text-4xl lg:text-5xl text-brand-navy font-sans font-semibold">
                 What is my purpose?
               </h2>
             </div>

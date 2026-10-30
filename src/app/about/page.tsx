@@ -7,8 +7,8 @@ import { Footer } from "@/components/sections/Footer";
 
 export default function AboutPage() {
   return (
-    <main className="min-h-screen bg-background text-foreground overflow-hidden">
-      <Navbar />
+    <main className="min-h-screen bg-background text-foreground font-sans overflow-hidden">
+      <Navbar mobileMenuFont="sans" />
 
       {/* ── A: Hero ─────────────────────────────────────────────────────── */}
       <section className="relative w-full h-[60vh] md:h-[75vh] min-h-[420px] overflow-hidden">
@@ -54,7 +54,7 @@ export default function AboutPage() {
               />
             </div>
 
-            <h3 className="text-2xl font-serif text-brand-navy mb-4 mt-12">From Storytelling and Poetry to AI Systems</h3>
+            <h3 className="text-2xl font-sans text-brand-navy mb-4 mt-12">From Storytelling and Poetry to AI Systems</h3>
             <p className="mb-4">
               Before algorithms, there were words. Maha Jouini&apos;s journey began not in code, but in poetry and prose — in <em>عاشقة من إفريقيا</em> and <em>الرقصة الأخيرة: من قرطاج إلى الصين</em>, where she explored identity, memory, and belonging across continents. That same instinct carried her into artificial intelligence: the belief that every system, like every story, carries a worldview — and that whoever writes it decides whose humanity is seen.
             </p>
@@ -69,7 +69,7 @@ export default function AboutPage() {
               <p className="mb-4">
                 Through her work — technical and literary alike — Maha advocates for a future where AI is not only advanced but socially responsible, culturally grounded, and designed to improve lives across diverse communities.
               </p>
-              <blockquote className="italic font-serif text-brand-navy text-lg text-center mt-6">
+              <blockquote className="italic font-sans text-brand-navy text-lg text-center mt-6">
                 &quot;The future of AI will not be built by one region alone. It must be co-created by the communities it seeks to serve.&quot;
               </blockquote>
             </div>
@@ -85,10 +85,10 @@ export default function AboutPage() {
           viewport={{ once: true }}
           className="mb-12"
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-brand-navy mb-6">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-sans text-brand-navy mb-6">
             My Journey
           </h2>
-          <h3 className="text-xl md:text-2xl font-serif text-brand-pink mb-4">
+          <h3 className="text-xl md:text-2xl font-sans text-brand-pink mb-4">
             Building Responsible AI Through Policy, Governance, and Human-Centered Innovation
           </h3>
           <div className="text-foreground/80 text-lg leading-relaxed space-y-4">
@@ -242,7 +242,7 @@ export default function AboutPage() {
                   <span className="sm:hidden text-[11px] font-bold uppercase tracking-widest text-brand-pink mb-1 block">
                     {item.period}
                   </span>
-                  <h3 className="text-xl md:text-2xl font-semibold text-brand-navy font-serif mb-3 leading-snug">
+                  <h3 className="text-xl md:text-2xl font-semibold text-brand-navy font-sans mb-3 leading-snug">
                     {item.title}
                   </h3>
                   <div className="text-foreground/75 text-[15.5px] leading-relaxed max-w-3xl">
@@ -413,7 +413,7 @@ export default function AboutPage() {
                   <span className="sm:hidden text-[11px] font-bold uppercase tracking-widest text-brand-pink mb-1 block">
                     {item.period}
                   </span>
-                  <h3 className="text-xl md:text-2xl font-semibold text-brand-navy font-serif mb-3 leading-snug">
+                  <h3 className="text-xl md:text-2xl font-semibold text-brand-navy font-sans mb-3 leading-snug">
                     {item.title}
                   </h3>
                   <div className="text-foreground/75 text-[15.5px] leading-relaxed max-w-3xl">
@@ -484,7 +484,7 @@ export default function AboutPage() {
           transition={{ duration: 0.7 }}
           className="mt-20 max-w-4xl mx-auto mb-16"
         >
-          <h3 className="text-2xl md:text-3xl font-serif text-brand-navy mb-5">
+          <h3 className="text-2xl md:text-3xl font-sans text-brand-navy mb-5">
             Looking Ahead
           </h3>
           <p className="text-foreground/75 text-[15.5px] md:text-[18px] leading-relaxed mb-4">
@@ -495,7 +495,7 @@ export default function AboutPage() {
           </p>
           
           <blockquote className="border-l-4 border-brand-pink pl-5 sm:pl-8 py-3">
-            <p className="text-lg md:text-xl font-serif italic text-foreground/85 leading-relaxed font-medium">
+            <p className="text-lg md:text-xl font-sans italic text-foreground/85 leading-relaxed font-medium">
               &ldquo;Technology is most powerful when it strengthens institutions, expands opportunity, and serves humanity with wisdom, dignity, and justice.&rdquo;
             </p>
           </blockquote>
@@ -509,7 +509,7 @@ export default function AboutPage() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-3xl md:text-4xl lg:text-5xl font-serif text-brand-navy"
+            className="text-3xl md:text-4xl lg:text-5xl font-sans text-brand-navy"
           >
             Academia Journey
           </motion.h2>
@@ -588,7 +588,7 @@ export default function AboutPage() {
                 {item.year}
               </span>
               <div>
-                <p className="font-semibold text-brand-navy font-serif text-xl leading-tight mb-2">
+                <p className="font-semibold text-brand-navy font-sans text-xl leading-tight mb-2">
                   {item.institution}
                 </p>
                 <p className="text-foreground/75 text-[15.5px] leading-relaxed max-w-4xl">

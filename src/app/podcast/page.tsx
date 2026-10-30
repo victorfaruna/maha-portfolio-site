@@ -1,5 +1,8 @@
 import { Navbar } from "@/components/sections/Navbar";
 import { Footer } from "@/components/sections/Footer";
+import { getPageMetadata } from "@/lib/site-metadata";
+
+export const metadata = getPageMetadata("/podcast");
 
 export default function PodcastPage() {
   return (

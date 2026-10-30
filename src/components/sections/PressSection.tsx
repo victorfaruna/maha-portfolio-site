@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Mic,
+  Mic2,
   Newspaper,
   Radio,
   Globe,
@@ -71,12 +71,12 @@ const slideVariants = {
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
-function getCategoryIcon(cat: MediaCategory) {
+function getCategoryIcon(cat: MediaCategory, className = "w-3.5 h-3.5") {
   switch (cat) {
-    case "Keynote & Talk":      return <Mic       className="w-3 h-3" />;
-    case "Press Feature":       return <Newspaper className="w-3 h-3" />;
-    case "Podcast & Broadcast": return <Radio     className="w-3 h-3" />;
-    case "Arabic Media":        return <Globe     className="w-3 h-3" />;
+    case "Keynote & Talk":      return <Mic2      className={className} strokeWidth={1.75} />;
+    case "Press Feature":       return <Newspaper className={className} strokeWidth={1.75} />;
+    case "Podcast & Broadcast": return <Radio     className={className} strokeWidth={1.75} />;
+    case "Arabic Media":        return <Globe     className={className} strokeWidth={1.75} />;
   }
 }
 
@@ -93,9 +93,9 @@ function FallbackThumb({ outlet, category }: { outlet: string; category: MediaCa
   return (
     <div className="w-full h-full bg-brand-navy flex flex-col items-center justify-center gap-2 p-4">
       <div className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-brand-pink">
-        {getCategoryIcon(category)}
+        {getCategoryIcon(category, "w-5 h-5")}
       </div>
-      <span className="text-white/50 text-[10px] font-mono uppercase tracking-widest text-center leading-tight line-clamp-2">
+      <span className="text-white/50 text-[10px] font-sans uppercase tracking-widest text-center leading-tight line-clamp-2">
         {outlet}
       </span>
     </div>
@@ -128,7 +128,7 @@ function CardContent({
   return (
     <div
       onClick={handleClick}
-      className="group absolute inset-0 flex flex-col cursor-pointer hover:border-brand-pink/40 transition-colors"
+      className="group absolute inset-0 flex flex-col cursor-pointer"
     >
       {/* ── Thumbnail ── */}
       <div className="relative w-full h-[200px] flex-shrink-0 overflow-hidden bg-brand-navy/10">
@@ -136,7 +136,7 @@ function CardContent({
           <img
             src={item.ogImage}
             alt={item.title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            className="w-full h-full object-cover"
             loading="lazy"
             onError={(e) => {
               (e.currentTarget as HTMLImageElement).style.display = "none";
@@ -146,16 +146,22 @@ function CardContent({
           <FallbackThumb outlet={item.outlet} category={item.category} />
         )}
 
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-200 group-hover:bg-black/15 motion-reduce:transition-none"
+        />
+
         {/* Video play overlay */}
         {isVideo && (
-          <div className="absolute inset-0 bg-black/35 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+          <div className="absolute inset-0 bg-black/35 flex items-center justify-center">
             <div
-              className={`rounded-full bg-brand-pink text-white flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform ${
+              className={`rounded-full bg-brand-pink text-white flex items-center justify-center shadow-xl ${
                 isFeatured ? "w-12 h-12" : "w-9 h-9"
               }`}
             >
               <Play
-                className={`fill-current translate-x-0.5 ${isFeatured ? "w-5 h-5" : "w-3.5 h-3.5"}`}
+                className={`translate-x-0.5 ${isFeatured ? "w-5 h-5" : "w-4 h-4"}`}
+                strokeWidth={1.75}
               />
             </div>
           </div>
@@ -164,8 +170,7 @@ function CardContent({
         {/* Category pill — featured slot only */}
         {isFeatured && (
           <div className="absolute top-3 left-3 z-10">
-            <span className="bg-brand-soft-pink text-brand-pink px-2.5 py-1 text-[10px] font-bold rounded-full border border-brand-pink/20 uppercase tracking-wider inline-flex items-center gap-1">
-              {getCategoryIcon(item.category)}
+            <span className="bg-brand-soft-pink text-brand-pink px-2.5 py-1 text-[10px] font-bold rounded-full border border-brand-pink/20 uppercase tracking-wider inline-block">
               {item.category}
             </span>
           </div>
@@ -174,7 +179,7 @@ function CardContent({
         {/* Year badge */}
         {item.year && (
           <div className="absolute top-2 right-2 z-10">
-            <span className="bg-black/55 backdrop-blur-sm text-white/85 px-2 py-0.5 text-[9px] font-mono rounded-full">
+            <span className="bg-black/55 backdrop-blur-sm text-white/85 px-2 py-0.5 text-[9px] font-sans rounded-full">
               {item.year}
             </span>
           </div>
@@ -195,7 +200,7 @@ function CardContent({
         {/* Title */}
         <h3
           dir={item.isRTL ? "rtl" : "ltr"}
-          className={`font-serif text-brand-navy group-hover:text-brand-pink transition-colors font-medium leading-snug flex-shrink-0 ${
+          className={`font-sans text-brand-navy font-medium leading-snug flex-shrink-0 decoration-1 underline-offset-4 group-hover:underline ${
             isFeatured
               ? "text-[17px] line-clamp-3 mb-2"
               : "text-[13px] line-clamp-2 mb-2"
@@ -224,15 +229,13 @@ function CardContent({
 
         {/* CTA */}
         <div
-          className={`inline-flex items-center gap-1.5 font-bold uppercase tracking-wider text-brand-navy group-hover:text-brand-pink transition-colors mt-auto ${
+          className={`inline-flex items-center gap-1.5 font-bold uppercase tracking-wider text-brand-navy mt-auto ${
             isFeatured ? "text-[11px]" : "text-[10px]"
           }`}
         >
           {getLinkLabel(item.category)}
           <ArrowUpRight
-            className={`group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform ${
-              isFeatured ? "w-3.5 h-3.5" : "w-3 h-3"
-            }`}
+            className={isFeatured ? "w-3.5 h-3.5" : "w-3 h-3"}
           />
         </div>
       </div>
@@ -323,8 +326,7 @@ function CategoryCarousel({
 
       {/* ── Row header ── */}
       <div className="flex items-center justify-between mb-5">
-        <span className="text-[11px] font-bold uppercase tracking-[0.15em] text-foreground/40 inline-flex items-center gap-2">
-          {getCategoryIcon(items[0].category)}
+        <span className="text-[11px] font-bold uppercase tracking-[0.15em] text-foreground/40">
           {label}
         </span>
 
@@ -505,7 +507,7 @@ export default function PressSection({
             <span className="text-xs uppercase tracking-widest text-brand-pink font-extrabold mb-3 block">
               PRESS &amp; MEDIA ARCHIVE
             </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif text-brand-navy leading-tight">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-sans text-brand-navy leading-tight">
               In the Press &amp; Public Voice
             </h2>
           </motion.div>

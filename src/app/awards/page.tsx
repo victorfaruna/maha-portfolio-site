@@ -1,11 +1,7 @@
-import type { Metadata } from "next";
+import { getPageMetadata } from "@/lib/site-metadata";
 import AwardsFellowshipsPage from "./AwardsFellowshipsPage";
 
-export const metadata: Metadata = {
-  title: "Awards & Fellowships | Maha Jouini",
-  description:
-    "Recognition and fellowships for Maha Jouini's work advancing responsible AI, ethical technology, digital inclusion, and women's leadership across Africa and globally.",
-};
+export const metadata = getPageMetadata("/awards");
 
 export default function Page() {
   return <AwardsFellowshipsPage />;

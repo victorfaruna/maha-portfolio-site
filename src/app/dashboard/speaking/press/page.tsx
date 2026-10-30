@@ -1,6 +1,7 @@
+import { Suspense } from 'react';
 import Link from 'next/link';
 import { Plus, Newspaper, Globe, Mic, Radio } from 'lucide-react';
-import { createAnonServerClient } from '@/lib/supabase/server';
+import { createServerClient } from '@/lib/supabase/server';
 import { DashboardTable, type ColumnDef, type RowDef } from '../../_components/DashboardTable';
 import { deleteSpeakingItem } from '@/app/actions/speaking';
 import { speakingData, type MediaCategory } from '@/data/speaking';
@@ -8,24 +9,34 @@ import type { SpeakingItem } from '@/lib/supabase/types';
 
 export const dynamic = 'force-dynamic';
 
-async function getPressData(): Promise<{ items: SpeakingItem[]; isUsingFallback: boolean }> {
+async function getPressData(): Promise<{ items: SpeakingItem[]; isUsingFallback: boolean; storageUnavailable?: boolean }> {
   try {
-    const supabase = createAnonServerClient();
-    const { data } = await supabase
+    const supabase = createServerClient();
+    const { data, error } = await supabase
       .from('speaking_items')
       .select('*')
       .eq('section_type', 'press')
-      .order('created_at', { ascending: false });
+      .order('created_at', { ascending: false })
+      .abortSignal(AbortSignal.timeout(8000));
+
+    if (error) {
+      console.error('[dashboard/speaking/press] Failed to load archive:', error.message);
+      return { items: getInitialPressItems(), isUsingFallback: true, storageUnavailable: true };
+    }
 
     if (data && data.length > 0) {
       return { items: data as SpeakingItem[], isUsingFallback: false };
     }
-  } catch {
-    // Fallback if table not yet created
+  } catch (error) {
+    console.error('[dashboard/speaking/press] Archive storage unavailable:', error instanceof Error ? error.message : 'Unknown error');
+    return { items: getInitialPressItems(), isUsingFallback: true, storageUnavailable: true };
   }
 
-  // Fallback to static static press items
-  const fallback = speakingData.map((item, idx) => ({
+  return { items: getInitialPressItems(), isUsingFallback: true };
+}
+
+function getInitialPressItems(): SpeakingItem[] {
+  return speakingData.map((item, idx) => ({
     id: `static-press-${idx}`,
     section_type: 'press' as const,
     category: item.category,
@@ -40,8 +51,6 @@ async function getPressData(): Promise<{ items: SpeakingItem[]; isUsingFallback:
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
   }));
-
-  return { items: fallback, isUsingFallback: true };
 }
 
 function getCategoryBadge(cat: MediaCategory) {
@@ -77,13 +86,13 @@ function getCategoryBadge(cat: MediaCategory) {
   }
 }
 
-export default async function PressArchiveDashboardPage({
+async function PressArchiveContent({
   searchParams,
 }: {
   searchParams: Promise<{ flash?: string }>;
 }) {
   const { flash } = await searchParams;
-  const { items, isUsingFallback } = await getPressData();
+  const { items, isUsingFallback, storageUnavailable } = await getPressData();
 
   const columns: ColumnDef[] = [
     { header: 'Image / Media', className: 'w-20' },
@@ -124,8 +133,45 @@ export default async function PressArchiveDashboardPage({
   }));
 
   return (
+    <>
+      {/* Flash message */}
+      {flash && (
+        <div className="mb-6 px-4 py-3 bg-green-50 border border-green-200 text-sm text-green-700">
+          {flash === 'created' ? '✓ Press feature added successfully.' : '✓ Press feature updated successfully.'}
+        </div>
+      )}
+
+      {storageUnavailable ? (
+        <div role="alert" className="mb-6 px-4 py-3 bg-amber-50 border border-amber-200 text-sm text-amber-900">
+          Archive storage is currently unavailable. Your existing media features are shown below. Saving changes will be available once the database connection is restored.
+        </div>
+      ) : isUsingFallback && (
+        <div className="mb-6 px-4 py-3 bg-blue-50 border border-blue-200 text-xs text-blue-800">
+          ℹ Displaying initial static media features. Click &quot;Add New Press Feature&quot; to add custom entries to your database.
+        </div>
+      )}
+
+      {/* Table */}
+      <div className="bg-white border border-gray-100 shadow-sm">
+        <DashboardTable
+          columns={columns}
+          rows={rows}
+          editBasePath="/dashboard/speaking/press"
+          onDelete={deleteSpeakingItem}
+          emptyMessage="No press features added yet. Click 'Add New Press Feature' to create one."
+        />
+      </div>
+    </>
+  );
+}
+
+export default function PressArchiveDashboardPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ flash?: string }>;
+}) {
+  return (
     <main className="flex-1 px-4 sm:px-8 py-6 sm:py-8">
-      {/* Header */}
       <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
@@ -145,29 +191,9 @@ export default async function PressArchiveDashboardPage({
         </Link>
       </div>
 
-      {/* Flash message */}
-      {flash && (
-        <div className="mb-6 px-4 py-3 bg-green-50 border border-green-200 text-sm text-green-700">
-          {flash === 'created' ? '✓ Press feature added successfully.' : '✓ Press feature updated successfully.'}
-        </div>
-      )}
-
-      {isUsingFallback && (
-        <div className="mb-6 px-4 py-3 bg-blue-50 border border-blue-200 text-xs text-blue-800">
-          ℹ Displaying initial static media features. Click &quot;Add New Press Feature&quot; to add custom entries to your database.
-        </div>
-      )}
-
-      {/* Table */}
-      <div className="bg-white border border-gray-100 shadow-sm">
-        <DashboardTable
-          columns={columns}
-          rows={rows}
-          editBasePath="/dashboard/speaking/press"
-          onDelete={deleteSpeakingItem}
-          emptyMessage="No press features added yet. Click 'Add New Press Feature' to create one."
-        />
-      </div>
+      <Suspense fallback={<p role="status" className="border border-gray-100 bg-white px-6 py-10 text-sm text-gray-500">Loading media archive…</p>}>
+        <PressArchiveContent searchParams={searchParams} />
+      </Suspense>
     </main>
   );
 }

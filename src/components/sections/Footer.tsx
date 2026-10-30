@@ -7,7 +7,7 @@ export function Footer({ showGradient = false }: { showGradient?: boolean }) {
   return (
     <footer
       id="contact"
-      className="pt-14 pb-8 bg-secondary/40 text-foreground relative overflow-hidden mt-8 border-t border-border"
+      className="pt-14 pb-8 bg-secondary/40 text-foreground font-sans relative overflow-hidden mt-8 border-t border-border"
     >
       {/* Decorative blurred blob */}
       {showGradient && (
@@ -28,7 +28,7 @@ export function Footer({ showGradient = false }: { showGradient?: boolean }) {
               <span className="text-sm uppercase tracking-widest text-foreground/50 font-semibold mb-6 block">
                 Let&apos;s Collaborate
               </span>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif text-brand-navy leading-tight">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-sans text-brand-navy leading-tight">
                 Ready to make an{" "}
                 <span className="italic text-brand-pink">impact?</span>
               </h2>
@@ -55,11 +55,11 @@ export function Footer({ showGradient = false }: { showGradient?: boolean }) {
                 <p className="text-sm text-foreground/50 uppercase tracking-widest mb-4">
                   Connect
                 </p>
-                <div className="flex gap-2.5">
+                <div className="flex flex-wrap gap-2.5">
                   {[
                     {
                       label: "LinkedIn",
-                      href: "#",
+                      href: "https://www.linkedin.com/in/maha-jouini/",
                       svg: (
                         <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
                           <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z" />
@@ -69,7 +69,7 @@ export function Footer({ showGradient = false }: { showGradient?: boolean }) {
                     },
                     {
                       label: "X / Twitter",
-                      href: "#",
+                      href: "https://x.com/MahaJouiniAI",
                       svg: (
                         <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
                           <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
@@ -89,10 +89,20 @@ export function Footer({ showGradient = false }: { showGradient?: boolean }) {
                     },
                     {
                       label: "YouTube",
-                      href: "#",
+                      href: "https://www.youtube.com/@MahaJouini-l1u",
                       svg: (
                         <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
                           <path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.518 3.545 12 3.545 12 3.545s-7.518 0-9.388.507a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.87.507 9.388.507 9.388.507s7.518 0 9.388-.507a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                        </svg>
+                      ),
+                    },
+                    {
+                      label: "Facebook",
+                      href: "https://www.facebook.com/profile.php?id=61582419245890",
+                      svg: (
+                        <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5" aria-hidden="true" focusable="false">
+                          {/* Facebook brand mark from Simple Icons (CC0). */}
+                          <path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z" />
                         </svg>
                       ),
                     },
@@ -109,8 +119,10 @@ export function Footer({ showGradient = false }: { showGradient?: boolean }) {
                     <a
                       key={label}
                       href={href}
+                      target={href === "#" ? undefined : "_blank"}
+                      rel={href === "#" ? undefined : "noopener noreferrer"}
                       aria-label={label}
-                      className="w-10 h-10 flex items-center justify-center border border-brand-navy/30 text-brand-navy hover:bg-brand-navy hover:text-white hover:border-brand-navy transition-all duration-300 rounded-lg"
+                      className="w-10 h-10 shrink-0 flex items-center justify-center border border-brand-navy/30 text-brand-navy hover:bg-brand-navy hover:text-white hover:border-brand-navy transition-all duration-300 rounded-none"
                     >
                       {svg}
                     </a>

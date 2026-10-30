@@ -35,7 +35,7 @@ export default function PublicationsSection({ publications }: { publications: Pu
               <Sparkles className="w-3.5 h-3.5" />
               SCHOLARLY WORKS &amp; POLICY
             </span>
-            <h2 className="text-2xl sm:text-3xl md:text-5xl font-serif text-brand-navy leading-tight">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-sans text-brand-navy leading-tight">
               Featured Publications &amp; Opinions
             </h2>
           </motion.div>
@@ -94,7 +94,7 @@ export default function PublicationsSection({ publications }: { publications: Pu
                       />
                     ) : (
                       <div className="w-full h-full bg-gradient-to-br from-brand-navy/15 via-brand-pink/10 to-brand-navy/5 flex items-center justify-center p-6 text-center">
-                        <span className="font-serif italic text-brand-navy/40 text-sm">
+                        <span className="font-sans italic text-brand-navy/40 text-sm">
                           {formattedCategory}
                         </span>
                       </div>
@@ -112,7 +112,7 @@ export default function PublicationsSection({ publications }: { publications: Pu
 
                     {/* Floating Year Badge on Cover Image */}
                     <div className="absolute top-3.5 right-3.5 z-10">
-                      <span className="bg-black/65 backdrop-blur-md text-white/90 border border-white/20 shadow-sm px-2.5 py-1 rounded-full text-[10px] font-mono tracking-wider inline-block">
+                      <span className="bg-black/65 backdrop-blur-md text-white/90 border border-white/20 shadow-sm px-2.5 py-1 rounded-full text-[10px] font-sans tracking-wider inline-block">
                         {pub.year}
                       </span>
                     </div>
@@ -131,7 +131,7 @@ export default function PublicationsSection({ publications }: { publications: Pu
                       )}
 
                       {/* Title */}
-                      <h3 className="text-lg sm:text-xl md:text-2xl font-serif text-brand-navy mb-3 leading-snug group-hover:text-brand-pink transition-colors duration-300 font-medium">
+                      <h3 className="text-lg sm:text-xl md:text-2xl font-sans text-brand-navy mb-3 leading-snug group-hover:text-brand-pink transition-colors duration-300 font-medium">
                         {pub.title}
                       </h3>
 
@@ -150,7 +150,7 @@ export default function PublicationsSection({ publications }: { publications: Pu
                             {readTimeMinutes} min
                           </span>
                           <span className="text-foreground/30">•</span>
-                          <span className="inline-flex items-center gap-1 text-[11px] text-brand-navy font-semibold font-mono">
+                          <span className="inline-flex items-center gap-1 text-[11px] text-brand-navy font-semibold font-sans">
                             <Eye className="w-3 h-3 text-brand-pink" />
                             {(() => {
                               if (typeof window !== "undefined") {
@@ -222,7 +222,7 @@ export default function PublicationsSection({ publications }: { publications: Pu
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="text-center text-foreground/50 py-16 font-serif text-lg"
+            className="text-center text-foreground/50 py-16 font-sans text-lg"
           >
             No publications in this category yet.
           </motion.p>

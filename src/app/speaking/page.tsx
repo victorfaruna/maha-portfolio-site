@@ -4,12 +4,10 @@ import SpeakingSection from "@/components/sections/SpeakingSection";
 import { createAnonServerClient } from "@/lib/supabase/server";
 import type { SpeakingItem } from "@/lib/supabase/types";
 import type { MediaItem } from "@/data/speaking";
+import { getPublishedTestimonials } from "@/lib/testimonials-server";
+import { getPageMetadata } from "@/lib/site-metadata";
 
-export const metadata = {
-  title: "Speaking & Media — Maha Jouini",
-  description:
-    "Keynote addresses, panel moderation, media features, and public voice on AI governance, digital sovereignty, and Africa's technological future.",
-};
+export const metadata = getPageMetadata("/speaking");
 
 export const revalidate = 60;
 
@@ -19,7 +17,8 @@ async function getSpeakingItems(): Promise<MediaItem[]> {
     const { data, error } = await supabase
       .from("speaking_items")
       .select("*")
-      .order("created_at", { ascending: false });
+      .order("created_at", { ascending: false })
+      .abortSignal(AbortSignal.timeout(8000));
 
     if (error || !data || data.length === 0) {
       return [];
@@ -44,15 +43,18 @@ async function getSpeakingItems(): Promise<MediaItem[]> {
 }
 
 export default async function SpeakingPage() {
-  const customSpeakingItems = await getSpeakingItems();
+  const [customSpeakingItems, customTestimonials] = await Promise.all([
+    getSpeakingItems(), getPublishedTestimonials(),
+  ]);
 
   return (
-    <main className="min-h-screen bg-background text-foreground overflow-hidden flex flex-col">
-      <Navbar />
+    <main className="min-h-screen bg-background text-foreground font-sans overflow-hidden flex flex-col">
+      <Navbar mobileMenuFont="sans" />
 
       {/* Main Interactive Speaking & Media Content */}
       <SpeakingSection
         customSpeakingItems={customSpeakingItems.length > 0 ? customSpeakingItems : undefined}
+        customTestimonials={customTestimonials}
       />
 
       <Footer showGradient />

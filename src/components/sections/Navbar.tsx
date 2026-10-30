@@ -26,9 +26,10 @@ const navLinks: NavLink[] = [
 interface NavbarProps {
   solid?: boolean;
   noBorder?: boolean;
+  mobileMenuFont?: "serif" | "sans";
 }
 
-export function Navbar({ solid = false, noBorder = false }: NavbarProps = {}) {
+export function Navbar({ solid = false, noBorder = false, mobileMenuFont = "sans" }: NavbarProps = {}) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -59,7 +60,7 @@ export function Navbar({ solid = false, noBorder = false }: NavbarProps = {}) {
               src="/images/logo.png"
               alt="Maha Jouini Logo"
               fill
-              className="object-contain object-left"
+              className="object-contain object-left origin-left scale-[0.85] lg:scale-100"
               priority
             />
           </Link>
@@ -127,7 +128,10 @@ export function Navbar({ solid = false, noBorder = false }: NavbarProps = {}) {
                     key={link.name}
                     href={link.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="w-full text-left text-2xl font-serif text-foreground hover:text-accent transition-colors flex items-center justify-between gap-2 py-4 border-b border-border/50"
+                    className={cn(
+                      "w-full text-left text-2xl text-foreground hover:text-accent transition-colors flex items-center justify-between gap-2 py-4 border-b border-border/50",
+                      mobileMenuFont === "sans" ? "font-sans" : "font-serif"
+                    )}
                   >
                     {link.name}
                     {link.hasDropdown && <ChevronDown className="w-5 h-5" />}
