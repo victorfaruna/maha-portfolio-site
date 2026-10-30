@@ -17,7 +17,7 @@ type Recognition = {
 type FeaturedRecognition = Recognition & {
   href: string;
   linkLabel: string;
-  image: { src: string; alt: string; position: string };
+  image: { src: string; alt: string; position: string; fit?: "cover" | "contain" };
 };
 
 const awards: Recognition[] = [
@@ -53,9 +53,10 @@ const featuredProgrammes: FeaturedRecognition[] = [
     href: "https://ms-elevate.caribou.global/meet-the-fellows/",
     linkLabel: "Meet the Microsoft Elevate fellows",
     image: {
-      src: "/images/awards-fellowships/microsoft-elevate-maha-jouini.jpg",
-      alt: "Maha Jouini’s portrait from the Microsoft Elevate Changemaker Fellowship profile",
-      position: "50% 30%",
+      src: "/images/awards-fellowships/chifaa-tunisia-profile-card.png",
+      alt: "CHIFAA Tunisia profile card featuring Maha Jouini and her cancer-care AI initiative",
+      position: "50% 50%",
+      fit: "contain",
     },
   },
   {
@@ -67,9 +68,10 @@ const featuredProgrammes: FeaturedRecognition[] = [
     href: "https://www.unesco.org/en/interculturaldialogue/youthforpeace/maha-jouini",
     linkLabel: "Read the UNESCO profile",
     image: {
-      src: "/images/awards-fellowships/unesco-youth-for-peace-maha-jouini.webp",
-      alt: "Maha Jouini’s portrait from UNESCO’s Youth for Peace leadership programme profile",
-      position: "50% 25%",
+      src: "/images/awards-fellowships/unesco.png",
+      alt: "UNESCO Youth for Peace website showing Maha Jouini’s leadership programme profile",
+      position: "50% 50%",
+      fit: "contain",
     },
   },
 ];
@@ -122,17 +124,19 @@ function SourceLink({
   href,
   children,
   inverse = false,
+  stretched = false,
 }: {
   href: string;
   children: ReactNode;
   inverse?: boolean;
+  stretched?: boolean;
 }) {
   return (
     <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className={`inline-flex min-h-11 items-center gap-2 text-sm font-semibold underline decoration-1 underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4 ${inverse ? "text-white decoration-white/50 hover:decoration-white" : "text-brand-navy decoration-brand-navy/40 hover:decoration-brand-navy"}`}
+      className={`inline-flex min-h-11 items-center gap-2 text-sm font-semibold underline decoration-1 underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4 ${inverse ? "text-white decoration-white/50 hover:decoration-white" : "text-brand-navy decoration-brand-navy/40 hover:decoration-brand-navy"} ${stretched ? "after:absolute after:inset-0 after:z-10 after:content-[''] focus-visible:after:outline-2 focus-visible:after:outline-offset-4 focus-visible:after:outline-brand-pink" : ""}`}
     >
       {children}
       <ArrowUpRight size={16} strokeWidth={1.75} className="shrink-0" aria-hidden="true" />
@@ -149,14 +153,14 @@ function FeaturedProgramme({ item }: { item: FeaturedRecognition }) {
         target="_blank"
         rel="noopener noreferrer"
         aria-label={`${item.title}: view the programme profile (opens in a new tab)`}
-        className="relative block aspect-[3/2] w-full overflow-hidden bg-brand-navy focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-navy"
+        className={`relative block aspect-[3/2] w-full overflow-hidden ${item.image.fit === "contain" ? "bg-white" : "bg-brand-navy"} focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-navy`}
       >
         <Image
           src={item.image.src}
           alt={item.image.alt}
           fill
           sizes="(min-width: 1440px) 624px, (min-width: 768px) 44vw, (min-width: 640px) calc(100vw - 80px), calc(100vw - 48px)"
-          className="object-cover"
+          className={item.image.fit === "contain" ? "object-contain" : "object-cover"}
           style={{ objectPosition: item.image.position }}
         />
       </a>
@@ -249,7 +253,7 @@ export default function AwardsFellowshipsPage() {
             Awards &amp; recognition
           </h2>
 
-          <article className="grid items-center gap-9 bg-brand-navy p-6 text-white sm:p-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14 lg:p-14">
+          <article data-award-card className="relative isolate grid items-center gap-9 bg-brand-navy p-6 text-white sm:p-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14 lg:p-14">
             <div className="min-w-0">
               <p className="text-xs font-bold uppercase leading-6 tracking-[0.14em] text-brand-pink">
                 AI Thought Leadership · Winner · 2026
@@ -274,7 +278,7 @@ export default function AwardsFellowshipsPage() {
                 </div>
               </dl>
               <div className="mt-6">
-                <SourceLink href="https://www.sheshapes.ai/202526-awards/thought-leadership-in-ai-winner" inverse>
+                <SourceLink href="https://www.sheshapes.ai/202526-awards/thought-leadership-in-ai-winner" inverse stretched>
                   View the award &amp; winner profile
                 </SourceLink>
               </div>

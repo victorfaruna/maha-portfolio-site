@@ -78,6 +78,24 @@ test('includes all three official source links with secure new-tab behavior', ()
   assert.ok(!mena.includes('/youthforpeace/'), 'Do not conflate UNESCO programmes');
 });
 
+test('the entire She Shapes AI award card is covered by one native, keyboard-accessible winner link', () => {
+  const card = html.match(/<article\b[^>]*data-award-card[^>]*>[\s\S]*?<\/article>/)?.[0];
+  assert.ok(card);
+  assert.match(card, /class="relative isolate grid/);
+  const links = [...card.matchAll(/<a\b[^>]+>/g)].map(match => match[0]);
+  assert.equal(links.length, 1, 'Do not nest or duplicate interactive links');
+  assert.ok(links[0].includes('href="https://www.sheshapes.ai/202526-awards/thought-leadership-in-ai-winner"'));
+  assert.ok(links[0].includes('target="_blank"'));
+  assert.ok(links[0].includes('rel="noopener noreferrer"'));
+  for (const utility of ['after:absolute', 'after:inset-0', 'after:z-10', 'focus-visible:after:outline-2', 'focus-visible:after:outline-brand-pink']) {
+    assert.ok(links[0].includes(utility), utility);
+  }
+  assert.doesNotMatch(links[0], /tabindex="-1"|role="button"/);
+  assert.ok(card.includes('View the award &amp; winner profile'));
+  assert.ok(card.includes('opens in a new tab'));
+  assert.ok(card.includes('she-shapes-ai-winner.png'));
+});
+
 test('uses Arial utilities for the page and every heading, including mobile navigation', () => {
   assert.match(html, /<main class="[^"]*font-sans/);
   const headings = [...html.matchAll(/<h[1-6]\b([^>]*)>/g)];
@@ -101,12 +119,12 @@ test('uses local photographs and the complete official winner graphic with alt t
   assert.ok(!winner.includes('object-cover'), 'Keep the official announcement uncropped');
 });
 
-test('each featured programme has its own official profile photo, linked source and responsive layout', () => {
+test('each featured programme has its own profile image, linked source and responsive layout', () => {
   const articles = [...html.matchAll(/<article\b[^>]*data-featured-programme[^>]*>[\s\S]*?<\/article>/g)].map(match => match[0]);
   assert.equal(articles.length, 2);
   for (const item of [
-    {title: 'Microsoft Elevate Changemaker Fellowship', file: 'microsoft-elevate-maha-jouini.jpg', href: 'https://ms-elevate.caribou.global/meet-the-fellows/'},
-    {title: 'UNESCO Intercultural Leadership Programme', file: 'unesco-youth-for-peace-maha-jouini.webp', href: 'https://www.unesco.org/en/interculturaldialogue/youthforpeace/maha-jouini'},
+    {title: 'Microsoft Elevate Changemaker Fellowship', file: 'chifaa-tunisia-profile-card.png', fit: 'contain', position: '50% 50%', href: 'https://ms-elevate.caribou.global/meet-the-fellows/'},
+    {title: 'UNESCO Intercultural Leadership Programme', file: 'unesco.png', fit: 'contain', position: '50% 50%', href: 'https://www.unesco.org/en/interculturaldialogue/youthforpeace/maha-jouini'},
   ]) {
     const article = articles.find(value => value.includes(item.title));
     assert.ok(article, item.title);
@@ -115,7 +133,8 @@ test('each featured programme has its own official profile photo, linked source 
     assert.match(article, /alt="[^"]+"/);
     assert.match(article, /sizes="[^"]+"/);
     assert.match(article, /aspect-\[3\/2\]/);
-    assert.match(article, /object-position:50% (?:25|30)%/);
+    assert.ok(article.includes(`object-${item.fit}`));
+    assert.ok(article.includes(`object-position:${item.position}`));
     assert.match(article, /mt-auto pt-6/);
     const links = [...article.matchAll(/<a\b[^>]+>/g)].map(match => match[0]);
     assert.equal(links.length, 2);
@@ -124,6 +143,35 @@ test('each featured programme has its own official profile photo, linked source 
   }
   assert.match(source, /grid items-stretch gap-8 md:grid-cols-2/);
   assert.ok(fs.existsSync(path.resolve(__dirname, '../public/images/awards-fellowships/maha-jouini-reading.jpg')), 'Do not delete the original reading portrait');
+});
+
+test('Microsoft fellowship uses the full CHIFAA Tunisia profile graphic instead of the previous portrait', () => {
+  const article = [...html.matchAll(/<article\b[^>]*data-featured-programme[^>]*>[\s\S]*?<\/article>/g)]
+    .map(match => match[0]).find(value => value.includes('Microsoft Elevate Changemaker Fellowship'));
+  const image = article.match(/<img\b[^>]+>/)[0];
+  assert.match(image, /object-contain/);
+  assert.doesNotMatch(image, /object-cover/);
+  assert.match(image, /alt="CHIFAA Tunisia profile card featuring Maha Jouini/);
+  assert.doesNotMatch(article, /microsoft-elevate-maha-jouini\.jpg/);
+  const asset = fs.readFileSync(path.resolve(__dirname, '../public/images/awards-fellowships/chifaa-tunisia-profile-card.png'));
+  assert.equal(asset.subarray(1, 4).toString(), 'PNG');
+  assert.ok(asset.readUInt32BE(16) > asset.readUInt32BE(20), 'Preserve the complete landscape graphic');
+  assert.ok(fs.existsSync(path.resolve(__dirname, '../public/images/awards-fellowships/microsoft-elevate-maha-jouini.jpg')), 'Keep the original portrait asset');
+});
+
+test('UNESCO uses the supplied full-page screenshot without cropping or the previous portrait', () => {
+  const article = [...html.matchAll(/<article\b[^>]*data-featured-programme[^>]*>[\s\S]*?<\/article>/g)]
+    .map(match => match[0]).find(value => value.includes('UNESCO Intercultural Leadership Programme'));
+  const image = article.match(/<img\b[^>]+>/)[0];
+  assert.match(image, /object-contain/);
+  assert.doesNotMatch(image, /object-cover/);
+  assert.match(image, /alt="UNESCO Youth for Peace website showing Maha Jouini/);
+  assert.match(article, /overflow-hidden bg-white/);
+  assert.doesNotMatch(article, /unesco-youth-for-peace-maha-jouini\.webp/);
+  const asset = fs.readFileSync(path.resolve(__dirname, '../public/images/awards-fellowships/unesco.png'));
+  assert.equal(asset.subarray(1, 4).toString(), 'PNG');
+  assert.ok(asset.readUInt32BE(16) > asset.readUInt32BE(20), 'Preserve the landscape screenshot');
+  assert.ok(fs.existsSync(path.resolve(__dirname, '../public/images/awards-fellowships/unesco-youth-for-peace-maha-jouini.webp')), 'Keep the original portrait asset');
 });
 
 test('secondary recognitions retain their text and source links without images or empty frames', () => {

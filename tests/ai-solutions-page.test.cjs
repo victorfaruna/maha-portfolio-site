@@ -25,6 +25,8 @@ function load(filename) {
   loaded.require = id => {
     if (id === './content') return load(path.join(root, 'content.ts'));
     if (id === './AiSolutionsExperience') return load(path.join(root, 'AiSolutionsExperience.tsx'));
+    if (id === './ParticlePortrait') return load(path.join(root, 'ParticlePortrait.tsx'));
+    if (id === '@/components/ui/ParticleImage') return load(path.resolve(root, '../../components/ui/ParticleImage.jsx'));
     if (id.endsWith('.module.css')) return new Proxy({}, {get: (_, key) => key === '__esModule' ? false : String(key)});
     if (id === '@/components/sections/Navbar') return {Navbar: props => React.createElement('header', {'data-mobile-font': props.mobileMenuFont})};
     if (id === '@/components/sections/Footer') return {Footer: () => React.createElement('footer')};
@@ -39,6 +41,9 @@ const html = renderToStaticMarkup(React.createElement(load(path.join(root, 'page
 const text = html.replace(/<[^>]*>/g, ' ').replace(/&amp;/g, '&').replace(/&#x27;/g, "'").replace(/\s+/g, ' ');
 const source = fs.readFileSync(path.join(root, 'AiSolutionsExperience.tsx'), 'utf8');
 const css = fs.readFileSync(path.join(root, 'ai-solutions.module.css'), 'utf8');
+const portraitSource = fs.readFileSync(path.join(root, 'ParticlePortrait.tsx'), 'utf8');
+const particleFilename = path.resolve(root, '../../components/ui/ParticleImage.jsx');
+const particleSource = fs.readFileSync(particleFilename, 'utf8');
 
 test('retains all supplied service and initiative content in server-rendered HTML', () => {
   assert.equal(services.length, 3);
@@ -67,7 +72,7 @@ test('all headings use Arial and the existing metadata layout remains in place',
 });
 
 test('uses the supplied local tech-face image and three uncropped real logos', () => {
-  const images = [...html.matchAll(/<img\b[^>]+>/g)].map(match => match[0]);
+  const images = [...html.matchAll(/<img\b[^>]+>/g)].map(match => match[0]).filter(image => !image.includes(encodeURIComponent('/images/1.jpeg')));
   assert.equal(images.length, 4);
   for (const image of images) {
     assert.match(image, /alt="[^"]+"/);
@@ -78,6 +83,24 @@ test('uses the supplied local tech-face image and three uncropped real logos', (
     assert.ok(fs.statSync(path.resolve(__dirname, '../public' + asset)).size > 10000, asset);
     assert.ok(html.includes(encodeURIComponent(asset)), asset);
   }
+});
+
+test('pairs the closing quote with an existing About-page photo in a responsive layout', () => {
+  const section = html.match(/<section aria-label="A people-first approach to AI"[\s\S]*?<\/section>/)[0];
+  const photo = section.match(/<img\b[^>]+>/)[0];
+  assert.equal([...html.matchAll(/<img\b[^>]+>/g)].length, 5);
+  assert.match(photo, /alt="Maha Jouini speaking at a conference"/);
+  assert.ok(photo.includes(encodeURIComponent('/images/1.jpeg')));
+  assert.match(photo, /object-cover object-center/);
+  assert.match(photo, /sizes="\(min-width: 640px\) 384px, calc\(100vw - 48px\)"/);
+  assert.match(section, /grid items-center[^\"]*lg:grid-cols-/);
+  assert.match(section, /aspect-\[4\/3\][^\"]*lg:aspect-square/);
+  assert.match(section, /href="\/work"/);
+  assert.match(section, /Start a conversation/);
+  assert.match(section, /Maha Jouini<\/p>/);
+  const about = fs.readFileSync(path.resolve(__dirname, '../src/app/about/page.tsx'), 'utf8');
+  assert.ok(about.includes('src="/images/1.jpeg"'));
+  assert.ok(fs.statSync(path.resolve(__dirname, '../public/images/1.jpeg')).size > 10000);
 });
 
 test('service controls have unique accessible regions with the first service open', () => {
@@ -121,4 +144,45 @@ test('motion is reduced-motion aware, scoped to the page, and does not lift card
   assert.match(source, /window\.cancelAnimationFrame\(frame\)/);
   assert.match(source, /observer\.disconnect\(\)/);
   assert.doesNotMatch(source, /whileHover|hover:-translate|hover:scale|rounded-|Sparkles|Robot/);
+});
+
+test('the particle portrait progressively enhances the existing accessible image using BCN physics', () => {
+  assert.match(source, /<ParticlePortrait reduceMotion=\{reduceMotion\}/);
+  assert.match(html, /data-particle-portrait="true"/);
+  assert.match(html, /data-particle-active="false"/);
+  assert.match(html, /data-particle-ready="false"/);
+  assert.doesNotMatch(html, /<canvas\b/);
+  assert.match(html, /alt="A woman&#x27;s profile illustrated as an interconnected digital network"/);
+  for (const feature of ['Originkit', 'BCN/components/ui/ParticleImage.tsx', 'randomInShape', 'getTransitionParams', 'mkParticle', 'mouseSpeedRef', 'repulsionMode', 'roamTargetX']) {
+    assert.ok(particleSource.includes(feature), feature);
+  }
+  assert.match(portraitSource, /repulsionForce: 10, repulsionRadius: 28/);
+  assert.match(portraitSource, /duration: 0\.8, ease: "easeInOut"/);
+  assert.doesNotMatch(particleSource, /imagedelivery\.net|bcn-logo-transparent/);
+});
+
+test('particle sampling ignores white background pixels but retains the original coloured network', () => {
+  const {isVisibleImagePixel} = load(particleFilename);
+  assert.equal(isVisibleImagePixel(255, 255, 255, 255, true), false);
+  assert.equal(isVisibleImagePixel(249, 250, 251, 255, true), false);
+  assert.equal(isVisibleImagePixel(80, 30, 180, 255, true), true);
+  assert.equal(isVisibleImagePixel(244, 240, 252, 255, true), true);
+  assert.equal(isVisibleImagePixel(80, 30, 180, 0, true), false);
+  assert.equal(isVisibleImagePixel(255, 255, 255, 255), true, 'Keep the original BCN default for other images');
+});
+
+test('particle animation is input-only, reduced-motion aware and cleaned up offscreen or on navigation', () => {
+  assert.match(portraitSource, /!reduceMotion && isVisible && isDocumentVisible/);
+  assert.match(portraitSource, /animate=\{isHovered\}/);
+  assert.match(portraitSource, /onTouchCancel=/);
+  assert.match(portraitSource, /observer\?\.disconnect\(\)/);
+  assert.match(portraitSource, /document\.removeEventListener\("visibilitychange"/);
+  assert.match(particleSource, /if \(!animate\) return/);
+  assert.match(particleSource, /cancelAnimationFrame\(animRef\.current\)/);
+  assert.match(particleSource, /loadGenerationRef\.current\+\+/);
+  assert.match(particleSource, /clearTimeout\(animTimerRef\.current\)/);
+  assert.match(particleSource, /Math\.min\(window\.devicePixelRatio \|\| 1, 2\)/);
+  assert.match(particleSource, /if \(!ctx\) return/);
+  assert.match(css, /touch-action: pan-y/);
+  assert.match(css, /\.particleCanvas \{ display: none; transition: none; \}/);
 });

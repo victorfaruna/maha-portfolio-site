@@ -21,7 +21,7 @@ export function IntroText() {
             href="https://hikmaai.org/"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-medium text-purple-700 underline underline-offset-4 hover:text-purple-800 focus-visible:text-purple-800"
+            className="font-medium text-brand-navy underline underline-offset-4 hover:text-brand-navy focus-visible:text-brand-navy"
           >
             HIKMA AI
           </a>{" "}
@@ -30,7 +30,7 @@ export function IntroText() {
             href="https://www.chifaa.org/"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-medium text-purple-700 underline underline-offset-4 hover:text-purple-800 focus-visible:text-purple-800"
+            className="font-medium text-brand-navy underline underline-offset-4 hover:text-brand-navy focus-visible:text-brand-navy"
           >
             CHIFAA
           </a>. I build

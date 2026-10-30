@@ -205,7 +205,7 @@ export default function SpeakingSection({
         <img
           src="/images/speakingandmediahero-landscape.png"
           alt="Maha Jouini Speaking"
-          className="absolute inset-0 w-full h-full object-cover object-[50%_25%]"
+          className="absolute inset-0 w-full h-full object-cover object-[82%_25%] lg:object-[50%_25%]"
         />
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10" />

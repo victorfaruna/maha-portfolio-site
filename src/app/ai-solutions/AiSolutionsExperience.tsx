@@ -6,6 +6,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowDown, ArrowRight, ArrowUpRight, Plus } from "lucide-react";
 import { initiatives, principles, services } from "./content";
+import { ParticlePortrait } from "./ParticlePortrait";
 import styles from "./ai-solutions.module.css";
 
 const focusStyles = "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-navy";
@@ -202,8 +203,8 @@ export function AiSolutionsExperience() {
 
           <figure className={`${styles.heroVisual} relative min-w-0 border border-brand-navy/15`}>
             <div className="relative aspect-[1.08/1] overflow-hidden bg-white">
-              <Image src="/images/aiimage.png" alt="A woman's profile illustrated as an interconnected digital network" fill sizes="(min-width: 1440px) 560px, (min-width: 1024px) 42vw, 90vw" className="object-contain p-3 sm:p-6" preload />
-              <span className="absolute left-5 top-5 text-[10px] font-semibold uppercase tracking-[0.18em] text-brand-navy/60 sm:left-6 sm:top-6">Technology with a human perspective</span>
+              <ParticlePortrait reduceMotion={reduceMotion} />
+              <span className="pointer-events-none absolute left-5 top-5 text-[10px] font-semibold uppercase tracking-[0.18em] text-brand-navy/60 sm:left-6 sm:top-6">Technology with a human perspective</span>
             </div>
             <figcaption className="flex flex-wrap items-center justify-between gap-2 border-t border-brand-navy/15 px-5 py-4 text-xs sm:px-6">
               <span className="font-semibold">People. Context. Purpose.</span>
@@ -313,10 +314,23 @@ export function AiSolutionsExperience() {
 
       <section aria-label="A people-first approach to AI" className="bg-brand-navy text-white">
         <div className="mx-auto max-w-[1440px] px-6 py-16 sm:px-10 md:px-12 md:py-20 lg:px-16 lg:py-24" data-ai-reveal>
-          <p className="mb-6 text-xs font-semibold uppercase tracking-[0.18em] text-white/60">The conviction behind the work</p>
-          <blockquote className="max-w-5xl text-3xl font-normal leading-[1.25] tracking-tight sm:text-4xl lg:text-[3.5rem]">
-            AI should not begin with the technology. It should begin with <span className="text-brand-pink">people, context and purpose.</span>
-          </blockquote>
+          <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,24rem)] lg:gap-12 xl:gap-16">
+            <div>
+              <p className="mb-6 text-xs font-semibold uppercase tracking-[0.18em] text-white/60">The conviction behind the work</p>
+              <blockquote className="text-3xl font-normal leading-[1.25] tracking-tight sm:text-4xl lg:text-5xl xl:text-[3.5rem]">
+                AI should not begin with the technology. It should begin with <span className="text-brand-pink">people, context and purpose.</span>
+              </blockquote>
+            </div>
+            <figure className="relative mx-auto aspect-[4/3] w-full max-w-sm overflow-hidden lg:aspect-square">
+              <Image
+                src="/images/1.jpeg"
+                alt="Maha Jouini speaking at a conference"
+                fill
+                sizes="(min-width: 640px) 384px, calc(100vw - 48px)"
+                className="object-cover object-center"
+              />
+            </figure>
+          </div>
           <div className="mt-10 flex flex-wrap items-center justify-between gap-6 border-t border-white/20 pt-7">
             <p className="text-sm text-white/75">Maha Jouini</p>
             <Link href="/work" className="inline-flex min-h-12 items-center gap-4 bg-white px-6 py-3 text-sm font-semibold text-brand-navy transition-colors hover:bg-brand-pink hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
