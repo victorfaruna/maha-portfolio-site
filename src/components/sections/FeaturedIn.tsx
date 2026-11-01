@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const partners = [
   { name: "UNESCO", logo: "/images/unesco.png", containerClassName: "h-20 max-w-24 md:h-28 md:max-w-32" },
-  { name: "African Union", logo: "/images/africanunion.jfif", containerClassName: "h-20 max-w-32 md:h-28 md:max-w-44" },
+  { name: "African Union", logo: "/images/africanunion.jpg", containerClassName: "h-20 max-w-32 md:h-28 md:max-w-44" },
   { name: "Stanford", logo: "/images/scanford.png", containerClassName: "h-20 max-w-32 md:h-28 md:max-w-44" },
   { name: "Microsoft", logo: "/images/microsoft.avif", containerClassName: "h-14 max-w-40 md:h-20 md:max-w-56" },
 ];
